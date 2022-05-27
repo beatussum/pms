@@ -16,6 +16,9 @@
  */
 
 
+#ifndef PMSCORE_CORE_CORE_HPP
+#define PMSCORE_CORE_CORE_HPP
+
 namespace core
 {
     template <class _T, unsigned long _N>
@@ -41,3 +44,5 @@ namespace core
         return __bfirst;
     }
 }
+
+#endif // PMSCORE_CORE_CORE_HPP

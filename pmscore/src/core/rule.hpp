@@ -16,13 +16,13 @@
  */
 
 
-#ifndef PMSCORE_RULE_HPP
-#define PMSCORE_RULE_HPP
+#ifndef PMSCORE_CORE_RULE_HPP
+#define PMSCORE_CORE_RULE_HPP
 
 #include <Arduino.h>
 
 namespace core
-{ 
+{
     class rule
     {
         template <size_t _N>
@@ -51,4 +51,4 @@ namespace core
     };
 }
 
-#endif // PMSCORE_RULE_HPP
+#endif // PMSCORE_CORE_RULE_HPP

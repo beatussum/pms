@@ -16,8 +16,8 @@
  */
 
 
-#ifndef PMSCORE_LOOPER_HPP
-#define PMSCORE_LOOPER_HPP
+#ifndef PMSCORE_CORE_LOOPER_HPP
+#define PMSCORE_CORE_LOOPER_HPP
 
 #include "core.hpp"
 #include "rule.hpp"
@@ -30,7 +30,7 @@ namespace core
     public:
         static inline constexpr auto m_ksize = _N;
 
-        using time_type  = unsigned long; 
+        using time_type  = unsigned long;
         using rules_type = rule[m_ksize];
     public:
         looper(const rules_type& __rules)
@@ -39,7 +39,7 @@ namespace core
         }
     public:
         void init(bool __sort = true)
-        {        
+        {
             if (__sort) {
                 for (auto r = (begin(m_rules) + 1); r != end(m_rules); ++r) {
                     auto x = *r;
@@ -55,7 +55,7 @@ namespace core
 
             for (auto& r : m_rules) {
                 r.m_chrono = millis();
-            }            
+            }
         }
 
         void actualize(time_type __t = millis())
@@ -69,4 +69,4 @@ namespace core
     };
 }
 
-#endif // PMSCORE_LOOPER_HPP
+#endif // PMSCORE_CORE_LOOPER_HPP
