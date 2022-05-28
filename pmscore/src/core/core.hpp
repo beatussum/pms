@@ -19,6 +19,8 @@
 #ifndef PMSCORE_CORE_CORE_HPP
 #define PMSCORE_CORE_CORE_HPP
 
+#include <Arduino.h>
+
 namespace core
 {
     template <class _T, unsigned long _N>
@@ -43,6 +45,10 @@ namespace core
 
         return __bfirst;
     }
+
+    String operator ""_s(const char* __c) { return String(__c); }
+    String operator ""_s(const char* __c, size_t) { return String(__c); }
+    String operator ""_s(char __c) { return String(__c); }
 }
 
 #endif // PMSCORE_CORE_CORE_HPP
