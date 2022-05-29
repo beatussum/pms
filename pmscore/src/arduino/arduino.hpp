@@ -19,11 +19,18 @@
 #ifndef PMSCORE_ARDUINO_ARDUINO_HPP
 #define PMSCORE_ARDUINO_ARDUINO_HPP
 
+#include "../math/math.hpp"
+
 #include <Arduino.h>
+
+using namespace math;
 
 namespace arduino
 {
     using pin_t = uint8_t;
+
+    inline static constexpr real kd = 7.2;
+    inline static constexpr real kr = 2.2;
 }
 
 #endif // PMSCORE_ARDUINO_ARDUINO_HPP

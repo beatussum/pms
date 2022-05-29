@@ -21,7 +21,7 @@
 
 #include "math.hpp"
 
-class String;
+#include <Arduino.h>
 
 namespace math
 {
@@ -55,13 +55,15 @@ namespace math
             const vector&
         ) noexcept;
     public:
-        constexpr vector(real __x = 0., real __y = 0., real __z = 0.) noexcept
+        constexpr vector(real __x = 0., real __y = 0.) noexcept
             : m_x(__x)
             , m_y(__y)
-            , m_z(__z)
         {}
     public:
         explicit operator String() const;
+    public:
+        real angle() const noexcept { return atan2(m_y, m_x); }
+        real norm() const noexcept { return sqrt(m_x * m_x + m_y * m_y); }
     public:
         /************************
          * Arithmetic operators *
@@ -76,8 +78,8 @@ namespace math
 
         vector operator+=(const vector&) noexcept;
         vector operator-=(const vector&) noexcept;
-    private:
-        real m_x, m_y, m_z;
+    public:
+        real m_x, m_y;
     };
 }
 

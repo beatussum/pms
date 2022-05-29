@@ -16,20 +16,12 @@
  */
 
 
-#include "position_computer.hpp"
+#include "core.hpp"
 
-#include "arduino/encoder.hpp"
-
-void position_computer::operator()()
+namespace core
 {
-    (*m_enca)(), (*m_encb)();
-
-    auto a = m_enca->angle(), b = m_encb->angle();
-
-    auto v     = (m_kr / 2) * ((a - m_la) + (b - m_lb));
-    auto alpha = (m_kr / (2 * m_kd)) * (m_lb - m_la);
-
-    m_pos += vector(-v * sin(alpha), v * cos(alpha));
-
-    m_la = a, m_lb = b;
+    String operator ""_s(const char* __c, size_t)
+    {
+        return String(__c);
+    }
 }

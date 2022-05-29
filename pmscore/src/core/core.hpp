@@ -46,9 +46,8 @@ namespace core
         return __bfirst;
     }
 
-    String operator ""_s(const char* __c) { return String(__c); }
-    String operator ""_s(const char* __c, size_t) { return String(__c); }
-    String operator ""_s(char __c) { return String(__c); }
+    inline String operator ""_s(const char* __c) { return String(__c); }
+    inline String operator ""_s(char __c) { return String(__c); }
 }
 
 #endif // PMSCORE_CORE_CORE_HPP

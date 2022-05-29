@@ -26,7 +26,7 @@ namespace math
 
     vector::operator String() const
     {
-        return '{'_s + m_x + ", "_s + m_y + ", "_s + m_z + '}'_s;
+        return '('_s + m_x + "; "_s + m_y + ')'_s;
     }
 
     /************************
@@ -35,10 +35,7 @@ namespace math
 
     constexpr bool operator==(const vector& __a, const vector& __b) noexcept
     {
-        return
-            (__a.m_x == __b.m_x) &&
-            (__a.m_y == __b.m_y) &&
-            (__a.m_z == __b.m_z);
+        return (__a.m_x == __b.m_x) && (__a.m_y == __b.m_y);
     }
 
     constexpr bool operator!=(const vector& __a, const vector& __b) noexcept
@@ -57,12 +54,12 @@ namespace math
 
     constexpr vector vector::operator-() noexcept
     {
-        return vector(-m_x, -m_y, -m_z);
+        return vector(-m_x, -m_y);
     }
 
     constexpr vector operator+(const vector& __a, const vector& __b) noexcept
     {
-        return vector(__a.m_x + __b.m_x, __a.m_y + __b.m_y, __a.m_z + __b.m_z);
+        return vector(__a.m_x + __b.m_x, __a.m_y + __b.m_y);
     }
 
     constexpr vector operator-(const vector& __a, const vector& __b) noexcept
