@@ -42,6 +42,7 @@ namespace path
             : m_enca(__a)
             , m_encb(__b)
             , m_pos()
+            , m_alpha(0.)
             , m_la(0.)
             , m_lb(0.)
         {}
@@ -51,9 +52,11 @@ namespace path
         void operator()();
     public:
         vector get_postion() const noexcept { return m_pos; }
-    private:
+        real get_angle() const noexcept { return m_alpha; }
+    public:
         arduino::encoder  *m_enca, *m_encb;
         math::vector      m_pos;
+        real              m_alpha;
         real              m_la, m_lb;
     };
 }

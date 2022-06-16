@@ -27,8 +27,16 @@ using namespace math;
 
 namespace path
 {
+    class path_computer_base
+    {
+    public:
+        virtual void operator()() = 0;
+    public:
+        virtual vector get_postion() const noexcept = 0;
+    };
+
     template <size_t _n>
-    class path_computer
+    class path_computer : public path_computer_base
     {
     public:
         inline static constexpr auto m_ksize = _n;
@@ -42,9 +50,9 @@ namespace path
         )
             : m_enca(__a)
             , m_encb(__b)
-            , m_pos()
+            , m_pos(5 * cos(__path[0].angle()), 5 * sin(__path[0].angle()))
             , m_i(&m_path[0])
-            , m_current_path(__path[0].norm())
+            , m_current_path(__path[0].norm() - m_pos.norm())
             , m_path_angle(__path[0].angle())
             , m_la(0.)
             , m_lb(0.)
@@ -56,7 +64,7 @@ namespace path
     public:
         explicit operator String() const { return static_cast<String>(m_pos); }
 
-        void operator()()
+        void operator()() override
         {
             using namespace core;
             using namespace arduino;
@@ -76,13 +84,19 @@ namespace path
                     m_i = begin(m_path);
                 }
 
-                m_current_path = m_i->norm();
-                m_path_angle   = m_i->angle();
+                m_pos -= vector(5 * cos(m_path_angle), 5 * sin(m_path_angle));
+
+                m_path_angle = m_i->angle();
+
+                auto advance = vector(5 * cos(m_path_angle), 5 * sin(m_path_angle));
+
+                m_pos          += advance;
+                m_current_path =  m_i->norm() - advance.norm();
             }
         }
     public:
-        vector get_postion() const noexcept { return m_pos; }
-    private:
+        vector get_postion() const noexcept override { return m_pos; }
+    public:
         arduino::encoder *m_enca, *m_encb;
         path_type        m_path;
         vector           m_pos;

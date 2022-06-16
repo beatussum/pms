@@ -30,18 +30,20 @@ namespace arduino
         : m_pina(__pina)
         , m_pinb(__pinb)
         , m_pwm(__pwm)
+        , m_direction(__d)
+        , m_valpwm(__valpwm)
     {
         pinMode(m_pina, OUTPUT);
         pinMode(m_pinb, OUTPUT);
         pinMode(m_pwm, OUTPUT);
 
-        set_direction(__d);
-        set_power(__valpwm);
+        set_direction(m_direction);
+        set_power(m_valpwm);
     }
 
-    void motoreductor::set_direction(direction __d) const
+    void motoreductor::set_direction(direction __d)
     {
-        switch (__d) {
+        switch (m_direction = __d) {
             case direction::Front:
                 digitalWrite(m_pina, HIGH);
                 digitalWrite(m_pinb, LOW);
@@ -65,8 +67,38 @@ namespace arduino
         }
     }
 
-    void motoreductor::set_power(byte __b) const
+    void motoreductor::set_power(byte __b)
     {
-        analogWrite(m_pwm, __b);
+        analogWrite(m_pwm, m_valpwm = __b);
+    }
+
+    void motoreductor::increase(int16_t __p)
+    {
+        if (m_direction == direction::Back) {
+            __p = m_valpwm - __p;
+        } else {
+            __p += m_valpwm;
+        }
+
+        if (__p < 0) {
+            switch (m_direction) {
+                case direction::Front:
+                    set_direction(direction::Back);
+                    set_power(-__p);
+
+                    break;
+                case direction::Back:
+                    set_direction(direction::Front);
+                    set_power(-__p);
+
+                    break;
+                default:
+                    set_power(0);
+
+                    break;
+            }
+        } else {
+            set_power(min(__p, 255));
+        }
     }
 }

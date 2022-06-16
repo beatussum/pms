@@ -46,6 +46,7 @@ namespace core
         return __bfirst;
     }
 
+    String operator ""_s(const char*, size_t);
     inline String operator ""_s(const char* __c) { return String(__c); }
     inline String operator ""_s(char __c) { return String(__c); }
 }

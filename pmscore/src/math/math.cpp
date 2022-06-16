@@ -16,25 +16,23 @@
  */
 
 
-#include "position_computer.hpp"
+#include "math.hpp"
 
-#include "../arduino/encoder.hpp"
+#include <Arduino.h>
+#include <math.h>
 
-namespace path
+namespace math
 {
-    void position_computer::operator()()
+    real angle_distance(real __a, real __b)
     {
-        using namespace arduino;
+        __a = fmod(__b, 2 * pi) - fmod(__a, 2 * pi);
 
-        (*m_enca)(), (*m_encb)();
+        if (__a > pi) {
+            __a -= 2 * pi;
+        } else if (__a < -pi) {
+            __a += 2 * pi;
+        }
 
-        auto a = m_enca->angle(), b = m_encb->angle();
-
-        auto v     = (kr / 2) * ((a - m_la) + (b - m_lb));
-        m_alpha    = (kr / (2 * kd)) * (m_lb - m_la);
-
-        m_pos += vector(-v * sin(m_alpha), v * cos(m_alpha));
-
-        m_la = a, m_lb = b;
+        return __a;
     }
 }

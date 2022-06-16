@@ -16,10 +16,49 @@
  */
 
 
+#include "src/arduino/chopper.hpp"
+#include "src/arduino/encoder.hpp"
+#include "src/arduino/motoreductor.hpp"
+#include "src/path/path_computer.hpp"
+#include "src/path/position_computer.hpp"
+#include "src/correcter.hpp"
+
+arduino::motoreductor ma(
+    4, 5, 3,
+    arduino::motoreductor::direction::Front,
+    170
+);
+
+
+arduino::motoreductor mb(
+    10, 11, 9,
+    arduino::motoreductor::direction::Front,
+    170
+);
+
+arduino::encoder enca(7);
+arduino::encoder encb(12);
+arduino::chopper ch(6);
+
+path::path_computer<4> pac(
+    { vector(0., 70.), vector(-70., 0.), vector(0., -70.), vector(70., 0.) },
+    &enca,
+    &encb
+);
+
+path::position_computer pos(&enca, &encb);
+
+correcter corr(&pac, &pos, &ma, &mb, 0.05);
+
+using namespace core;
+
 void setup()
 {
+    Serial.begin(9600);
+    ch.enable();
 }
 
 void loop()
 {
+    corr();
 }

@@ -44,11 +44,20 @@ namespace arduino
             byte __valpwm = 0
         );
     public:
-        void set_direction(direction) const;
-        void set_power(byte) const;
+        direction get_direction() const noexcept { return m_direction; }
+        void set_direction(direction);
+
+        byte get_power() const noexcept { return m_valpwm; }
+        void set_power(byte);
+    public:
+        void increase(int16_t = 1);
+        void reduce(int16_t __p = 1) { increase(-__p); }
     private:
         pin_t m_pina, m_pinb;
         pin_t m_pwm;
+
+        direction m_direction;
+        byte m_valpwm;
     };
 }
 
