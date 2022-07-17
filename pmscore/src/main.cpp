@@ -16,12 +16,12 @@
  */
 
 
-#include "src/arduino/chopper.hpp"
-#include "src/arduino/encoder.hpp"
-#include "src/arduino/motoreductor.hpp"
-#include "src/path/path_computer.hpp"
-#include "src/path/position_computer.hpp"
-#include "src/correcter.hpp"
+#include "arduino/chopper.hpp"
+#include "arduino/encoder.hpp"
+#include "arduino/motoreductor.hpp"
+#include "path/path_computer.hpp"
+#include "path/position_computer.hpp"
+#include "correcter.hpp"
 
 arduino::motoreductor ma(
     4, 5, 3,

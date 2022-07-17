@@ -20,6 +20,9 @@ build/
 .kdev4/
 *.kdev4
 
+# PlatformIO
+.pio/
+
 # Qt Creator
 CMakeLists.txt.user
 
