@@ -18,10 +18,7 @@
 
 #include "core.hpp"
 
-namespace core
+String operator ""_s(const char* __c, size_t)
 {
-    String operator ""_s(const char* __c, size_t)
-    {
-        return String(__c);
-    }
+    return String(__c);
 }

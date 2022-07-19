@@ -23,64 +23,43 @@
 
 #include <Arduino.h>
 
-namespace math
+class vector
 {
-    class vector
-    {
-        /************************
-         * Comparison operators *
-         ************************/
+public:
+    explicit operator String() const;
+public:
+    real angle() const noexcept { return atan2(y, x); }
+    real norm() const noexcept { return sqrt(sq(x) + sq(y)); }
+public:
+    /************************
+     * Arithmetic operators *
+     ************************/
 
-        friend constexpr bool operator==(
-            const vector&,
-            const vector&
-        ) noexcept;
+    constexpr vector operator+() const noexcept;
+    constexpr vector operator-() const noexcept;
 
-        friend constexpr bool operator!=(
-            const vector&,
-            const vector&
-        ) noexcept;
+    /************************
+     * Assignment operators *
+     ************************/
 
-        /************************
-         * Arithmetic operators *
-         ************************/
+    vector operator+=(const vector&) noexcept;
+    vector operator-=(const vector&) noexcept;
+public:
+    real x = 0, y = 0;
+};
 
-        friend constexpr vector operator+(
-            const vector&,
-            const vector&
-        ) noexcept;
+/************************
+ * Comparison operators *
+ ************************/
 
-        friend constexpr vector operator-(
-            const vector&,
-            const vector&
-        ) noexcept;
-    public:
-        constexpr vector(real __x = 0., real __y = 0.) noexcept
-            : m_x(__x)
-            , m_y(__y)
-        {}
-    public:
-        explicit operator String() const;
-    public:
-        real angle() const noexcept { return atan2(m_y, m_x); }
-        real norm() const noexcept { return sqrt(m_x * m_x + m_y * m_y); }
-    public:
-        /************************
-         * Arithmetic operators *
-         ************************/
+constexpr bool operator==(const vector&, const vector&) noexcept;
+constexpr bool operator!=(const vector&, const vector&) noexcept;
 
-        constexpr vector operator+() noexcept;
-        constexpr vector operator-() noexcept;
+/************************
+ * Arithmetic operators *
+ ************************/
 
-        /************************
-         * Assignment operators *
-         ************************/
-
-        vector operator+=(const vector&) noexcept;
-        vector operator-=(const vector&) noexcept;
-    public:
-        real m_x, m_y;
-    };
-}
+constexpr vector operator+(const vector&, const vector&) noexcept;
+constexpr vector operator-(const vector&, const vector&) noexcept;
 
 #endif // PMSCORE_MATH_VECTOR_HPP

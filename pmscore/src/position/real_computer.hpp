@@ -16,15 +16,34 @@
  */
 
 
-#include "rule.hpp"
+#ifndef PMSCORE_POSITION_REAL_COMPUTER_HPP
+#define PMSCORE_POSITION_REAL_COMPUTER_HPP
 
-namespace core
+#include "math/vector.hpp"
+
+namespace position
 {
-    void rule::actualize(time_type __t)
+    class real_computer
     {
-        if ((__t - m_chrono) >= m_step) {
-            m_callable();
-            m_chrono = __t;
-        }
-    }
+    public:
+        real_computer() noexcept
+            : m_alpha(0.)
+            , m_pos()
+            , m_la(0.)
+            , m_lb(0.)
+        {}
+    public:
+        explicit operator String() const { return static_cast<String>(m_pos); }
+    public:
+        void update_status(real __angle_a, real __angle_b);
+    public:
+        vector get_postion() const noexcept { return m_pos; }
+        real get_angle() const noexcept { return m_alpha; }
+    private:
+        real   m_alpha;
+        vector m_pos;
+        real   m_la, m_lb;
+    };
 }
+
+#endif // PMSCORE_POSITION_REAL_COMPUTER_HPP

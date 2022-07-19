@@ -16,39 +16,37 @@
  */
 
 
-#ifndef PMSCORE_CORE_RULE_HPP
-#define PMSCORE_CORE_RULE_HPP
+#ifndef PMSCORE_POSITION_COMPUTERS_HPP
+#define PMSCORE_POSITION_COMPUTERS_HPP
 
-#include <Arduino.h>
+#include "math/math.hpp"
 
-namespace core
+class correcter;
+
+namespace position
 {
-    class rule
-    {
-        template <size_t _N>
-        friend class looper;
-    public:
-        using callable_type = void (*)();
-        using time_type     = unsigned int;
-    public:
-        constexpr rule()
-            : m_chrono(0)
-            , m_step(0)
-            , m_callable(nullptr)
-        {}
+    class real_computer;
+    class theoretical_computer_base;
 
-        rule(time_type __step, callable_type __c)
-            : m_chrono(0)
-            , m_step(__step)
-            , m_callable(__c)
+    class computers
+    {
+    public:
+        constexpr computers(
+            real_computer* __rc,
+            theoretical_computer_base* __tc,
+            correcter* __c
+        ) noexcept
+            : m_rcomputer(__rc)
+            , m_tcomputer(__tc)
+            , m_correcter(__c)
         {}
     public:
-        void actualize(time_type);
+        void update_status(real __angle_a, real __angle_b);
     private:
-        time_type     m_chrono;
-        time_type     m_step;
-        callable_type m_callable;
+        real_computer*             m_rcomputer;
+        theoretical_computer_base* m_tcomputer;
+        correcter*                 m_correcter;
     };
 }
 
-#endif // PMSCORE_CORE_RULE_HPP
+#endif // PMSCORE_POSITION_COMPUTERS_HPP

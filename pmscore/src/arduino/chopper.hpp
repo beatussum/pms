@@ -19,7 +19,7 @@
 #ifndef PMSCORE_ARDUINO_CHOPPER_HPP
 #define PMSCORE_ARDUINO_CHOPPER_HPP
 
-#include "arduino.hpp"
+#include "arduino/arduino.hpp"
 
 namespace arduino
 {

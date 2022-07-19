@@ -18,66 +18,61 @@
 
 #include "vector.hpp"
 
-#include "../core/core.hpp"
+#include "core/core.hpp"
 
-namespace math
+vector::operator String() const
 {
-    using namespace core;
+    return '('_s + x + "; "_s + y + ')'_s;
+}
 
-    vector::operator String() const
-    {
-        return '('_s + m_x + "; "_s + m_y + ')'_s;
-    }
+/************************
+ * Comparison operators *
+ ************************/
 
-    /************************
-     * Comparison operators *
-     ************************/
+constexpr bool operator==(const vector& __a, const vector& __b) noexcept
+{
+    return (__a.x == __b.x) && (__a.y == __b.y);
+}
 
-    constexpr bool operator==(const vector& __a, const vector& __b) noexcept
-    {
-        return (__a.m_x == __b.m_x) && (__a.m_y == __b.m_y);
-    }
+constexpr bool operator!=(const vector& __a, const vector& __b) noexcept
+{
+    return !(__a == __b);
+}
 
-    constexpr bool operator!=(const vector& __a, const vector& __b) noexcept
-    {
-        return !(__a == __b);
-    }
+/************************
+ * Arithmetic operators *
+ ************************/
 
-    /************************
-     * Arithmetic operators *
-     ************************/
+constexpr vector vector::operator+() const noexcept
+{
+    return *this;
+}
 
-    constexpr vector vector::operator+() noexcept
-    {
-        return *this;
-    }
+constexpr vector vector::operator-() const noexcept
+{
+    return {-x, -y};
+}
 
-    constexpr vector vector::operator-() noexcept
-    {
-        return vector(-m_x, -m_y);
-    }
+constexpr vector operator+(const vector& __a, const vector& __b) noexcept
+{
+    return {__a.x + __b.x, __a.y + __b.y};
+}
 
-    constexpr vector operator+(const vector& __a, const vector& __b) noexcept
-    {
-        return vector(__a.m_x + __b.m_x, __a.m_y + __b.m_y);
-    }
+constexpr vector operator-(const vector& __a, const vector& __b) noexcept
+{
+    return __a + (-__b);
+}
 
-    constexpr vector operator-(const vector& __a, const vector& __b) noexcept
-    {
-        return __a + (-__b);
-    }
+/************************
+ * Assignment operators *
+ ************************/
 
-    /************************
-     * Assignment operators *
-     ************************/
+vector vector::operator+=(const vector& __b) noexcept
+{
+    return *this = (*this + __b);
+}
 
-    vector vector::operator+=(const vector& __b) noexcept
-    {
-        return *this = (*this + __b);
-    }
-
-    vector vector::operator-=(const vector& __b) noexcept
-    {
-        return *this = (*this - __b);
-    }
+vector vector::operator-=(const vector& __b) noexcept
+{
+    return *this = (*this - __b);
 }

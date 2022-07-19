@@ -16,18 +16,22 @@
  */
 
 
-#include "arduino/chopper.hpp"
+#include "position/real_computer.hpp"
 
-namespace arduino
+#include "arduino/arduino.hpp"
+
+namespace position
 {
-    chopper::chopper(pin_t __stby)
-        : m_stby(__stby)
+    void real_computer::update_status(real __angle_a, real __angle_b)
     {
-        pinMode(m_stby, OUTPUT);
-    }
+        using namespace arduino;
 
-    void chopper::enable(bool __b) const
-    {
-        digitalWrite(m_stby, __b);
+        real v  = (kr / 2) * ((__angle_a - m_la) + (__angle_b - m_lb));
+        m_alpha = (kr / (2 * kd)) * (m_lb - m_la);
+
+        m_pos += {-v * sin(m_alpha), v * cos(m_alpha)};
+
+        m_la = __angle_a;
+        m_lb = __angle_b;
     }
 }

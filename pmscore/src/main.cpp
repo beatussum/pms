@@ -18,39 +18,42 @@
 
 #include "arduino/chopper.hpp"
 #include "arduino/encoder.hpp"
+#include "arduino/encoders.hpp"
 #include "arduino/motoreductor.hpp"
-#include "path/path_computer.hpp"
-#include "path/position_computer.hpp"
+#include "position/computers.hpp"
+#include "position/real_computer.hpp"
+#include "position/theoretical_computer.hpp"
 #include "correcter.hpp"
 
-arduino::motoreductor ma(
-    4, 5, 3,
-    arduino::motoreductor::direction::Front,
-    170
-);
-
-
-arduino::motoreductor mb(
-    10, 11, 9,
-    arduino::motoreductor::direction::Front,
-    170
-);
+arduino::chopper ch(6);
 
 arduino::encoder enca(7);
 arduino::encoder encb(12);
-arduino::chopper ch(6);
 
-path::path_computer<4> pac(
-    { vector(0., 70.), vector(-70., 0.), vector(0., -70.), vector(70., 0.) },
+arduino::motoreductor ma(
+    4, 5, 3,
     &enca,
-    &encb
+    arduino::motoreductor::direction::Front,
+    200
 );
 
-path::position_computer pos(&enca, &encb);
+arduino::motoreductor mb(
+    10, 11, 9,
+    &encb,
+    arduino::motoreductor::direction::Front,
+    200
+);
 
-correcter corr(&pac, &pos, &ma, &mb, 0.05);
+position::real_computer rcomputer;
 
-using namespace core;
+position::theoretical_computer tcomputer(
+    {{0., 70.}, {-70., 0.}, {0., -70.}, {70., 0.}}
+);
+
+correcter corr(&ma, &mb, 0.05);
+
+position::computers computers(&rcomputer, &tcomputer, &corr);
+arduino::encoders encoders(&enca, &encb, &computers);
 
 void setup()
 {
@@ -60,5 +63,5 @@ void setup()
 
 void loop()
 {
-    corr();
+    encoders.update_status();
 }

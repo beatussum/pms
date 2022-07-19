@@ -19,11 +19,9 @@
 #ifndef PMSCORE_ARDUINO_ARDUINO_HPP
 #define PMSCORE_ARDUINO_ARDUINO_HPP
 
-#include "../math/math.hpp"
+#include "math/math.hpp"
 
 #include <Arduino.h>
-
-using namespace math;
 
 namespace arduino
 {

@@ -19,8 +19,6 @@
 #include "correcter.hpp"
 
 #include "arduino/motoreductor.hpp"
-#include "path/path_computer.hpp"
-#include "path/position_computer.hpp"
 
 void correcter::turn_left() const
 {
@@ -40,20 +38,18 @@ void correcter::reset() const
     m_mb->set_power(200);
 }
 
-void correcter::operator()()
+void correcter::update_status(
+    vector __rposition,
+    vector __tposition,
+    real __rangle
+)
 {
-    using namespace core;
+    real walpha = atan2(
+        __tposition.y - __rposition.y,
+        __tposition.x - __rposition.x
+    ) - (PI / 2);
 
-    (*m_path_computer)(), (*m_position_computer)();
-
-    auto walpha = atan2(
-        m_path_computer->get_postion().m_y
-        - m_position_computer->get_postion().m_y,
-        m_path_computer->get_postion().m_x
-        - m_position_computer->get_postion().m_x
-    ) - (pi / 2);
-
-    auto diff = angle_distance(m_position_computer->get_angle(), walpha);
+    real diff = angle_distance(__rangle, walpha);
 
     if (diff < -m_epsilon) {
         turn_right();

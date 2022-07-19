@@ -16,25 +16,37 @@
  */
 
 
-#include "position_computer.hpp"
+#ifndef PMSCORE_ARDUINO_ENCODERS_HPP
+#define PMSCORE_ARDUINO_ENCODERS_HPP
 
-#include "../arduino/encoder.hpp"
-
-namespace path
+namespace position
 {
-    void position_computer::operator()()
-    {
-        using namespace arduino;
-
-        (*m_enca)(), (*m_encb)();
-
-        auto a = m_enca->angle(), b = m_encb->angle();
-
-        auto v     = (kr / 2) * ((a - m_la) + (b - m_lb));
-        m_alpha    = (kr / (2 * kd)) * (m_lb - m_la);
-
-        m_pos += vector(-v * sin(m_alpha), v * cos(m_alpha));
-
-        m_la = a, m_lb = b;
-    }
+    class computers;
 }
+
+namespace arduino
+{
+    class encoder;
+
+    class encoders
+    {
+    public:
+        constexpr encoders(
+            encoder* __enca,
+            encoder* __encb,
+            position::computers* __c
+        ) noexcept
+            : m_enca(__enca)
+            , m_encb(__encb)
+            , m_computers(__c)
+        {}
+    public:
+        void update_status();
+    private:
+        encoder*             m_enca;
+        encoder*             m_encb;
+        position::computers* m_computers;
+    };
+}
+
+#endif // PMSCORE_ARDUINO_ENCODERS_HPP

@@ -16,18 +16,23 @@
  */
 
 
-#include "arduino/chopper.hpp"
+#include "position/computers.hpp"
 
-namespace arduino
+#include "correcter.hpp"
+#include "position/real_computer.hpp"
+#include "position/theoretical_computer.hpp"
+
+namespace position
 {
-    chopper::chopper(pin_t __stby)
-        : m_stby(__stby)
+    void computers::update_status(real __angle_a, real __angle_b)
     {
-        pinMode(m_stby, OUTPUT);
-    }
+        m_rcomputer->update_status(__angle_a, __angle_b);
+        m_tcomputer->update_status(__angle_a, __angle_b);
 
-    void chopper::enable(bool __b) const
-    {
-        digitalWrite(m_stby, __b);
+        m_correcter->update_status(
+            m_rcomputer->get_postion(),
+            m_tcomputer->get_postion(),
+            m_rcomputer->get_angle()
+        );
     }
 }

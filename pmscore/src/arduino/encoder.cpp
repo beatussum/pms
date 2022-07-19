@@ -16,30 +16,40 @@
  */
 
 
-#include "encoder.hpp"
+#include "arduino/encoder.hpp"
 
-#include <Arduino.h>
+#include "arduino/motoreductor.hpp"
 
 namespace arduino
 {
     encoder::encoder(pin_t __pin)
         : m_pin(__pin)
-        , m_inc(0)
+        , m_inc(0.)
         , m_last(false)
+        , m_reverse(false)
     {
         pinMode(m_pin, INPUT_PULLUP);
     }
 
-    void encoder::operator()()
+    bool encoder::update_status()
     {
         if (digitalRead(m_pin) != m_last) {
             m_last = !m_last;
-            m_inc += 1;
+
+            if (m_reverse) {
+                --m_inc;
+            } else {
+                ++m_inc;
+            }
+
+            return true;
+        } else {
+            return false;
         }
     }
 
     real encoder::angle() const noexcept
     {
-        return static_cast<real>(m_inc) * ((2 * pi) / m_knbinc);
+        return m_inc * ((2 * PI) / m_knbinc);
     }
 }

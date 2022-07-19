@@ -16,18 +16,17 @@
  */
 
 
-#include "arduino/chopper.hpp"
+#include "arduino/encoders.hpp"
+
+#include "arduino/encoder.hpp"
+#include "position/computers.hpp"
 
 namespace arduino
 {
-    chopper::chopper(pin_t __stby)
-        : m_stby(__stby)
+    void encoders::update_status()
     {
-        pinMode(m_stby, OUTPUT);
-    }
-
-    void chopper::enable(bool __b) const
-    {
-        digitalWrite(m_stby, __b);
+        if (m_enca->update_status() || m_encb->update_status()) {
+            m_computers->update_status(m_enca->angle(), m_encb->angle());
+        }
     }
 }

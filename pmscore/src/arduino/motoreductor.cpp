@@ -16,7 +16,9 @@
  */
 
 
-#include "motoreductor.hpp"
+#include "arduino/motoreductor.hpp"
+
+#include "arduino/encoder.hpp"
 
 namespace arduino
 {
@@ -24,12 +26,14 @@ namespace arduino
         pin_t __pina,
         pin_t __pinb,
         pin_t __pwm,
+        encoder* __e,
         direction __d,
-        byte __valpwm
+        uint8_t __valpwm
     )
         : m_pina(__pina)
         , m_pinb(__pinb)
         , m_pwm(__pwm)
+        , m_encoder(__e)
         , m_direction(__d)
         , m_valpwm(__valpwm)
     {
@@ -43,7 +47,7 @@ namespace arduino
 
     void motoreductor::set_direction(direction __d)
     {
-        switch (m_direction = __d) {
+        switch (__d) {
             case direction::Front:
                 digitalWrite(m_pina, HIGH);
                 digitalWrite(m_pinb, LOW);
@@ -65,14 +69,26 @@ namespace arduino
 
                 break;
         }
+
+        if (__d != m_direction) {
+            switch (__d) {
+                case direction::Front:
+                case direction::Back:
+                    m_encoder->reverse();
+
+                    break;
+            }
+        }
+
+        m_direction = __d;
     }
 
-    void motoreductor::set_power(byte __b)
+    void motoreductor::set_power(uint8_t __b)
     {
         analogWrite(m_pwm, m_valpwm = __b);
     }
 
-    void motoreductor::increase(int16_t __p)
+    void motoreductor::increase_power(int16_t __p)
     {
         if (m_direction == direction::Back) {
             __p = m_valpwm - __p;

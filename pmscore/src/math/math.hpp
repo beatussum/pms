@@ -19,13 +19,8 @@
 #ifndef PMSCORE_MATH_MATH_HPP
 #define PMSCORE_MATH_MATH_HPP
 
-namespace math
-{
-    using real = double;
+using real = double;
 
-    constexpr real pi = 3.141592653589793238462643383279502884;
-
-    real angle_distance(real, real);
-}
+real angle_distance(real, real);
 
 #endif // PMSCORE_MATH_MATH_HPP
