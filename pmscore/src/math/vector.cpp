@@ -16,7 +16,7 @@
  */
 
 
-#include "vector.hpp"
+#include "math/vector.hpp"
 
 #include "core/core.hpp"
 
