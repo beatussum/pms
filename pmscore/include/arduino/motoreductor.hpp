@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle <beatussum@protonmail.com>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
  *
@@ -19,16 +19,16 @@
 #ifndef PMSCORE_ARDUINO_MOTOREDUCTOR_HPP
 #define PMSCORE_ARDUINO_MOTOREDUCTOR_HPP
 
-#include "arduino.hpp"
-
-#include <Arduino.h>
+#include "arduino/arduino.hpp"
 
 namespace arduino
 {
+    class encoder;
+
     class motoreductor
     {
     public:
-        enum class direction : byte
+        enum class direction : uint8_t
         {
             Front,
             Back,
@@ -40,24 +40,25 @@ namespace arduino
             pin_t __pina,
             pin_t __pinb,
             pin_t __pwm,
+            encoder*,
             direction __d = direction::Off,
-            byte __valpwm = 0
+            uint8_t __valpwm = 0
         );
     public:
         direction get_direction() const noexcept { return m_direction; }
         void set_direction(direction);
 
-        byte get_power() const noexcept { return m_valpwm; }
-        void set_power(byte);
+        uint8_t get_power() const noexcept { return m_valpwm; }
+        void set_power(uint8_t);
     public:
-        void increase(int16_t = 1);
-        void reduce(int16_t __p = 1) { increase(-__p); }
+        void increase_power(int16_t = 1);
+        void reduce_power(int16_t __p = 1) { increase_power(-__p); }
     private:
-        pin_t m_pina, m_pinb;
-        pin_t m_pwm;
+        pin_t   m_pina, m_pinb, m_pwm;
+        encoder *m_encoder;
 
         direction m_direction;
-        byte m_valpwm;
+        uint8_t   m_valpwm;
     };
 }
 

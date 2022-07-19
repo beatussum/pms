@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle <beatussum@protonmail.com>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
  *
@@ -16,23 +16,19 @@
  */
 
 
-#ifndef PMSCORE_ARDUINO_CHOPPER_HPP
-#define PMSCORE_ARDUINO_CHOPPER_HPP
+#ifndef PMSCORE_ARDUINO_ARDUINO_HPP
+#define PMSCORE_ARDUINO_ARDUINO_HPP
 
-#include "arduino.hpp"
+#include "math/math.hpp"
+
+#include <Arduino.h>
 
 namespace arduino
 {
-    class chopper
-    {
-    public:
-        chopper(pin_t __stby);
-    public:
-        void enable(bool = true) const;
-        void disable() const { enable(false); }
-    private:
-        pin_t m_stby;
-    };
+    using pin_t = uint8_t;
+
+    inline static constexpr real kd = 7.2;
+    inline static constexpr real kr = 2.2;
 }
 
-#endif // PMSCORE_ARDUINO_CHOPPER_HPP
+#endif // PMSCORE_ARDUINO_ARDUINO_HPP

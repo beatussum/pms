@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle <beatussum@protonmail.com>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
  *
@@ -16,16 +16,17 @@
  */
 
 
-#ifndef PMSCORE_MATH_MATH_HPP
-#define PMSCORE_MATH_MATH_HPP
+#include "arduino/encoders.hpp"
 
-namespace math
+#include "arduino/encoder.hpp"
+#include "position/computers.hpp"
+
+namespace arduino
 {
-    using real = double;
-
-    constexpr real pi = 3.141592653589793238462643383279502884;
-
-    real angle_distance(real, real);
+    void encoders::update_status()
+    {
+        if (m_enca->update_status() || m_encb->update_status()) {
+            m_computers->update_status(m_enca->angle(), m_encb->angle());
+        }
+    }
 }
-
-#endif // PMSCORE_MATH_MATH_HPP

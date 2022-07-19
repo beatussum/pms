@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle <beatussum@protonmail.com>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
  *
@@ -19,13 +19,10 @@
 #ifndef PMSCORE_ARDUINO_ENCODER_HPP
 #define PMSCORE_ARDUINO_ENCODER_HPP
 
-#include "../math/math.hpp"
-#include "arduino.hpp"
+#include "arduino/arduino.hpp"
 
 namespace arduino
 {
-    using namespace math;
-
     class encoder
     {
     public:
@@ -33,14 +30,18 @@ namespace arduino
     public:
         encoder(pin_t __pin);
     public:
-        void operator()();
+        bool update_status();
     public:
         real angle() const noexcept;
-        uint32_t inc() const noexcept { return m_inc; }
+        real inc() const noexcept { return m_inc; }
+
+        void reverse() noexcept { m_reverse = !m_reverse; }
     private:
-        pin_t    m_pin;
-        uint32_t m_inc;
-        bool     m_last;
+        pin_t m_pin;
+
+        real m_inc;
+        bool m_last;
+        bool m_reverse;
     };
 }
 

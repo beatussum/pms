@@ -16,20 +16,37 @@
  */
 
 
+#ifndef PMSCORE_POSITION_COMPUTERS_HPP
+#define PMSCORE_POSITION_COMPUTERS_HPP
+
 #include "math/math.hpp"
 
-#include <Arduino.h>
-#include <math.h>
+class correcter;
 
-real angle_distance(real __a, real __b)
+namespace position
 {
-    __a = fmod(__b, 2 * PI) - fmod(__a, 2 * PI);
+    class real_computer;
+    class theoretical_computer_base;
 
-    if (__a > PI) {
-        __a -= 2 * PI;
-    } else if (__a < -PI) {
-        __a += 2 * PI;
-    }
-
-    return __a;
+    class computers
+    {
+    public:
+        constexpr computers(
+            real_computer* __rc,
+            theoretical_computer_base* __tc,
+            correcter* __c
+        ) noexcept
+            : m_rcomputer(__rc)
+            , m_tcomputer(__tc)
+            , m_correcter(__c)
+        {}
+    public:
+        void update_status(real __angle_a, real __angle_b);
+    private:
+        real_computer*             m_rcomputer;
+        theoretical_computer_base* m_tcomputer;
+        correcter*                 m_correcter;
+    };
 }
+
+#endif // PMSCORE_POSITION_COMPUTERS_HPP

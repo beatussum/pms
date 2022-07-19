@@ -16,20 +16,37 @@
  */
 
 
-#include "math/math.hpp"
+#ifndef PMSCORE_ARDUINO_ENCODERS_HPP
+#define PMSCORE_ARDUINO_ENCODERS_HPP
 
-#include <Arduino.h>
-#include <math.h>
-
-real angle_distance(real __a, real __b)
+namespace position
 {
-    __a = fmod(__b, 2 * PI) - fmod(__a, 2 * PI);
-
-    if (__a > PI) {
-        __a -= 2 * PI;
-    } else if (__a < -PI) {
-        __a += 2 * PI;
-    }
-
-    return __a;
+    class computers;
 }
+
+namespace arduino
+{
+    class encoder;
+
+    class encoders
+    {
+    public:
+        constexpr encoders(
+            encoder* __enca,
+            encoder* __encb,
+            position::computers* __c
+        ) noexcept
+            : m_enca(__enca)
+            , m_encb(__encb)
+            , m_computers(__c)
+        {}
+    public:
+        void update_status();
+    private:
+        encoder*             m_enca;
+        encoder*             m_encb;
+        position::computers* m_computers;
+    };
+}
+
+#endif // PMSCORE_ARDUINO_ENCODERS_HPP

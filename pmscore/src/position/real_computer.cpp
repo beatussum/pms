@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle <beatussum@protonmail.com>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
  *
@@ -16,25 +16,22 @@
  */
 
 
-#include "position_computer.hpp"
+#include "position/real_computer.hpp"
 
-#include "../arduino/encoder.hpp"
+#include "arduino/arduino.hpp"
 
-namespace path
+namespace position
 {
-    void position_computer::operator()()
+    void real_computer::update_status(real __angle_a, real __angle_b)
     {
         using namespace arduino;
 
-        (*m_enca)(), (*m_encb)();
+        real v  = (kr / 2) * ((__angle_a - m_la) + (__angle_b - m_lb));
+        m_alpha = (kr / (2 * kd)) * (m_lb - m_la);
 
-        auto a = m_enca->angle(), b = m_encb->angle();
+        m_pos += {-v * sin(m_alpha), v * cos(m_alpha)};
 
-        auto v     = (kr / 2) * ((a - m_la) + (b - m_lb));
-        m_alpha    = (kr / (2 * kd)) * (m_lb - m_la);
-
-        m_pos += vector(-v * sin(m_alpha), v * cos(m_alpha));
-
-        m_la = a, m_lb = b;
+        m_la = __angle_a;
+        m_lb = __angle_b;
     }
 }

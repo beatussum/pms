@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle <beatussum@protonmail.com>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
  *
@@ -16,21 +16,11 @@
  */
 
 
-#ifndef PMSCORE_ARDUINO_ARDUINO_HPP
-#define PMSCORE_ARDUINO_ARDUINO_HPP
+#ifndef PMSCORE_MATH_MATH_HPP
+#define PMSCORE_MATH_MATH_HPP
 
-#include "../math/math.hpp"
+using real = double;
 
-#include <Arduino.h>
+real angle_distance(real, real);
 
-using namespace math;
-
-namespace arduino
-{
-    using pin_t = uint8_t;
-
-    inline static constexpr real kd = 7.2;
-    inline static constexpr real kr = 2.2;
-}
-
-#endif // PMSCORE_ARDUINO_ARDUINO_HPP
+#endif // PMSCORE_MATH_MATH_HPP

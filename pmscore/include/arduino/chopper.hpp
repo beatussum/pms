@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle <beatussum@protonmail.com>
  *
- * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
  *
@@ -16,15 +16,23 @@
  */
 
 
-#include "rule.hpp"
+#ifndef PMSCORE_ARDUINO_CHOPPER_HPP
+#define PMSCORE_ARDUINO_CHOPPER_HPP
 
-namespace core
+#include "arduino/arduino.hpp"
+
+namespace arduino
 {
-    void rule::actualize(time_type __t)
+    class chopper
     {
-        if ((__t - m_chrono) >= m_step) {
-            m_callable();
-            m_chrono = __t;
-        }
-    }
+    public:
+        chopper(pin_t __stby);
+    public:
+        void enable(bool = true) const;
+        void disable() const { enable(false); }
+    private:
+        pin_t m_stby;
+    };
 }
+
+#endif // PMSCORE_ARDUINO_CHOPPER_HPP
