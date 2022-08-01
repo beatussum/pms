@@ -20,7 +20,7 @@
 
 #include <Arduino.h>
 
-namespace arduino
+namespace pmscore::arduino
 {
     chopper::chopper(pin_t __stby)
         : m_stby(__stby)

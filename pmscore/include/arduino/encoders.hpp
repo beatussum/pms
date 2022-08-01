@@ -21,9 +21,12 @@
 
 #include "math/math.hpp"
 
-class position_computer;
+namespace pmscore
+{
+    class position_computer;
+}
 
-namespace arduino
+namespace pmscore::arduino
 {
     class encoder;
 

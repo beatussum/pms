@@ -24,7 +24,7 @@
 
 #include <stdint.h>
 
-namespace speed_profile
+namespace pmscore::speed_profile
 {
     class triangular
     {

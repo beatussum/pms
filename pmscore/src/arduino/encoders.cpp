@@ -21,7 +21,7 @@
 #include "position_computer.hpp"
 #include "arduino/encoder.hpp"
 
-namespace arduino
+namespace pmscore::arduino
 {
     void encoders::update_status()
     {

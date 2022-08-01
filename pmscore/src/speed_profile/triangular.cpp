@@ -20,7 +20,7 @@
 
 #include <Arduino.h>
 
-namespace speed_profile
+namespace pmscore::speed_profile
 {
     constexpr triangular::return_type
     triangular::default_speed() const noexcept

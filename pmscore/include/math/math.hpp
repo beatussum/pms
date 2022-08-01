@@ -19,8 +19,11 @@
 #ifndef PMSCORE_MATH_MATH_HPP
 #define PMSCORE_MATH_MATH_HPP
 
-using real = double;
+namespace pmscore
+{
+    using real = double;
 
-real angle_distance(real, real);
+    real angle_distance(real, real);
+}
 
 #endif // PMSCORE_MATH_MATH_HPP

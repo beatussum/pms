@@ -16,19 +16,22 @@
  */
 
 
-template <class _T>
-constexpr _T&& forward(remove_reference_t<_T>& __t) noexcept
+namespace pmscore
 {
-    return static_cast<_T&&>(__t);
-}
+    template <class _T>
+    constexpr _T&& forward(remove_reference_t<_T>& __t) noexcept
+    {
+        return static_cast<_T&&>(__t);
+    }
 
-template <class _T>
-constexpr _T&& forward(remove_reference_t<_T>&& __t) noexcept
-{
-    static_assert(
-        !is_lvalue_reference_v<_T>,
-	    "std::forward must not be used to convert an rvalue to an lvalue"
-    );
+    template <class _T>
+    constexpr _T&& forward(remove_reference_t<_T>&& __t) noexcept
+    {
+        static_assert(
+            !is_lvalue_reference_v<_T>,
+            "std::forward must not be used to convert an rvalue to an lvalue"
+        );
 
-    return static_cast<_T&&>(__t);
+        return static_cast<_T&&>(__t);
+    }
 }

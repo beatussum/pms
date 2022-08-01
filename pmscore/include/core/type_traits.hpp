@@ -19,65 +19,68 @@
 #ifndef PMSCORE_CORE_TYPE_TRAITS_HPP
 #define PMSCORE_CORE_TYPE_TRAITS_HPP
 
-/*********************
- * integral_constant *
- *********************/
-
-template <class _T, _T _v>
-class integral_constant
+namespace pmscore
 {
-public:
-    using type       = integral_constant;
-    using value_type = _T;
-public:
-    static constexpr _T value = _v;
-public:
-    constexpr operator value_type() const noexcept { return value; }
-    constexpr value_type operator()() const noexcept { return value; }
-};
+    /*********************
+     * integral_constant *
+     *********************/
 
-template <bool _v>
-using bool_constant = integral_constant<bool, _v>;
+    template <class _T, _T _v>
+    class integral_constant
+    {
+    public:
+        using type       = integral_constant;
+        using value_type = _T;
+    public:
+        static constexpr _T value = _v;
+    public:
+        constexpr operator value_type() const noexcept { return value; }
+        constexpr value_type operator()() const noexcept { return value; }
+    };
 
-using false_type = integral_constant<bool, false>;
-using true_type  = integral_constant<bool, true>;
+    template <bool _v>
+    using bool_constant = integral_constant<bool, _v>;
 
-/***********************
- * is_lvalue_reference *
- ***********************/
+    using false_type = integral_constant<bool, false>;
+    using true_type  = integral_constant<bool, true>;
 
-template <class>
-struct is_lvalue_reference : false_type {};
+    /***********************
+     * is_lvalue_reference *
+     ***********************/
 
-template <class _T>
-struct is_lvalue_reference<_T&> : true_type {};
+    template <class>
+    struct is_lvalue_reference : false_type {};
 
-template <class _T>
-constexpr bool is_lvalue_reference_v = is_lvalue_reference<_T>::value;
+    template <class _T>
+    struct is_lvalue_reference<_T&> : true_type {};
 
-/********************
- * remove_reference *
- ********************/
+    template <class _T>
+    constexpr bool is_lvalue_reference_v = is_lvalue_reference<_T>::value;
 
-template <class _T>
-struct remove_reference
-{
-    using type = _T;
-};
+    /********************
+     * remove_reference *
+     ********************/
 
-template <class _T>
-struct remove_reference<_T&>
-{
-    using type = _T;
-};
+    template <class _T>
+    struct remove_reference
+    {
+        using type = _T;
+    };
 
-template <class _T>
-struct remove_reference<_T&&>
-{
-    using type = _T;
-};
+    template <class _T>
+    struct remove_reference<_T&>
+    {
+        using type = _T;
+    };
 
-template <class _T>
-using remove_reference_t = typename remove_reference<_T>::type;
+    template <class _T>
+    struct remove_reference<_T&&>
+    {
+        using type = _T;
+    };
+
+    template <class _T>
+    using remove_reference_t = typename remove_reference<_T>::type;
+}
 
 #endif // PMSCORE_CORE_TYPE_TRAITS_HPP

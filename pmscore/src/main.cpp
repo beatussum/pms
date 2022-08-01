@@ -24,6 +24,8 @@
 #include "correcter.hpp"
 #include "position_computer.hpp"
 
+using namespace pmscore;
+
 arduino::chopper chopper(6);
 
 arduino::encoder encoder_a(7);

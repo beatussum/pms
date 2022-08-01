@@ -23,7 +23,7 @@
 
 #include <stdint.h>
 
-namespace arduino
+namespace pmscore::arduino
 {
     using pin_t = uint8_t;
 

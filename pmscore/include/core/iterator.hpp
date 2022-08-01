@@ -19,14 +19,17 @@
 #ifndef PMSCORE_CORE_ITERATOR_HPP
 #define PMSCORE_CORE_ITERATOR_HPP
 
-template <class _T, unsigned long _N>
-constexpr _T* begin(_T (&__array)[_N]) noexcept;
+namespace pmscore
+{
+    template <class _T, unsigned long _N>
+    constexpr _T* begin(_T (&__array)[_N]) noexcept;
 
-template <class _T, unsigned long _N>
-constexpr _T* end(_T (&__array)[_N]) noexcept;
+    template <class _T, unsigned long _N>
+    constexpr _T* end(_T (&__array)[_N]) noexcept;
 
-template <class _InputIt, class _OutputIt>
-_OutputIt copy(_InputIt __afirst, _InputIt __alast, _OutputIt __bfirst);
+    template <class _InputIt, class _OutputIt>
+    _OutputIt copy(_InputIt __afirst, _InputIt __alast, _OutputIt __bfirst);
+}
 
 #include "core/iterator.ipp"
 

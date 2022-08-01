@@ -23,55 +23,58 @@
 #include "core/utility.hpp"
 #include "math/vector.hpp"
 
-class correcter_base
+namespace pmscore
 {
-public:
-    virtual void update_status(
-        vector __rposition,
-        vector __tposition,
-        real __rangle
-    ) = 0;
-};
-
-template <class _SpeedProfile>
-class correcter : public correcter_base
-{
-public:
-    enum class mode
+    class correcter_base
     {
-        Fix,
-        Reset,
-        Turn
+    public:
+        virtual void update_status(
+            vector __rposition,
+            vector __tposition,
+            real __rangle
+        ) = 0;
     };
 
-    using speed_profile_type = _SpeedProfile;
-public:
-    explicit constexpr correcter(
-        arduino::motoreductor* __motor_a,
-        arduino::motoreductor* __motor_b,
-        real __epsilon,
-        _SpeedProfile&& __s
-    ) noexcept
-        : m_motor_a(__motor_a)
-        , m_motor_b(__motor_b)
-        , m_epsilon(__epsilon)
-        , m_speed_profile(forward<_SpeedProfile>(__s))
-        , m_mode(mode::Fix)
-    {}
-public:
-    void update_status(
-        vector __rposition,
-        vector __tposition,
-        real __rangle
-    ) override;
-private:
-    arduino::motoreductor* m_motor_a;
-    arduino::motoreductor* m_motor_b;
-    real                   m_epsilon;
-    speed_profile_type     m_speed_profile;
+    template <class _SpeedProfile>
+    class correcter : public correcter_base
+    {
+    public:
+        enum class mode
+        {
+            Fix,
+            Reset,
+            Turn
+        };
 
-    mode m_mode;
-};
+        using speed_profile_type = _SpeedProfile;
+    public:
+        explicit constexpr correcter(
+            arduino::motoreductor* __motor_a,
+            arduino::motoreductor* __motor_b,
+            real __epsilon,
+            _SpeedProfile&& __s
+        ) noexcept
+            : m_motor_a(__motor_a)
+            , m_motor_b(__motor_b)
+            , m_epsilon(__epsilon)
+            , m_speed_profile(forward<_SpeedProfile>(__s))
+            , m_mode(mode::Fix)
+        {}
+    public:
+        void update_status(
+            vector __rposition,
+            vector __tposition,
+            real __rangle
+        ) override;
+    private:
+        arduino::motoreductor* m_motor_a;
+        arduino::motoreductor* m_motor_b;
+        real                   m_epsilon;
+        speed_profile_type     m_speed_profile;
+
+        mode m_mode;
+    };
+}
 
 #include "correcter.ipp"
 

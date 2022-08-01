@@ -21,15 +21,18 @@
 #include <Arduino.h>
 #include <math.h>
 
-real angle_distance(real __a, real __b)
+namespace pmscore
 {
-    __a = fmod(__b, 2 * PI) - fmod(__a, 2 * PI);
+    real angle_distance(real __a, real __b)
+    {
+        __a = fmod(__b, 2 * PI) - fmod(__a, 2 * PI);
 
-    if (__a > PI) {
-        __a -= 2 * PI;
-    } else if (__a < -PI) {
-        __a += 2 * PI;
+        if (__a > PI) {
+            __a -= 2 * PI;
+        } else if (__a < -PI) {
+            __a += 2 * PI;
+        }
+
+        return __a;
     }
-
-    return __a;
 }

@@ -22,7 +22,7 @@
 
 #include <Arduino.h>
 
-namespace arduino
+namespace pmscore::arduino
 {
     motoreductor::motoreductor(
         pin_t __pina,

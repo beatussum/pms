@@ -23,49 +23,52 @@
 
 #include <Arduino.h>
 
-class vector
+namespace pmscore
 {
-public:
-    static vector with_polar_coordinates(real __r, real __angle);
-    static vector with_polar_coordinates(real __angle);
-public:
-    explicit operator String() const;
-public:
-    real angle() const noexcept { return atan2(y, x); }
-    real norm() const noexcept { return sqrt(sq(x) + sq(y)); }
-public:
+    class vector
+    {
+    public:
+        static vector with_polar_coordinates(real __r, real __angle);
+        static vector with_polar_coordinates(real __angle);
+    public:
+        explicit operator String() const;
+    public:
+        real angle() const noexcept { return atan2(y, x); }
+        real norm() const noexcept { return sqrt(sq(x) + sq(y)); }
+    public:
+        /************************
+         * Arithmetic operators *
+         ************************/
+
+        constexpr vector operator+() const noexcept;
+        constexpr vector operator-() const noexcept;
+
+        /************************
+         * Assignment operators *
+         ************************/
+
+        vector& operator+=(const vector&) noexcept;
+        vector& operator-=(const vector&) noexcept;
+        vector& operator*=(real) noexcept;
+    public:
+        real x = 0.;
+        real y = 0.;
+    };
+
+    /************************
+     * Comparison operators *
+     ************************/
+
+    constexpr bool operator==(const vector&, const vector&) noexcept;
+    constexpr bool operator!=(const vector&, const vector&) noexcept;
+
     /************************
      * Arithmetic operators *
      ************************/
 
-    constexpr vector operator+() const noexcept;
-    constexpr vector operator-() const noexcept;
-
-    /************************
-     * Assignment operators *
-     ************************/
-
-    vector& operator+=(const vector&) noexcept;
-    vector& operator-=(const vector&) noexcept;
-    vector& operator*=(real) noexcept;
-public:
-    real x = 0.;
-    real y = 0.;
-};
-
-/************************
- * Comparison operators *
- ************************/
-
-constexpr bool operator==(const vector&, const vector&) noexcept;
-constexpr bool operator!=(const vector&, const vector&) noexcept;
-
-/************************
- * Arithmetic operators *
- ************************/
-
-constexpr vector operator+(const vector&, const vector&) noexcept;
-constexpr vector operator-(const vector&, const vector&) noexcept;
-constexpr vector operator*(real, const vector&) noexcept;
+    constexpr vector operator+(const vector&, const vector&) noexcept;
+    constexpr vector operator-(const vector&, const vector&) noexcept;
+    constexpr vector operator*(real, const vector&) noexcept;
+}
 
 #endif // PMSCORE_MATH_VECTOR_HPP

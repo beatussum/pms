@@ -21,30 +21,33 @@
 
 #include "core/type_traits.hpp"
 
-/***********
- * forward *
- ***********/
-
-template <class _T>
-constexpr _T&& forward(remove_reference_t<_T>&) noexcept;
-
-template <class _T>
-constexpr _T&& forward(remove_reference_t<_T>&&) noexcept;
-
-/********
- * pair *
- ********/
-
-template <class _First, class _Second = _First>
-class pair
+namespace pmscore
 {
-public:
-    using first_type  = _First;
-    using second_type = _Second;
-public:
-    _First  first;
-    _Second second;
-};
+    /***********
+     * forward *
+     ***********/
+
+    template <class _T>
+    constexpr _T&& forward(remove_reference_t<_T>&) noexcept;
+
+    template <class _T>
+    constexpr _T&& forward(remove_reference_t<_T>&&) noexcept;
+
+    /********
+     * pair *
+     ********/
+
+    template <class _First, class _Second = _First>
+    class pair
+    {
+    public:
+        using first_type  = _First;
+        using second_type = _Second;
+    public:
+        _First  first;
+        _Second second;
+    };
+}
 
 #include "core/utility.ipp"
 

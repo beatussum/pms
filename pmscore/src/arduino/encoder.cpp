@@ -22,7 +22,7 @@
 
 #include <Arduino.h>
 
-namespace arduino
+namespace pmscore::arduino
 {
     encoder::encoder(pin_t __pin)
         : m_pin(__pin)

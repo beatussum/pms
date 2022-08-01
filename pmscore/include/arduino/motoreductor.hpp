@@ -21,7 +21,7 @@
 
 #include "arduino/arduino.hpp"
 
-namespace arduino
+namespace pmscore::arduino
 {
     class encoder;
 

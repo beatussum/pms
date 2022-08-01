@@ -18,7 +18,10 @@
 
 #include "core/core.hpp"
 
-String operator ""_s(const char* __c, size_t)
+namespace pmscore
 {
-    return String(__c);
+    String operator ""_s(const char* __c, size_t)
+    {
+        return String(__c);
+    }
 }

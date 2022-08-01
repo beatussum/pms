@@ -21,78 +21,81 @@
 #include "arduino/arduino.hpp"
 #include "correcter.hpp"
 
-position_computer::~position_computer()
+namespace pmscore
 {
-    delete[] m_tpath;
-}
+    position_computer::~position_computer()
+    {
+        delete[] m_tpath;
+    }
 
-position_computer::operator String() const
-{
-    return
-        "real position: "_s + static_cast<String>(m_rpos) + '\n'_s +
-        "theoretical position: "_s + static_cast<String>(m_tpos) + '\n'_s;
-}
+    position_computer::operator String() const
+    {
+        return
+            "real position: "_s + static_cast<String>(m_rpos) + '\n'_s +
+            "theoretical position: "_s + static_cast<String>(m_tpos) + '\n'_s;
+    }
 
-void position_computer::__update_rstatus(
-    real __angle_a,
-    real __angle_b,
-    real __last_angle_a,
-    real __last_angle_b
-)
-{
-    using namespace arduino;
+    void position_computer::__update_rstatus(
+        real __angle_a,
+        real __angle_b,
+        real __last_angle_a,
+        real __last_angle_b
+    )
+    {
+        using namespace arduino;
 
-    real v = (r / 2) *
-        ((__angle_a - __last_angle_a) + (__angle_b - __last_angle_b));
+        real v = (r / 2) *
+            ((__angle_a - __last_angle_a) + (__angle_b - __last_angle_b));
 
-    m_rangle  = (r / (2 * d)) * (__last_angle_a - __last_angle_b);
-    m_rpos   += {-v * sin(m_rangle), v * cos(m_rangle)};
-}
+        m_rangle  = (r / (2 * d)) * (__last_angle_a - __last_angle_b);
+        m_rpos   += {-v * sin(m_rangle), v * cos(m_rangle)};
+    }
 
-void position_computer::__update_tstatus(
-    real __last_angle_a,
-    real __last_angle_b
-)
-{
-    using namespace arduino;
+    void position_computer::__update_tstatus(
+        real __last_angle_a,
+        real __last_angle_b
+    )
+    {
+        using namespace arduino;
 
-    if (m_tcurrent_edge == -1.) {
-        if ((m_rpos - m_tvertex).norm() <= m_vertex_radius) {
-            m_tcurrent_edge  = m_ti->norm();
-            m_tvertex       += *m_ti;
+        if (m_tcurrent_edge == -1.) {
+            if ((m_rpos - m_tvertex).norm() <= m_vertex_radius) {
+                m_tcurrent_edge  = m_ti->norm();
+                m_tvertex       += *m_ti;
 
-            m_tpos += vector::with_polar_coordinates(
-                m_tadvance * m_tcurrent_edge, m_tangle
-            );
+                m_tpos += vector::with_polar_coordinates(
+                    m_tadvance * m_tcurrent_edge, m_tangle
+                );
 
-            /* TODO: spins on */
-        }
-    } else {
-        real v         = (r / 2) * (__last_angle_a + __last_angle_b);
-        m_tcurrent_pos = {v * cos(m_tangle), v * sin(m_tangle)};
-
-        if (v >= m_tcurrent_edge) {
-            if (++m_ti == (m_tpath + m_tpath_size)) {
-                m_ti = m_tpath;
+                /* TODO: spins on */
             }
+        } else {
+            real v         = (r / 2) * (__last_angle_a + __last_angle_b);
+            m_tcurrent_pos = {v * cos(m_tangle), v * sin(m_tangle)};
 
-            m_tpos          += m_tcurrent_pos;
-            m_tcurrent_pos   = {};
-            m_tangle         = m_ti->angle();
-            m_tcurrent_edge  = -1;
+            if (v >= m_tcurrent_edge) {
+                if (++m_ti == (m_tpath + m_tpath_size)) {
+                    m_ti = m_tpath;
+                }
+
+                m_tpos          += m_tcurrent_pos;
+                m_tcurrent_pos   = {};
+                m_tangle         = m_ti->angle();
+                m_tcurrent_edge  = -1;
+            }
         }
     }
-}
 
-void position_computer::update_status(
-    real __angle_a,
-    real __angle_b,
-    real __last_angle_a,
-    real __last_angle_b
-)
-{
-    __update_rstatus(__angle_a, __angle_b, __last_angle_a, __last_angle_b);
-    __update_tstatus(__last_angle_a, __last_angle_b);
+    void position_computer::update_status(
+        real __angle_a,
+        real __angle_b,
+        real __last_angle_a,
+        real __last_angle_b
+    )
+    {
+        __update_rstatus(__angle_a, __angle_b, __last_angle_a, __last_angle_b);
+        __update_tstatus(__last_angle_a, __last_angle_b);
 
-    m_correcter->update_status(m_rpos, m_tpos, m_rangle);
+        m_correcter->update_status(m_rpos, m_tpos, m_rangle);
+    }
 }

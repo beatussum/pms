@@ -23,73 +23,76 @@
 #include "core/iterator.hpp"
 #include "math/vector.hpp"
 
-class correcter_base;
-
-class position_computer
+namespace pmscore
 {
-public:
-    template <size_t _n>
-    explicit position_computer(
-        correcter_base*,
-        real __tadvance,
-        const vector (&__tpath)[_n],
-        real __vertex_radius
-    ) noexcept;
+    class correcter_base;
 
-    ~position_computer();
-public:
-    explicit operator String() const;
-private:
-    void __update_rstatus(
-        real __angle_a,
-        real __angle_b,
-        real __last_angle_a,
-        real __last_angle_b
-    );
+    class position_computer
+    {
+    public:
+        template <size_t _n>
+        explicit position_computer(
+            correcter_base*,
+            real __tadvance,
+            const vector (&__tpath)[_n],
+            real __vertex_radius
+        ) noexcept;
 
-    void __update_tstatus(real __last_angle_a, real __last_angle_b);
-public:
-    void update_status(
-        real __angle_a,
-        real __angle_b,
-        real __last_angle_a,
-        real __last_angle_b
-    );
-public:
-    correcter_base* get_correcter() const noexcept { return m_correcter; }
-    real get_tadvance() const noexcept { return m_tadvance; }
+        ~position_computer();
+    public:
+        explicit operator String() const;
+    private:
+        void __update_rstatus(
+            real __angle_a,
+            real __angle_b,
+            real __last_angle_a,
+            real __last_angle_b
+        );
 
-    const vector* get_path() const noexcept { return m_tpath; }
-    vector* get_path() noexcept { return m_tpath; }
+        void __update_tstatus(real __last_angle_a, real __last_angle_b);
+    public:
+        void update_status(
+            real __angle_a,
+            real __angle_b,
+            real __last_angle_a,
+            real __last_angle_b
+        );
+    public:
+        correcter_base* get_correcter() const noexcept { return m_correcter; }
+        real get_tadvance() const noexcept { return m_tadvance; }
 
-    template <size_t _n>
-    void set_path(const vector (&)[_n]) noexcept;
+        const vector* get_path() const noexcept { return m_tpath; }
+        vector* get_path() noexcept { return m_tpath; }
 
-    real get_vertex_radius() const noexcept { return m_vertex_radius; }
+        template <size_t _n>
+        void set_path(const vector (&)[_n]) noexcept;
 
-    real get_rangle() const noexcept { return m_rangle; }
-    vector get_rpos() const noexcept { return m_rpos; }
-    real get_tangle() const noexcept { return m_tangle; }
-    const vector* get_current_edge() const noexcept { return m_ti; }
-    size_t get_path_size() const noexcept { return m_tpath_size; }
-    vector get_tpos() const noexcept { return m_tpos + m_tcurrent_pos; }
-    vector get_tvertex() const noexcept { return m_tvertex; }
-private:
-    correcter_base* m_correcter;
-    real            m_tadvance;
-    vector*         m_tpath;
-    real            m_vertex_radius;
+        real get_vertex_radius() const noexcept { return m_vertex_radius; }
 
-    real          m_rangle;
-    vector        m_rpos;
-    real          m_tangle;
-    real          m_tcurrent_edge;
-    vector        m_tcurrent_pos;
-    const vector* m_ti;
-    size_t        m_tpath_size;
-    vector        m_tpos;
-    vector        m_tvertex;
-};
+        real get_rangle() const noexcept { return m_rangle; }
+        vector get_rpos() const noexcept { return m_rpos; }
+        real get_tangle() const noexcept { return m_tangle; }
+        const vector* get_current_edge() const noexcept { return m_ti; }
+        size_t get_path_size() const noexcept { return m_tpath_size; }
+        vector get_tpos() const noexcept { return m_tpos + m_tcurrent_pos; }
+        vector get_tvertex() const noexcept { return m_tvertex; }
+    private:
+        correcter_base* m_correcter;
+        real            m_tadvance;
+        vector*         m_tpath;
+        real            m_vertex_radius;
+
+        real          m_rangle;
+        vector        m_rpos;
+        real          m_tangle;
+        real          m_tcurrent_edge;
+        vector        m_tcurrent_pos;
+        const vector* m_ti;
+        size_t        m_tpath_size;
+        vector        m_tpos;
+        vector        m_tvertex;
+    };
+}
 
 #include "position_computer.ipp"
 
