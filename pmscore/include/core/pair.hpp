@@ -16,6 +16,9 @@
  */
 
 
+#ifndef PMSCORE_CORE_PAIR_HPP
+#define PMSCORE_CORE_PAIR_HPP
+
 template <class _First, class _Second = _First>
 class pair
 {
@@ -26,3 +29,5 @@ public:
     _First  first;
     _Second second;
 };
+
+#endif // PMSCORE_CORE_PAIR_HPP
