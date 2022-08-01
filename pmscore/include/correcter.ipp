@@ -27,32 +27,38 @@ namespace pmscore
     {
         switch (m_mode) {
             case mode::Fix:
-                real gamma = HALF_PI - (__rposition - __tposition).angle();
-                real diff  = angle_distance(gamma, __rangle);
+                {
+                    real gamma = HALF_PI - (__rposition - __tposition).angle();
+                    real diff  = angle_distance(gamma, __rangle);
 
-                if (abs(diff) > m_epsilon) {
-                    m_mode = mode::Fix;
+                    if (abs(diff) > m_epsilon) {
+                        m_mode = mode::Fix;
 
-                    m_speed_profile.init(__rangle, gamma);
+                        m_speed_profile.init(__rangle, gamma);
+                    }
                 }
 
                 break;
             case mode::Reset:
-                m_mode      = mode::Fix;
-                auto [a, b] = m_speed_profile.default_speed();
-
-                m_motor_a->set_power(a);
-                m_motor_b->set_power(b);
-
-                break;
-            case mode::Turn:
-                if (m_speed_profile.is_ended()) {
-                    m_mode = mode::Reset;
-                } else {
-                    auto [a, b] = m_speed_profile.compute_speed(__rangle);
+                {
+                    m_mode      = mode::Fix;
+                    auto [a, b] = m_speed_profile.default_speed();
 
                     m_motor_a->set_power(a);
                     m_motor_b->set_power(b);
+                }
+
+                break;
+            case mode::Turn:
+                {
+                    if (m_speed_profile.is_ended()) {
+                        m_mode = mode::Reset;
+                    } else {
+                        auto [a, b] = m_speed_profile.compute_speed(__rangle);
+
+                        m_motor_a->set_power(a);
+                        m_motor_b->set_power(b);
+                    }
                 }
 
                 break;

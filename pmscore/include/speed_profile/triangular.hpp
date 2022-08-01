@@ -59,4 +59,6 @@ namespace pmscore::speed_profile
     };
 }
 
+#include "speed_profile/triangular.ipp"
+
 #endif // PMSCORE_SPEED_PROFILE_TRIANGULAR_HPP

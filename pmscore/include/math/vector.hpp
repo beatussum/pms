@@ -47,9 +47,9 @@ namespace pmscore
          * Assignment operators *
          ************************/
 
-        vector& operator+=(const vector&) noexcept;
-        vector& operator-=(const vector&) noexcept;
-        vector& operator*=(real) noexcept;
+        constexpr vector& operator+=(const vector&) noexcept;
+        constexpr vector& operator-=(const vector&) noexcept;
+        constexpr vector& operator*=(real) noexcept;
     public:
         real x = 0.;
         real y = 0.;
@@ -70,5 +70,7 @@ namespace pmscore
     constexpr vector operator-(const vector&, const vector&) noexcept;
     constexpr vector operator*(real, const vector&) noexcept;
 }
+
+#include "math/vector.ipp"
 
 #endif // PMSCORE_MATH_VECTOR_HPP

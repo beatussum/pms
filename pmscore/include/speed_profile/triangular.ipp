@@ -16,24 +16,11 @@
  */
 
 
-#include "math/vector.hpp"
-
-#include "core/core.hpp"
-
-namespace pmscore
+namespace pmscore::speed_profile
 {
-    vector vector::with_polar_coordinates(real __r, real __angle)
+    constexpr triangular::return_type
+    triangular::default_speed() const noexcept
     {
-        return {__r * cos(__angle), __r * sin(__angle)};
-    }
-
-    vector vector::with_polar_coordinates(real __angle)
-    {
-        return with_polar_coordinates(1., __angle);
-    }
-
-    vector::operator String() const
-    {
-        return '('_s + x + "; "_s + y + ')'_s;
+        return {m_omega_a, m_omega_a};
     }
 }

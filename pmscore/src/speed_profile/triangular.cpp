@@ -22,12 +22,6 @@
 
 namespace pmscore::speed_profile
 {
-    constexpr triangular::return_type
-    triangular::default_speed() const noexcept
-    {
-        return {m_omega_a, m_omega_a};
-    }
-
     void triangular::init(real __alpha_0, real __alpha_f) noexcept
     {
         m_alpha_0         = __alpha_0;

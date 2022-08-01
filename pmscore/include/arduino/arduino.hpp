@@ -27,8 +27,8 @@ namespace pmscore::arduino
 {
     using pin_t = uint8_t;
 
-    inline static constexpr real d = 7.2;
-    inline static constexpr real r = 2.2;
+    static constexpr real d = 7.2;
+    static constexpr real r = 2.2;
 }
 
 #endif // PMSCORE_ARDUINO_ARDUINO_HPP
