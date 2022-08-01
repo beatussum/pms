@@ -19,10 +19,9 @@
 #ifndef PMSCORE_ARDUINO_ENCODERS_HPP
 #define PMSCORE_ARDUINO_ENCODERS_HPP
 
-namespace position
-{
-    class computers;
-}
+#include "math/math.hpp"
+
+class position_computer_base;
 
 namespace arduino
 {
@@ -31,21 +30,21 @@ namespace arduino
     class encoders
     {
     public:
-        constexpr encoders(
-            encoder* __enca,
-            encoder* __encb,
-            position::computers* __c
+        explicit constexpr encoders(
+            encoder* __enc_a,
+            encoder* __enc_b,
+            position_computer_base* __c
         ) noexcept
-            : m_enca(__enca)
-            , m_encb(__encb)
-            , m_computers(__c)
+            : m_enc_a(__enc_a)
+            , m_enc_b(__enc_b)
+            , m_computer(__c)
         {}
     public:
         void update_status();
     private:
-        encoder*             m_enca;
-        encoder*             m_encb;
-        position::computers* m_computers;
+        encoder*                m_enc_a;
+        encoder*                m_enc_b;
+        position_computer_base* m_computer;
     };
 }
 

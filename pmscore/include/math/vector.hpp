@@ -19,12 +19,15 @@
 #ifndef PMSCORE_MATH_VECTOR_HPP
 #define PMSCORE_MATH_VECTOR_HPP
 
-#include "math.hpp"
+#include "math/math.hpp"
 
 #include <Arduino.h>
 
 class vector
 {
+public:
+    static vector with_polar_coordinates(real __r, real __angle);
+    static vector with_polar_coordinates(real __angle);
 public:
     explicit operator String() const;
 public:
@@ -42,10 +45,12 @@ public:
      * Assignment operators *
      ************************/
 
-    vector operator+=(const vector&) noexcept;
-    vector operator-=(const vector&) noexcept;
+    vector& operator+=(const vector&) noexcept;
+    vector& operator-=(const vector&) noexcept;
+    vector& operator*=(real) noexcept;
 public:
-    real x = 0, y = 0;
+    real x = 0.;
+    real y = 0.;
 };
 
 /************************
@@ -61,5 +66,6 @@ constexpr bool operator!=(const vector&, const vector&) noexcept;
 
 constexpr vector operator+(const vector&, const vector&) noexcept;
 constexpr vector operator-(const vector&, const vector&) noexcept;
+constexpr vector operator*(real, const vector&) noexcept;
 
 #endif // PMSCORE_MATH_VECTOR_HPP

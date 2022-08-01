@@ -20,45 +20,44 @@
 #include "arduino/encoder.hpp"
 #include "arduino/encoders.hpp"
 #include "arduino/motoreductor.hpp"
-#include "position/computers.hpp"
-#include "position/real_computer.hpp"
-#include "position/theoretical_computer.hpp"
+#include "speed_profile/triangular.hpp"
 #include "correcter.hpp"
+#include "position_computer.hpp"
 
-arduino::chopper ch(6);
+arduino::chopper chopper(6);
 
-arduino::encoder enca(7);
-arduino::encoder encb(12);
+arduino::encoder encoder_a(7);
+arduino::encoder encoder_b(12);
 
-arduino::motoreductor ma(
+arduino::motoreductor motor_a(
     4, 5, 3,
-    &enca,
+    &encoder_a,
     arduino::motoreductor::direction::Front,
     200
 );
 
-arduino::motoreductor mb(
+arduino::motoreductor motor_b(
     10, 11, 9,
-    &encb,
+    &encoder_b,
     arduino::motoreductor::direction::Front,
     200
 );
 
-position::real_computer rcomputer;
+correcter corr(&motor_a, &motor_b, .1, speed_profile::triangular(2., 200));
 
-position::theoretical_computer tcomputer(
-    {{0., 70.}, {-70., 0.}, {0., -70.}, {70., 0.}}
+position_computer computer(
+    &corr,
+    .1,
+    {{0., 70.}, {-70., 0.}, {0., -70.}, {70., 0.}},
+    5.
 );
 
-correcter corr(&ma, &mb, 0.05);
-
-position::computers computers(&rcomputer, &tcomputer, &corr);
-arduino::encoders encoders(&enca, &encb, &computers);
+arduino::encoders encoders(&encoder_a, &encoder_b, &computer);
 
 void setup()
 {
     Serial.begin(9600);
-    ch.enable();
+    chopper.enable();
 }
 
 void loop()

@@ -26,27 +26,57 @@ namespace arduino
     class motoreductor;
 }
 
-class correcter
+class correcter_base
 {
 public:
-    correcter(
-        arduino::motoreductor* __ma,
-        arduino::motoreductor* __mb,
-        real __epsilon
-    )
-        : m_ma(__ma)
-        , m_mb(__mb)
+    virtual void update_status(
+        vector __rposition,
+        vector __tposition,
+        real __rangle
+    ) = 0;
+};
+
+template <class _SpeedProfile>
+class correcter : public correcter_base
+{
+public:
+    enum class mode
+    {
+        Fix,
+        Reset,
+        Turn
+    };
+
+    using speed_profile_type = _SpeedProfile;
+public:
+    /* TODO: perfect forwarding */
+    explicit constexpr correcter(
+        arduino::motoreductor* __motor_a,
+        arduino::motoreductor* __motor_b,
+        real __epsilon,
+        _SpeedProfile __s
+    ) noexcept
+        : m_motor_a(__motor_a)
+        , m_motor_b(__motor_b)
         , m_epsilon(__epsilon)
+        , m_speed_profile(__s)
+        , m_mode(mode::Fix)
     {}
 public:
-    void update_status(vector __rposition, vector __tposition, real __rangle);
-public:
-    void turn_left() const;
-    void turn_right() const;
-    void reset() const;
+    void update_status(
+        vector __rposition,
+        vector __tposition,
+        real __rangle
+    ) override;
 private:
-    arduino::motoreductor *m_ma, *m_mb;
-    real                  m_epsilon;
+    arduino::motoreductor* m_motor_a;
+    arduino::motoreductor* m_motor_b;
+    real                   m_epsilon;
+    speed_profile_type     m_speed_profile;
+
+    mode m_mode;
 };
+
+#include "correcter.ipp"
 
 #endif // PMSCORE_CORRECTER_HPP

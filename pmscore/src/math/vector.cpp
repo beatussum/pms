@@ -20,6 +20,16 @@
 
 #include "core/core.hpp"
 
+vector vector::with_polar_coordinates(real __r, real __angle)
+{
+    return {__r * cos(__angle), __r * sin(__angle)};
+}
+
+vector vector::with_polar_coordinates(real __angle)
+{
+    return with_polar_coordinates(1., __angle);
+}
+
 vector::operator String() const
 {
     return '('_s + x + "; "_s + y + ')'_s;
@@ -63,16 +73,26 @@ constexpr vector operator-(const vector& __a, const vector& __b) noexcept
     return __a + (-__b);
 }
 
+constexpr vector operator*(real __a, const vector& __b) noexcept
+{
+    return {__a * __b.x, __a * __b.y};
+}
+
 /************************
  * Assignment operators *
  ************************/
 
-vector vector::operator+=(const vector& __b) noexcept
+vector& vector::operator+=(const vector& __b) noexcept
 {
     return *this = (*this + __b);
 }
 
-vector vector::operator-=(const vector& __b) noexcept
+vector& vector::operator-=(const vector& __b) noexcept
 {
     return *this = (*this - __b);
+}
+
+vector& vector::operator*=(real __b) noexcept
+{
+    return *this = (__b * *this);
 }

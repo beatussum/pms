@@ -16,22 +16,13 @@
  */
 
 
-#include "position/real_computer.hpp"
-
-#include "arduino/arduino.hpp"
-
-namespace position
+template <class _First, class _Second = _First>
+class pair
 {
-    void real_computer::update_status(real __angle_a, real __angle_b)
-    {
-        using namespace arduino;
-
-        real v  = (kr / 2) * ((__angle_a - m_la) + (__angle_b - m_lb));
-        m_alpha = (kr / (2 * kd)) * (m_lb - m_la);
-
-        m_pos += {-v * sin(m_alpha), v * cos(m_alpha)};
-
-        m_la = __angle_a;
-        m_lb = __angle_b;
-    }
-}
+public:
+    using first_type  = _First;
+    using second_type = _Second;
+public:
+    _First  first;
+    _Second second;
+};

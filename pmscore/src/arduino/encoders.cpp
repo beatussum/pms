@@ -18,15 +18,23 @@
 
 #include "arduino/encoders.hpp"
 
+#include "position_computer.hpp"
 #include "arduino/encoder.hpp"
-#include "position/computers.hpp"
 
 namespace arduino
 {
     void encoders::update_status()
     {
-        if (m_enca->update_status() || m_encb->update_status()) {
-            m_computers->update_status(m_enca->angle(), m_encb->angle());
+        real last_angle_a = m_enc_a->angle();
+        real last_angle_b = m_enc_b->angle();
+
+        if (m_enc_a->update_status() || m_enc_b->update_status()) {
+            m_computer->update_status(
+                m_enc_a->angle(),
+                m_enc_b->angle(),
+                last_angle_a,
+                last_angle_b
+            );
         }
     }
 }
