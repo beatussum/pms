@@ -21,14 +21,14 @@
 
 #include "math/math.hpp"
 
-#include <Arduino.h>
+#include <stdint.h>
 
 namespace arduino
 {
     using pin_t = uint8_t;
 
-    inline static constexpr real kd = 7.2;
-    inline static constexpr real kr = 2.2;
+    inline static constexpr real d = 7.2;
+    inline static constexpr real r = 2.2;
 }
 
 #endif // PMSCORE_ARDUINO_ARDUINO_HPP

@@ -16,24 +16,25 @@
  */
 
 
-#ifndef PMSCORE_CORE_CORE_HPP
-#define PMSCORE_CORE_CORE_HPP
-
-#include <Arduino.h>
+template <class _T, unsigned long _N>
+constexpr _T* begin(_T (&__array)[_N]) noexcept
+{
+    return &__array[0];
+}
 
 template <class _T, unsigned long _N>
-constexpr _T* begin(_T (&__array)[_N]) noexcept;
-
-template <class _T, unsigned long _N>
-constexpr _T* end(_T (&__array)[_N]) noexcept;
+constexpr _T* end(_T (&__array)[_N]) noexcept
+{
+    return &__array[_N];
+}
 
 template <class _InputIt, class _OutputIt>
-_OutputIt copy(_InputIt __afirst, _InputIt __alast, _OutputIt __bfirst);
+_OutputIt copy(_InputIt __afirst, _InputIt __alast, _OutputIt __bfirst)
+{
+    for (; __afirst != __alast; ++__afirst, ++__bfirst)
+    {
+        *__bfirst = *__afirst;
+    }
 
-String operator ""_s(const char*, size_t);
-inline String operator ""_s(const char* __c) { return String(__c); }
-inline String operator ""_s(char __c) { return String(__c); }
-
-#include "core/core.ipp"
-
-#endif // PMSCORE_CORE_CORE_HPP
+    return __bfirst;
+}

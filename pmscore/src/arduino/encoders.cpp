@@ -25,13 +25,13 @@ namespace arduino
 {
     void encoders::update_status()
     {
-        real last_angle_a = m_enc_a->angle();
-        real last_angle_b = m_enc_b->angle();
+        real last_angle_a = m_encoder_a->angle();
+        real last_angle_b = m_encoder_b->angle();
 
-        if (m_enc_a->update_status() || m_enc_b->update_status()) {
+        if (m_encoder_a->update_status() || m_encoder_b->update_status()) {
             m_computer->update_status(
-                m_enc_a->angle(),
-                m_enc_b->angle(),
+                m_encoder_a->angle(),
+                m_encoder_b->angle(),
                 last_angle_a,
                 last_angle_b
             );

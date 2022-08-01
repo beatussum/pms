@@ -26,7 +26,7 @@ namespace arduino
     class chopper
     {
     public:
-        chopper(pin_t __stby);
+        explicit chopper(pin_t __stby);
     public:
         void enable(bool = true) const;
         void disable() const { enable(false); }

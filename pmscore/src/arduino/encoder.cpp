@@ -20,6 +20,8 @@
 
 #include "arduino/motoreductor.hpp"
 
+#include <Arduino.h>
+
 namespace arduino
 {
     encoder::encoder(pin_t __pin)

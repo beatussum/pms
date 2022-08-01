@@ -20,6 +20,8 @@
 
 #include "arduino/encoder.hpp"
 
+#include <Arduino.h>
+
 namespace arduino
 {
     motoreductor::motoreductor(

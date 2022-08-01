@@ -28,7 +28,7 @@ namespace arduino
     public:
         inline static constexpr real m_knbinc = 48.;
     public:
-        encoder(pin_t __pin);
+        explicit encoder(pin_t __pin);
     public:
         bool update_status();
     public:

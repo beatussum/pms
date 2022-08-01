@@ -18,6 +18,8 @@
 
 #include "arduino/chopper.hpp"
 
+#include <Arduino.h>
+
 namespace arduino
 {
     chopper::chopper(pin_t __stby)

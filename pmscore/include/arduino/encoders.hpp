@@ -31,19 +31,19 @@ namespace arduino
     {
     public:
         explicit constexpr encoders(
-            encoder* __enc_a,
-            encoder* __enc_b,
+            encoder* __encoder_a,
+            encoder* __encoder_b,
             position_computer_base* __c
         ) noexcept
-            : m_enc_a(__enc_a)
-            , m_enc_b(__enc_b)
+            : m_encoder_a(__encoder_a)
+            , m_encoder_b(__encoder_b)
             , m_computer(__c)
         {}
     public:
         void update_status();
     private:
-        encoder*                m_enc_a;
-        encoder*                m_enc_b;
+        encoder*                m_encoder_a;
+        encoder*                m_encoder_b;
         position_computer_base* m_computer;
     };
 }

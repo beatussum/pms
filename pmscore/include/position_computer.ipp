@@ -65,10 +65,10 @@ void position_computer<_n>::__update_rstatus(
 {
     using namespace arduino;
 
-    real v = (kr / 2) *
+    real v = (r / 2) *
         ((__angle_a - __last_angle_a) + (__angle_b - __last_angle_b));
 
-    m_rangle  = (kr / (2 * kd)) * (__last_angle_a - __last_angle_b);
+    m_rangle  = (r / (2 * d)) * (__last_angle_a - __last_angle_b);
     m_rpos   += {-v * sin(m_rangle), v * cos(m_rangle)};
 }
 
@@ -92,7 +92,7 @@ void position_computer<_n>::__update_tstatus(
             /* TODO: spins on */
         }
     } else {
-        real v         = (kr / 2) * (__last_angle_a + __last_angle_b);
+        real v         = (r / 2) * (__last_angle_a + __last_angle_b);
         m_tcurrent_pos = {v * cos(m_tangle), v * sin(m_tangle)};
 
         if (v >= m_tcurrent_edge) {
