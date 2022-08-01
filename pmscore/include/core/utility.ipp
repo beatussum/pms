@@ -16,13 +16,19 @@
  */
 
 
-#ifndef PMSCORE_CORE_CORE_HPP
-#define PMSCORE_CORE_CORE_HPP
+template <class _T>
+constexpr _T&& forward(remove_reference_t<_T>& __t) noexcept
+{
+    return static_cast<_T&&>(__t);
+}
 
-#include <Arduino.h>
+template <class _T>
+constexpr _T&& forward(remove_reference_t<_T>&& __t) noexcept
+{
+    static_assert(
+        !is_lvalue_reference_v<_T>,
+	    "std::forward must not be used to convert an rvalue to an lvalue"
+    );
 
-String operator ""_s(const char*, size_t);
-inline String operator ""_s(const char* __c) { return String(__c); }
-inline String operator ""_s(char __c) { return String(__c); }
-
-#endif // PMSCORE_CORE_CORE_HPP
+    return static_cast<_T&&>(__t);
+}

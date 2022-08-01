@@ -20,6 +20,7 @@
 #define PMSCORE_POSITION_COMPUTER_HPP
 
 #include "core/core.hpp"
+#include "core/iterator.hpp"
 #include "math/vector.hpp"
 
 class correcter_base;

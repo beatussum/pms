@@ -16,8 +16,24 @@
  */
 
 
-#ifndef PMSCORE_CORE_PAIR_HPP
-#define PMSCORE_CORE_PAIR_HPP
+#ifndef PMSCORE_CORE_UTILITY_HPP
+#define PMSCORE_CORE_UTILITY_HPP
+
+#include "core/type_traits.hpp"
+
+/***********
+ * forward *
+ ***********/
+
+template <class _T>
+constexpr _T&& forward(remove_reference_t<_T>&) noexcept;
+
+template <class _T>
+constexpr _T&& forward(remove_reference_t<_T>&&) noexcept;
+
+/********
+ * pair *
+ ********/
 
 template <class _First, class _Second = _First>
 class pair
@@ -30,4 +46,6 @@ public:
     _Second second;
 };
 
-#endif // PMSCORE_CORE_PAIR_HPP
+#include "core/utility.ipp"
+
+#endif // PMSCORE_CORE_UTILITY_HPP

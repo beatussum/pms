@@ -20,6 +20,7 @@
 #define PMSCORE_CORRECTER_HPP
 
 #include "arduino/motoreductor.hpp"
+#include "core/utility.hpp"
 #include "math/vector.hpp"
 
 class correcter_base
@@ -45,17 +46,16 @@ public:
 
     using speed_profile_type = _SpeedProfile;
 public:
-    /* TODO: perfect forwarding */
     explicit constexpr correcter(
         arduino::motoreductor* __motor_a,
         arduino::motoreductor* __motor_b,
         real __epsilon,
-        _SpeedProfile __s
+        _SpeedProfile&& __s
     ) noexcept
         : m_motor_a(__motor_a)
         , m_motor_b(__motor_b)
         , m_epsilon(__epsilon)
-        , m_speed_profile(__s)
+        , m_speed_profile(forward<_SpeedProfile>(__s))
         , m_mode(mode::Fix)
     {}
 public:

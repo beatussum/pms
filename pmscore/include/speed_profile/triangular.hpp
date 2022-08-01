@@ -19,7 +19,7 @@
 #ifndef PMSCORE_SPEED_PROFILE_TRIANGULAR_HPP
 #define PMSCORE_SPEED_PROFILE_TRIANGULAR_HPP
 
-#include "core/pair.hpp"
+#include "core/utility.hpp"
 #include "math/math.hpp"
 
 #include <stdint.h>

@@ -16,13 +16,18 @@
  */
 
 
-#ifndef PMSCORE_CORE_CORE_HPP
-#define PMSCORE_CORE_CORE_HPP
+#ifndef PMSCORE_CORE_ITERATOR_HPP
+#define PMSCORE_CORE_ITERATOR_HPP
 
-#include <Arduino.h>
+template <class _T, unsigned long _N>
+constexpr _T* begin(_T (&__array)[_N]) noexcept;
 
-String operator ""_s(const char*, size_t);
-inline String operator ""_s(const char* __c) { return String(__c); }
-inline String operator ""_s(char __c) { return String(__c); }
+template <class _T, unsigned long _N>
+constexpr _T* end(_T (&__array)[_N]) noexcept;
 
-#endif // PMSCORE_CORE_CORE_HPP
+template <class _InputIt, class _OutputIt>
+_OutputIt copy(_InputIt __afirst, _InputIt __alast, _OutputIt __bfirst);
+
+#include "core/iterator.ipp"
+
+#endif // PMSCORE_CORE_ITERATOR_HPP
