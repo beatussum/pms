@@ -16,8 +16,6 @@
  */
 
 
-#include "arduino/motoreductor.hpp"
-
 template <class _SpeedProfile>
 void correcter<_SpeedProfile>::update_status(
     vector __rposition,

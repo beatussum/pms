@@ -16,10 +16,6 @@
  */
 
 
-#include "correcter.hpp"
-#include "arduino/arduino.hpp"
-#include "core/core.hpp"
-
 template <size_t _n>
 constexpr position_computer<_n>::position_computer(
     correcter_base* __c,

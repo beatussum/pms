@@ -19,12 +19,8 @@
 #ifndef PMSCORE_CORRECTER_HPP
 #define PMSCORE_CORRECTER_HPP
 
+#include "arduino/motoreductor.hpp"
 #include "math/vector.hpp"
-
-namespace arduino
-{
-    class motoreductor;
-}
 
 class correcter_base
 {

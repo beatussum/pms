@@ -19,9 +19,10 @@
 #ifndef PMSCORE_POSITION_COMPUTER_HPP
 #define PMSCORE_POSITION_COMPUTER_HPP
 
+#include "arduino/arduino.hpp"
+#include "core/core.hpp"
 #include "math/vector.hpp"
-
-class correcter_base;
+#include "correcter.hpp"
 
 class position_computer_base
 {
