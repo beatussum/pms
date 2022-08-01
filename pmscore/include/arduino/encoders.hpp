@@ -21,7 +21,7 @@
 
 #include "math/math.hpp"
 
-class position_computer_base;
+class position_computer;
 
 namespace arduino
 {
@@ -33,7 +33,7 @@ namespace arduino
         explicit constexpr encoders(
             encoder* __encoder_a,
             encoder* __encoder_b,
-            position_computer_base* __c
+            position_computer* __c
         ) noexcept
             : m_encoder_a(__encoder_a)
             , m_encoder_b(__encoder_b)
@@ -42,9 +42,9 @@ namespace arduino
     public:
         void update_status();
     private:
-        encoder*                m_encoder_a;
-        encoder*                m_encoder_b;
-        position_computer_base* m_computer;
+        encoder*           m_encoder_a;
+        encoder*           m_encoder_b;
+        position_computer* m_computer;
     };
 }
 
