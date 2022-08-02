@@ -31,8 +31,10 @@ namespace pmscore
     position_computer::operator String() const
     {
         return
-            "real position: "_s + static_cast<String>(m_rpos) + '\n'_s +
-            "theoretical position: "_s + static_cast<String>(m_tpos) + '\n'_s;
+            "real position: "_s + static_cast<String>(m_rpos) + " with " +
+            m_rangle + " rad\n"_s +
+            "theoretical position: "_s + static_cast<String>(get_tpos()) +
+            " with " + m_tangle + " rad\n"_s;
     }
 
     void position_computer::__update_rstatus(
@@ -47,7 +49,7 @@ namespace pmscore
         real v = (r / 2) *
             ((__angle_a - __last_angle_a) + (__angle_b - __last_angle_b));
 
-        m_rangle  = (r / (2 * d)) * (__last_angle_a - __last_angle_b);
+        m_rangle  = (r / (2 * d)) * (__last_angle_b - __last_angle_a);
         m_rpos   += {-v * sin(m_rangle), v * cos(m_rangle)};
     }
 
@@ -67,13 +69,13 @@ namespace pmscore
                     m_tadvance * m_tcurrent_edge, m_tangle
                 );
 
-                /* TODO: spins on */
+                m_correcter->next_edge(m_rangle, m_tangle);
             }
         } else {
             real v         = (r / 2) * (__last_angle_a + __last_angle_b);
             m_tcurrent_pos = {v * cos(m_tangle), v * sin(m_tangle)};
 
-            if (v >= m_tcurrent_edge) {
+            if (abs(v) >= (1 - m_tadvance) * m_tcurrent_edge) {
                 if (++m_ti == (m_tpath + m_tpath_size)) {
                     m_ti = m_tpath;
                 }
@@ -96,6 +98,6 @@ namespace pmscore
         __update_rstatus(__angle_a, __angle_b, __last_angle_a, __last_angle_b);
         __update_tstatus(__last_angle_a, __last_angle_b);
 
-        m_correcter->update_status(m_rpos, m_tpos, m_rangle);
+        m_correcter->update_status(m_rpos, get_tpos(), m_rangle);
     }
 }

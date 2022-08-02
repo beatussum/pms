@@ -28,6 +28,8 @@ namespace pmscore
     class correcter_base
     {
     public:
+        virtual void next_edge(real __alpha, real __beta) noexcept = 0;
+
         virtual void update_status(
             vector __rposition,
             vector __tposition,
@@ -42,6 +44,7 @@ namespace pmscore
         enum class mode
         {
             Fix,
+            NextEdge,
             Reset,
             Turn
         };
@@ -61,6 +64,8 @@ namespace pmscore
             , m_mode(mode::Fix)
         {}
     public:
+        void next_edge(real __alpha, real __beta) noexcept override;
+
         void update_status(
             vector __rposition,
             vector __tposition,

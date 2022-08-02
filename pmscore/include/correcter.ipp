@@ -19,6 +19,17 @@
 namespace pmscore
 {
     template <class _SpeedProfile>
+    void correcter<_SpeedProfile>::next_edge(
+        real __alpha,
+        real __beta
+    ) noexcept
+    {
+        m_mode = mode::NextEdge;
+
+        m_speed_profile.init_for_next_edge(__alpha, __beta);
+    }
+
+    template <class _SpeedProfile>
     void correcter<_SpeedProfile>::update_status(
         vector __rposition,
         vector __tposition,
@@ -28,11 +39,11 @@ namespace pmscore
         switch (m_mode) {
             case mode::Fix:
                 {
-                    real gamma = HALF_PI - (__rposition - __tposition).angle();
+                    real gamma = M_PI_2 - (__tposition - __rposition).angle();
                     real diff  = angle_distance(gamma, __rangle);
 
                     if (abs(diff) > m_epsilon) {
-                        m_mode = mode::Fix;
+                        m_mode = mode::Turn;
 
                         m_speed_profile.init(__rangle, gamma);
                     }
@@ -49,6 +60,7 @@ namespace pmscore
                 }
 
                 break;
+            case mode::NextEdge:
             case mode::Turn:
                 {
                     if (m_speed_profile.is_ended()) {

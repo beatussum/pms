@@ -34,14 +34,12 @@ arduino::encoder encoder_b(12);
 arduino::motoreductor motor_a(
     4, 5, 3,
     &encoder_a,
-    arduino::motoreductor::direction::Front,
     200
 );
 
 arduino::motoreductor motor_b(
     10, 11, 9,
     &encoder_b,
-    arduino::motoreductor::direction::Front,
     200
 );
 

@@ -39,11 +39,15 @@ namespace pmscore::speed_profile
             , m_alpha_1(0.)
             , m_is_ended(false)
             , m_is_turning_left(false)
+            , m_omega(0)
         {}
+    private:
+        void __init(real __alpha_0, real __alpha_f) noexcept;
     public:
         constexpr return_type default_speed() const noexcept;
 
         void init(real __alpha_0, real __alpha_f) noexcept;
+        void init_for_next_edge(real __alpha_0, real __alpha_f) noexcept;
         return_type compute_speed(real __rangle) noexcept;
     public:
         bool is_ended() const noexcept { return m_is_ended; }
@@ -51,11 +55,12 @@ namespace pmscore::speed_profile
         real    m_a;
         int16_t m_omega_a;
 
-        real m_alpha_0;
-        real m_alpha_f;
-        real m_alpha_1;
-        bool m_is_ended;
-        bool m_is_turning_left;
+        real    m_alpha_0;
+        real    m_alpha_f;
+        real    m_alpha_1;
+        bool    m_is_ended;
+        bool    m_is_turning_left;
+        int16_t m_omega;
     };
 }
 

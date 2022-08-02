@@ -29,53 +29,54 @@ namespace pmscore::arduino
         pin_t __pinb,
         pin_t __pwm,
         encoder* __e,
-        direction __d,
         uint8_t __power
     )
         : m_pin_a(__pina)
         , m_pin_b(__pinb)
         , m_pin_pwm(__pwm)
         , m_encoder(__e)
-        , m_direction(__d)
+        , m_direction((__power < 0) ? direction::Back : direction::Front)
         , m_power(__power)
     {
         pinMode(m_pin_a, OUTPUT);
         pinMode(m_pin_b, OUTPUT);
         pinMode(m_pin_pwm, OUTPUT);
 
-        set_direction(m_direction);
+        __set_direction(m_direction);
         set_power(m_power);
+    }
+
+    void motoreductor::__set_direction(direction __d)
+    {
+        switch (__d) {
+            case direction::Front:
+                digitalWrite(m_pin_a, HIGH);
+                digitalWrite(m_pin_b, LOW);
+
+                break;
+            case direction::Back:
+                digitalWrite(m_pin_a, LOW);
+                digitalWrite(m_pin_b, HIGH);
+
+                break;
+            case direction::Break:
+                digitalWrite(m_pin_a, HIGH);
+                digitalWrite(m_pin_b, HIGH);
+
+                break;
+            case direction::Off:
+                digitalWrite(m_pin_a, LOW);
+                digitalWrite(m_pin_b, LOW);
+
+                break;
+        }
     }
 
     void motoreductor::set_direction(direction __d)
     {
         if (__d != m_direction) {
-            switch (m_direction = __d) {
-                case direction::Front:
-                    m_encoder->reverse();
-
-                    digitalWrite(m_pin_a, HIGH);
-                    digitalWrite(m_pin_b, LOW);
-
-                    break;
-                case direction::Back:
-                    m_encoder->reverse();
-
-                    digitalWrite(m_pin_a, LOW);
-                    digitalWrite(m_pin_b, HIGH);
-
-                    break;
-                case direction::Break:
-                    digitalWrite(m_pin_a, HIGH);
-                    digitalWrite(m_pin_b, HIGH);
-
-                    break;
-                case direction::Off:
-                    digitalWrite(m_pin_a, LOW);
-                    digitalWrite(m_pin_b, LOW);
-
-                    break;
-            }
+            m_encoder->reverse();
+            __set_direction(m_direction = __d);
         }
     }
 

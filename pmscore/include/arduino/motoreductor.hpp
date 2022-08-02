@@ -41,9 +41,10 @@ namespace pmscore::arduino
             pin_t __pin_b,
             pin_t __pin_pwm,
             encoder*,
-            direction = direction::Off,
             uint8_t __power = 0
         );
+    private:
+        void __set_direction(direction);
     public:
         direction get_direction() const noexcept { return m_direction; }
         void set_direction(direction);

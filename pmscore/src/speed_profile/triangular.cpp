@@ -22,13 +22,30 @@
 
 namespace pmscore::speed_profile
 {
-    void triangular::init(real __alpha_0, real __alpha_f) noexcept
+    void triangular::__init(real __alpha_0, real __alpha_f) noexcept
     {
         m_alpha_0         = __alpha_0;
         m_alpha_f         = __alpha_f;
         m_alpha_1         = (m_alpha_0 + m_alpha_f) / 2;
         m_is_ended        = false;
         m_is_turning_left = (m_alpha_0 < m_alpha_f);
+    }
+
+    void triangular::init(real __alpha_0, real __alpha_f) noexcept
+    {
+        m_omega = m_omega_a;
+
+        __init(__alpha_0, __alpha_f);
+    }
+
+    void triangular::init_for_next_edge(
+        real __alpha_0,
+        real __alpha_f
+    ) noexcept
+    {
+        m_omega = 0;
+
+        __init(__alpha_0, __alpha_f);
     }
 
     triangular::return_type triangular::compute_speed(real __rangle) noexcept
@@ -43,15 +60,23 @@ namespace pmscore::speed_profile
             int16_t k;
 
             if (__rangle <= m_alpha_1) {
-                k = min(round(m_a * (__rangle - m_alpha_0)), 255 - m_omega_a);
+                k = constrain(
+                    round(m_a * (__rangle - m_alpha_0)),
+                    1,
+                    255 - m_omega
+                );
             } else {
-                k = min(round(m_a * (m_alpha_f - __rangle)), 255 - m_omega_a);
+                k = constrain(
+                    round(m_a * (m_alpha_f - __rangle)),
+                    1,
+                    255 - m_omega
+                );
             }
 
             if (m_is_turning_left) {
-                return {m_omega_a - k, m_omega_a + k};
+                return {m_omega - k, m_omega + k};
             } else {
-                return {m_omega_a + k, m_omega_a - k};
+                return {m_omega + k, m_omega - k};
             }
         }
     }

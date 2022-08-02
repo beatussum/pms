@@ -52,6 +52,6 @@ namespace pmscore::arduino
 
     real encoder::angle() const noexcept
     {
-        return m_inc * ((2 * PI) / m_knbinc);
+        return m_inc * (M_2_PI / m_knbinc);
     }
 }
