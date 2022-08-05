@@ -85,12 +85,15 @@ namespace pmscore
         real          m_rangle;
         vector        m_rpos;
         real          m_tangle;
+        real          m_tangle_a_0;
+        real          m_tangle_b_0;
         real          m_tcurrent_edge;
         vector        m_tcurrent_pos;
         const vector* m_ti;
         size_t        m_tpath_size;
         vector        m_tpos;
         vector        m_tvertex;
+        real          m_distance;
     };
 }
 

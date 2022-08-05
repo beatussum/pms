@@ -21,27 +21,30 @@
 
 #include "arduino/arduino.hpp"
 
+#include <stddef.h>
+
 namespace pmscore::arduino
 {
     class encoder
     {
+        friend void set_main_encoders(encoder*, encoder*) noexcept;
+
+        template <size_t>
+        friend void update_main_encoder_status() noexcept;
     public:
-        inline static constexpr real m_knbinc = 48.;
+        static constexpr real incrementation_counts = 1124.4288;
     public:
         explicit encoder(pin_t __pin);
     public:
-        bool update_status();
-    public:
-        real angle() const noexcept;
-        real inc() const noexcept { return m_inc; }
+        real get_angle() const noexcept;
+        real get_incrementation() const noexcept { return m_incrementation; }
 
         void reverse() noexcept { m_reverse = !m_reverse; }
     private:
         pin_t m_pin;
 
-        real m_inc;
-        bool m_last;
-        bool m_reverse;
+        volatile real m_incrementation;
+        bool          m_reverse;
     };
 }
 

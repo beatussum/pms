@@ -19,22 +19,59 @@
 #include "arduino/encoders.hpp"
 
 #include "position_computer.hpp"
-#include "arduino/encoder.hpp"
+
+#include <util/atomic.h>
 
 namespace pmscore::arduino
 {
     void encoders::update_status()
     {
-        real last_angle_a = m_encoder_a->angle();
-        real last_angle_b = m_encoder_b->angle();
+        real angle_a, angle_b;
 
-        if (m_encoder_a->update_status() || m_encoder_b->update_status()) {
-            m_computer->update_status(
-                m_encoder_a->angle(),
-                m_encoder_b->angle(),
-                last_angle_a,
-                last_angle_b
-            );
+        ATOMIC_BLOCK(ATOMIC_FORCEON) {
+            angle_a = m_encoder_a->get_angle();
+            angle_b = m_encoder_b->get_angle();
         }
+
+        m_computer->update_status(
+            angle_a,
+            angle_b,
+            m_last_angle_a,
+            m_last_angle_b
+        );
+
+        m_last_angle_a = angle_a;
+        m_last_angle_b = angle_b;
+    }
+
+    void set_main_encoders(const encoders& __e) noexcept
+    {
+        set_main_encoders(__e.m_encoder_a, __e.m_encoder_b);
+    }
+
+    void set_main_encoders(encoder* __a, encoder* __b) noexcept
+    {
+        if (main_encoders[0] != nullptr) {
+            detachInterrupt(digitalPinToInterrupt(main_encoders[0]->m_pin));
+        }
+
+        if (main_encoders[1] != nullptr) {
+            detachInterrupt(digitalPinToInterrupt(main_encoders[1]->m_pin));
+        }
+
+        main_encoders[0] = __a;
+        main_encoders[1] = __b;
+
+        attachInterrupt(
+            digitalPinToInterrupt(__a->m_pin),
+            update_main_encoder_status<0>,
+            CHANGE
+        );
+
+        attachInterrupt(
+            digitalPinToInterrupt(__b->m_pin),
+            update_main_encoder_status<1>,
+            CHANGE
+        );
     }
 }

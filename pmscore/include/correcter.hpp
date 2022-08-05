@@ -28,56 +28,60 @@ namespace pmscore
     class correcter_base
     {
     public:
-        virtual void next_edge(real __alpha, real __beta) noexcept = 0;
+        virtual void next_edge(real __x_0, real __x_f) noexcept = 0;
 
         virtual void update_status(
+            real __distance,
+            real __rangle,
             vector __rposition,
-            vector __tposition,
-            real __rangle
+            vector __tposition
         ) = 0;
     };
 
-    template <class _SpeedProfile>
+    template <class _SpeedProfile, class _HeadingSpeedProfile>
     class correcter : public correcter_base
     {
     public:
-        enum class mode
+        enum class heading_mode
         {
             Fix,
-            NextEdge,
-            Reset,
+            Off,
             Turn
         };
 
-        using speed_profile_type = _SpeedProfile;
+        using heading_speed_profile_type = _HeadingSpeedProfile;
+        using speed_profile_type         = _SpeedProfile;
     public:
         explicit constexpr correcter(
             arduino::motoreductor* __motor_a,
             arduino::motoreductor* __motor_b,
-            real __epsilon,
-            _SpeedProfile&& __s
+            _SpeedProfile&& __s,
+            _HeadingSpeedProfile&& __hs
         ) noexcept
             : m_motor_a(__motor_a)
             , m_motor_b(__motor_b)
-            , m_epsilon(__epsilon)
+            , m_heading_speed_profile(forward<_HeadingSpeedProfile>(__hs))
             , m_speed_profile(forward<_SpeedProfile>(__s))
-            , m_mode(mode::Fix)
+            , m_heading_mode(heading_mode::Fix)
+            , m_omega(0)
         {}
     public:
-        void next_edge(real __alpha, real __beta) noexcept override;
+        void next_edge(real __x_0, real __x_f) noexcept override;
 
         void update_status(
+            real __distance,
+            real __rangle,
             vector __rposition,
-            vector __tposition,
-            real __rangle
+            vector __tposition
         ) override;
     private:
-        arduino::motoreductor* m_motor_a;
-        arduino::motoreductor* m_motor_b;
-        real                   m_epsilon;
-        speed_profile_type     m_speed_profile;
+        arduino::motoreductor*     m_motor_a;
+        arduino::motoreductor*     m_motor_b;
+        heading_speed_profile_type m_heading_speed_profile;
+        speed_profile_type         m_speed_profile;
 
-        mode m_mode;
+        heading_mode m_heading_mode;
+        int16_t      m_omega;
     };
 }
 

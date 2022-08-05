@@ -86,10 +86,10 @@ namespace pmscore::arduino
 
         if (m_power < 0) {
             set_direction(direction::Back);
-            analogWrite(m_pin_pwm, -m_power);
+            analogWrite(m_pin_pwm, static_cast<int>(-m_power));
         } else {
             set_direction(direction::Front);
-            analogWrite(m_pin_pwm, m_power);
+            analogWrite(m_pin_pwm, static_cast<int>(m_power));
         }
     }
 }

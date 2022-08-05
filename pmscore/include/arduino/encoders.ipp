@@ -16,11 +16,17 @@
  */
 
 
-namespace pmscore::speed_profile
+namespace pmscore::arduino
 {
-    constexpr triangular::return_type
-    triangular::default_speed() const noexcept
+    template <size_t _n>
+    void update_main_encoder_status() noexcept
     {
-        return {m_omega_a, m_omega_a};
+        encoder* e = main_encoders[_n];
+
+        if (e->m_reverse) {
+            --e->m_incrementation;
+        } else {
+            ++e->m_incrementation;
+        }
     }
 }

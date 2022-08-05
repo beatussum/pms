@@ -20,42 +20,55 @@
 #include "arduino/encoder.hpp"
 #include "arduino/encoders.hpp"
 #include "arduino/motoreductor.hpp"
-#include "speed_profile/triangular.hpp"
+#include "speed_profile/trapezoidal.hpp"
 #include "correcter.hpp"
 #include "position_computer.hpp"
 
 using namespace pmscore;
 
-arduino::chopper chopper(6);
+arduino::chopper chopper(8);
 
-arduino::encoder encoder_a(7);
-arduino::encoder encoder_b(12);
+arduino::encoder encoder_a(2);
+arduino::encoder encoder_b(3);
 
 arduino::motoreductor motor_a(
-    4, 5, 3,
+    10, 9, 11,
     &encoder_a,
-    200
+    80
 );
 
 arduino::motoreductor motor_b(
-    10, 11, 9,
+    6, 7, 5,
     &encoder_b,
-    200
+    80
 );
 
-correcter corr(&motor_a, &motor_b, .1, speed_profile::triangular(2., 200));
+correcter corr(
+    &motor_a,
+    &motor_b,
+
+    speed_profile::trapezoidal(
+        1.,
+        20.,
+        80,
+        [] (real __a, real __b) { return __b - __a; }
+    ),
+
+    speed_profile::trapezoidal(10., .01, 10, &angle_distance)
+);
 
 position_computer computer(
     &corr,
     .1,
-    {{0., 70.}, {-70., 0.}, {0., -70.}, {70., 0.}},
-    5.
+    {{0., 1'000.}, {-1'000., 0.}, {0., -1'000.}, {1'000., 0.}},
+    40.
 );
 
 arduino::encoders encoders(&encoder_a, &encoder_b, &computer);
 
 void setup()
 {
+    arduino::set_main_encoders(encoders);
     Serial.begin(9600);
     chopper.enable();
 }

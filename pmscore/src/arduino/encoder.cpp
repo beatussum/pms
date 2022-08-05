@@ -18,40 +18,20 @@
 
 #include "arduino/encoder.hpp"
 
-#include "arduino/motoreductor.hpp"
-
 #include <Arduino.h>
 
 namespace pmscore::arduino
 {
     encoder::encoder(pin_t __pin)
         : m_pin(__pin)
-        , m_inc(0.)
-        , m_last(false)
+        , m_incrementation(0.)
         , m_reverse(false)
     {
         pinMode(m_pin, INPUT_PULLUP);
     }
 
-    bool encoder::update_status()
+    real encoder::get_angle() const noexcept
     {
-        if (digitalRead(m_pin) != m_last) {
-            m_last = !m_last;
-
-            if (m_reverse) {
-                --m_inc;
-            } else {
-                ++m_inc;
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    real encoder::angle() const noexcept
-    {
-        return m_inc * (M_2_PI / m_knbinc);
+        return m_incrementation * (TWO_PI / incrementation_counts);
     }
 }

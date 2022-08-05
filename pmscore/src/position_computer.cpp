@@ -60,19 +60,26 @@ namespace pmscore
     {
         using namespace arduino;
 
+        m_distance = (m_rpos - m_tvertex).norm();
+
         if (m_tcurrent_edge == -1.) {
-            if ((m_rpos - m_tvertex).norm() <= m_vertex_radius) {
+            if (m_distance <= m_vertex_radius) {
                 m_tcurrent_edge  = m_ti->norm();
                 m_tvertex       += *m_ti;
+                m_distance       = (m_rpos - m_tvertex).norm();
 
                 m_tpos += vector::with_polar_coordinates(
                     m_tadvance * m_tcurrent_edge, m_tangle
                 );
 
-                m_correcter->next_edge(m_rangle, m_tangle);
+                m_correcter->next_edge(m_distance, 0);
             }
         } else {
-            real v         = (r / 2) * (__last_angle_a + __last_angle_b);
+            real v = (r / 2) * (
+                (__last_angle_a - m_tangle_a_0) +
+                (__last_angle_b - m_tangle_b_0)
+            );
+
             m_tcurrent_pos = {v * cos(m_tangle), v * sin(m_tangle)};
 
             if (abs(v) >= (1 - m_tadvance) * m_tcurrent_edge) {
@@ -83,7 +90,9 @@ namespace pmscore
                 m_tpos          += m_tcurrent_pos;
                 m_tcurrent_pos   = {};
                 m_tangle         = m_ti->angle();
-                m_tcurrent_edge  = -1;
+                m_tangle_a_0     = __last_angle_a;
+                m_tangle_b_0     = __last_angle_b;
+                m_tcurrent_edge  = -1.;
             }
         }
     }
@@ -98,6 +107,6 @@ namespace pmscore
         __update_rstatus(__angle_a, __angle_b, __last_angle_a, __last_angle_b);
         __update_tstatus(__last_angle_a, __last_angle_b);
 
-        m_correcter->update_status(m_rpos, get_tpos(), m_rangle);
+        m_correcter->update_status(m_distance, m_rangle, m_rpos, get_tpos());
     }
 }

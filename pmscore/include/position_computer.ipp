@@ -32,6 +32,8 @@ namespace pmscore
         , m_rangle(0.)
         , m_rpos()
         , m_tangle(__tpath[0].angle())
+        , m_tangle_a_0(0.)
+        , m_tangle_b_0(0.)
         , m_tcurrent_edge(__tpath[0].norm())
         , m_tcurrent_pos()
         , m_ti(m_tpath)
@@ -42,8 +44,11 @@ namespace pmscore
         ))
 
         , m_tvertex(__tpath[0])
+        , m_distance(__tpath[0].norm())
     {
         copy(begin(__tpath), end(__tpath), m_tpath);
+
+        m_correcter->next_edge(m_distance, 0);
     }
 
     template <size_t _n>

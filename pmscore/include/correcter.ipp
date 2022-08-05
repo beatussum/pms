@@ -18,62 +18,66 @@
 
 namespace pmscore
 {
-    template <class _SpeedProfile>
-    void correcter<_SpeedProfile>::next_edge(
-        real __alpha,
-        real __beta
+    template <class _SpeedProfile, class _HeadingSpeedProfile>
+    void correcter<_SpeedProfile, _HeadingSpeedProfile>::next_edge(
+        real __x_0,
+        real __x_f
     ) noexcept
     {
-        m_mode = mode::NextEdge;
-
-        m_speed_profile.init_for_next_edge(__alpha, __beta);
+        m_speed_profile.init(__x_0, __x_f, 120);
     }
 
-    template <class _SpeedProfile>
-    void correcter<_SpeedProfile>::update_status(
+    template <class _SpeedProfile, class _HeadingSpeedProfile>
+    void correcter<_SpeedProfile, _HeadingSpeedProfile>::update_status(
+        real __distance,
+        real __rangle,
         vector __rposition,
-        vector __tposition,
-        real __rangle
+        vector __tposition
     )
     {
-        switch (m_mode) {
-            case mode::Fix:
+        int16_t k = 0;
+        int16_t omega = m_speed_profile.compute_speed(__distance);
+
+        if (omega != m_omega) {
+            m_heading_mode = heading_mode::Off;
+            m_omega        = omega;
+        } else if (m_heading_mode == heading_mode::Off) {
+            m_heading_mode = heading_mode::Fix;
+        }
+
+        switch (m_heading_mode) {
+            case heading_mode::Fix:
                 {
-                    real gamma = M_PI_2 - (__tposition - __rposition).angle();
-                    real diff  = angle_distance(gamma, __rangle);
+                    real gamma = (__tposition - __rposition).angle() - M_PI_2;
 
-                    if (abs(diff) > m_epsilon) {
-                        m_mode = mode::Turn;
-
-                        m_speed_profile.init(__rangle, gamma);
+                    if (
+                        m_heading_speed_profile.init(
+                            __rangle,
+                            gamma,
+                            static_cast<uint8_t>(255 - m_omega)
+                        )
+                    )
+                    {
+                        m_heading_mode = heading_mode::Turn;
                     }
                 }
 
                 break;
-            case mode::Reset:
-                {
-                    m_mode      = mode::Fix;
-                    auto [a, b] = m_speed_profile.default_speed();
-
-                    m_motor_a->set_power(a);
-                    m_motor_b->set_power(b);
-                }
-
+            case heading_mode::Off:
                 break;
-            case mode::NextEdge:
-            case mode::Turn:
+            case heading_mode::Turn:
                 {
-                    if (m_speed_profile.is_ended()) {
-                        m_mode = mode::Reset;
-                    } else {
-                        auto [a, b] = m_speed_profile.compute_speed(__rangle);
+                    k = m_heading_speed_profile.compute_speed(__rangle);
 
-                        m_motor_a->set_power(a);
-                        m_motor_b->set_power(b);
+                    if (k == 0) {
+                        m_heading_mode = heading_mode::Fix;
                     }
                 }
 
                 break;
         }
+
+        m_motor_a->set_power(m_omega + k);
+        m_motor_b->set_power(m_omega - k);
     }
 }

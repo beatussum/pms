@@ -19,6 +19,7 @@
 #ifndef PMSCORE_ARDUINO_ENCODERS_HPP
 #define PMSCORE_ARDUINO_ENCODERS_HPP
 
+#include "arduino/encoder.hpp"
 #include "math/math.hpp"
 
 namespace pmscore
@@ -28,10 +29,9 @@ namespace pmscore
 
 namespace pmscore::arduino
 {
-    class encoder;
-
     class encoders
     {
+        friend void set_main_encoders(const encoders&) noexcept;
     public:
         explicit constexpr encoders(
             encoder* __encoder_a,
@@ -41,6 +41,8 @@ namespace pmscore::arduino
             : m_encoder_a(__encoder_a)
             , m_encoder_b(__encoder_b)
             , m_computer(__c)
+            , m_last_angle_a(0.)
+            , m_last_angle_b(0.)
         {}
     public:
         void update_status();
@@ -48,7 +50,20 @@ namespace pmscore::arduino
         encoder*           m_encoder_a;
         encoder*           m_encoder_b;
         position_computer* m_computer;
+
+        real m_last_angle_a;
+        real m_last_angle_b;
     };
+
+    inline encoder* main_encoders[] = {nullptr, nullptr};
+
+    void set_main_encoders(const encoders&) noexcept;
+    void set_main_encoders(encoder*, encoder*) noexcept;
+
+    template <size_t>
+    void update_main_encoder_status() noexcept;
 }
+
+#include "arduino/encoders.ipp"
 
 #endif // PMSCORE_ARDUINO_ENCODERS_HPP
