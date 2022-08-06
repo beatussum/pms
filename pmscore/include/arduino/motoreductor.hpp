@@ -32,7 +32,7 @@ namespace pmscore::arduino
         {
             Front,
             Back,
-            Break,
+            Brake,
             Off
         };
     public:
@@ -41,19 +41,23 @@ namespace pmscore::arduino
             pin_t __pin_b,
             pin_t __pin_pwm,
             encoder*,
-            uint8_t __power = 0
+            int16_t __power = 0
         );
     private:
-        void __set_direction(direction);
+        static direction __direction_from_power(int16_t) noexcept;
+        void __set_direction(direction) const;
+        void __set_direction_and_reverse(direction);
     public:
         direction get_direction() const noexcept { return m_direction; }
-        void set_direction(direction);
 
         int16_t get_power() const noexcept { return m_power; }
         void set_power(int16_t);
 
         void increase_power(int16_t __p = 1) { set_power(m_power + __p); }
         void reduce_power(int16_t __p = 1) { increase_power(-__p); }
+    public:
+        void brake() { __set_direction_and_reverse(direction::Brake); }
+        void disable() { __set_direction_and_reverse(direction::Off); }
     private:
         pin_t     m_pin_a;
         pin_t     m_pin_b;

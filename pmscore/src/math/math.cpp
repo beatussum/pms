@@ -24,12 +24,12 @@ namespace pmscore
 {
     real angle_distance(real __a, real __b)
     {
-        __a = fmod(__b, TWO_PI) - fmod(__a, TWO_PI);
+        __a = fmod(__b, M_2PI) - fmod(__a, M_2PI);
 
         if (__a > M_PI) {
-            __a -= TWO_PI;
+            __a -= M_2PI;
         } else if (__a < -M_PI) {
-            __a += TWO_PI;
+            __a += M_2PI;
         }
 
         return __a;

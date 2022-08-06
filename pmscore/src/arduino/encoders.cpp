@@ -62,16 +62,20 @@ namespace pmscore::arduino
         main_encoders[0] = __a;
         main_encoders[1] = __b;
 
-        attachInterrupt(
-            digitalPinToInterrupt(__a->m_pin),
-            update_main_encoder_status<0>,
-            CHANGE
-        );
+        if (__a != nullptr) {
+            attachInterrupt(
+                digitalPinToInterrupt(__a->m_pin),
+                update_main_encoder_status<0>,
+                CHANGE
+            );
+        }
 
-        attachInterrupt(
-            digitalPinToInterrupt(__b->m_pin),
-            update_main_encoder_status<1>,
-            CHANGE
-        );
+        if (__b != nullptr) {
+            attachInterrupt(
+                digitalPinToInterrupt(__b->m_pin),
+                update_main_encoder_status<1>,
+                CHANGE
+            );
+        }
     }
 }

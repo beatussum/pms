@@ -29,13 +29,13 @@ namespace pmscore::arduino
         pin_t __pinb,
         pin_t __pwm,
         encoder* __e,
-        uint8_t __power
+        int16_t __power
     )
         : m_pin_a(__pina)
         , m_pin_b(__pinb)
         , m_pin_pwm(__pwm)
         , m_encoder(__e)
-        , m_direction((__power < 0) ? direction::Back : direction::Front)
+        , m_direction(__direction_from_power(__power))
         , m_power(__power)
     {
         pinMode(m_pin_a, OUTPUT);
@@ -46,7 +46,20 @@ namespace pmscore::arduino
         set_power(m_power);
     }
 
-    void motoreductor::__set_direction(direction __d)
+    motoreductor::direction motoreductor::__direction_from_power(
+        int16_t __p
+    ) noexcept
+    {
+        if (__p < 0) {
+            return direction::Back;
+        } else if (__p > 0) {
+            return direction::Front;
+        } else {
+            return direction::Off;
+        }
+    }
+
+    void motoreductor::__set_direction(direction __d) const
     {
         switch (__d) {
             case direction::Front:
@@ -59,7 +72,7 @@ namespace pmscore::arduino
                 digitalWrite(m_pin_b, HIGH);
 
                 break;
-            case direction::Break:
+            case direction::Brake:
                 digitalWrite(m_pin_a, HIGH);
                 digitalWrite(m_pin_b, HIGH);
 
@@ -72,24 +85,37 @@ namespace pmscore::arduino
         }
     }
 
-    void motoreductor::set_direction(direction __d)
+    void motoreductor::__set_direction_and_reverse(direction __d)
     {
         if (__d != m_direction) {
-            m_encoder->reverse();
+            switch (__d) {
+                case direction::Front:
+                case direction::Back:
+                    m_encoder->reverse();
+
+                    break;
+                case direction::Brake:
+                case direction::Off:
+                    break;
+            }
+
             __set_direction(m_direction = __d);
         }
     }
 
     void motoreductor::set_power(int16_t __b)
     {
-        m_power = constrain(__b, -255, 255);
+        m_power = __b;
 
         if (m_power < 0) {
-            set_direction(direction::Back);
+            __set_direction_and_reverse(direction::Back);
             analogWrite(m_pin_pwm, static_cast<int>(-m_power));
-        } else {
-            set_direction(direction::Front);
+        } else if (m_power > 0) {
+            __set_direction_and_reverse(direction::Front);
             analogWrite(m_pin_pwm, static_cast<int>(m_power));
+        } else {
+            __set_direction_and_reverse(direction::Off);
+            analogWrite(m_pin_pwm, 0);
         }
     }
 }

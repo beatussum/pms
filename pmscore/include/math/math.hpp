@@ -19,6 +19,8 @@
 #ifndef PMSCORE_MATH_MATH_HPP
 #define PMSCORE_MATH_MATH_HPP
 
+#define M_2PI 6.283185307179586476925286766559
+
 namespace pmscore
 {
     using real = double;

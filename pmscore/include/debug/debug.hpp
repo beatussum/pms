@@ -19,22 +19,22 @@
 #ifndef PMSCORE_DEBUG_DEBUG_HPP
 #define PMSCORE_DEBUG_DEBUG_HPP
 
-#include "core/core.hpp"
+#include <Arduino.h>
 
-#define PMSCORE_DEBUG_MSG(msg)                       \
+#define PMSCORE_DEBUG_MSG(__msg)                     \
     Serial.println(                                  \
         "\u001B[31m(\u001B[1;33mDEBUG\u001B[0;31m) " \
         "\u001B[0m(\u001B[0;32mmessage\u001B[0m) "   \
-        msg                                          \
+        __msg                                        \
     )
 
-#define PMSCORE_DEBUG_VAR(var)                       \
+#define PMSCORE_DEBUG_VAR(__var)                     \
     Serial.println(                                  \
         "\u001B[31m(\u001B[1;33mDEBUG\u001B[0;31m) " \
         "\u001B[0m(\u001B[0;32mvariable\u001B[0m) "  \
-        #var                                         \
-        " = "_s +                                    \
-        static_cast<String>(var)                     \
+        #__var                                       \
+        " = " +                                      \
+        static_cast<String>(__var)                   \
     )
 
 #endif // PMSCORE_DEBUG_DEBUG_HPP

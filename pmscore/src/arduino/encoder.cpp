@@ -32,6 +32,6 @@ namespace pmscore::arduino
 
     real encoder::get_angle() const noexcept
     {
-        return m_incrementation * (TWO_PI / incrementation_counts);
+        return m_incrementation * (M_2PI / incrementation_counts);
     }
 }

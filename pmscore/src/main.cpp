@@ -31,17 +31,8 @@ arduino::chopper chopper(8);
 arduino::encoder encoder_a(2);
 arduino::encoder encoder_b(3);
 
-arduino::motoreductor motor_a(
-    10, 9, 11,
-    &encoder_a,
-    80
-);
-
-arduino::motoreductor motor_b(
-    6, 7, 5,
-    &encoder_b,
-    80
-);
+arduino::motoreductor motor_a(10, 9, 11, &encoder_a);
+arduino::motoreductor motor_b(6, 7, 5, &encoder_b);
 
 correcter corr(
     &motor_a,
