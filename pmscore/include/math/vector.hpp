@@ -25,35 +25,7 @@
 
 namespace pmscore
 {
-    class vector
-    {
-    public:
-        static vector with_polar_coordinates(real __r, real __angle);
-        static vector with_polar_coordinates(real __angle);
-    public:
-        explicit operator String() const;
-    public:
-        real angle() const noexcept { return atan2(y, x); }
-        real norm() const noexcept { return sqrt(sq(x) + sq(y)); }
-    public:
-        /************************
-         * Arithmetic operators *
-         ************************/
-
-        constexpr vector operator+() const noexcept;
-        constexpr vector operator-() const noexcept;
-
-        /************************
-         * Assignment operators *
-         ************************/
-
-        constexpr vector& operator+=(const vector&) noexcept;
-        constexpr vector& operator-=(const vector&) noexcept;
-        constexpr vector& operator*=(real) noexcept;
-    public:
-        real x = 0.;
-        real y = 0.;
-    };
+    class vector;
 
     /************************
      * Comparison operators *
@@ -69,6 +41,39 @@ namespace pmscore
     constexpr vector operator+(const vector&, const vector&) noexcept;
     constexpr vector operator-(const vector&, const vector&) noexcept;
     constexpr vector operator*(real, const vector&) noexcept;
+    constexpr vector operator/(const vector&, real);
+
+    class vector
+    {
+    public:
+        static vector with_polar_coordinates(real __r, real __angle);
+        static vector with_polar_coordinates(real __angle);
+    public:
+        explicit operator String() const;
+    public:
+        real angle() const noexcept { return atan2(y, x); }
+        real norm() const noexcept { return sqrt(sq(x) + sq(y)); }
+        vector unit() const { return (*this / norm()); }
+    public:
+        /************************
+         * Arithmetic operators *
+         ************************/
+
+        constexpr vector operator+() const noexcept;
+        constexpr vector operator-() const noexcept;
+
+        /************************
+         * Assignment operators *
+         ************************/
+
+        constexpr vector& operator+=(const vector&) noexcept;
+        constexpr vector& operator-=(const vector&) noexcept;
+        constexpr vector& operator*=(real) noexcept;
+        constexpr vector& operator/=(real);
+    public:
+        real x = 0.;
+        real y = 0.;
+    };
 }
 
 #include "math/vector.ipp"
