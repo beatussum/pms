@@ -38,31 +38,52 @@ namespace pmscore
         ) = 0;
     };
 
-    template <class _SpeedProfile, class _HeadingSpeedProfile>
+    template <
+        class _HeadingSpeedProfile,
+        class _SoiSpeedProfile,
+        class _SpeedProfile
+    >
     class correcter : public correcter_base
     {
     public:
-        enum class heading_mode
+        enum class heading_speed_mode : uint8_t
         {
             Fix,
             Off,
             Turn
         };
 
+        enum class soi_speed_mode : uint8_t
+        {
+            Run,
+            Off
+        };
+
+        enum class speed_mode : uint8_t
+        {
+            Run,
+            Off
+        };
+
         using heading_speed_profile_type = _HeadingSpeedProfile;
+        using soi_speed_profile_type     = _SoiSpeedProfile;
         using speed_profile_type         = _SpeedProfile;
     public:
         explicit constexpr correcter(
             arduino::motoreductor* __motor_a,
             arduino::motoreductor* __motor_b,
-            _SpeedProfile&& __s,
-            _HeadingSpeedProfile&& __hs
+            _HeadingSpeedProfile&& __hs,
+            _SoiSpeedProfile&& __ss,
+            _SpeedProfile&& __s
         ) noexcept
             : m_motor_a(__motor_a)
             , m_motor_b(__motor_b)
             , m_heading_speed_profile(forward<_HeadingSpeedProfile>(__hs))
+            , m_soi_speed_profile(forward<_SoiSpeedProfile>(__ss))
             , m_speed_profile(forward<_SpeedProfile>(__s))
-            , m_heading_mode(heading_mode::Fix)
+            , m_heading_speed_mode(heading_speed_mode::Fix)
+            , m_soi_speed_mode(soi_speed_mode::Off)
+            , m_speed_mode(speed_mode::Run)
             , m_omega(0)
         {}
     public:
@@ -78,10 +99,13 @@ namespace pmscore
         arduino::motoreductor*     m_motor_a;
         arduino::motoreductor*     m_motor_b;
         heading_speed_profile_type m_heading_speed_profile;
+        soi_speed_profile_type     m_soi_speed_profile;
         speed_profile_type         m_speed_profile;
 
-        heading_mode m_heading_mode;
-        int16_t      m_omega;
+        heading_speed_mode m_heading_speed_mode;
+        soi_speed_mode     m_soi_speed_mode;
+        speed_mode         m_speed_mode;
+        int16_t            m_omega;
     };
 }
 

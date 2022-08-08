@@ -18,17 +18,28 @@
 
 namespace pmscore
 {
-    template <class _SpeedProfile, class _HeadingSpeedProfile>
-    void correcter<_SpeedProfile, _HeadingSpeedProfile>::next_edge(
-        real __x_0,
-        real __x_f
-    ) noexcept
+    template <
+        class _HeadingSpeedProfile,
+        class _SoiSpeedProfile,
+        class _SpeedProfile
+    >
+    void correcter<_HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile>::
+    next_edge(real __x_0, real __x_f) noexcept
     {
-        m_speed_profile.init(__x_0, __x_f, 120);
+        m_heading_speed_mode = heading_speed_mode::Fix;
+        m_soi_speed_mode     = soi_speed_mode::Run;
+        m_speed_mode         = speed_mode::Off;
+
+        m_speed_profile.init(__x_0, __x_f);
     }
 
-    template <class _SpeedProfile, class _HeadingSpeedProfile>
-    void correcter<_SpeedProfile, _HeadingSpeedProfile>::update_status(
+    template <
+        class _HeadingSpeedProfile,
+        class _SoiSpeedProfile,
+        class _SpeedProfile
+    >
+    void correcter<_HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile>::
+    update_status(
         real __distance,
         real __rangle,
         vector __rposition,
@@ -36,41 +47,85 @@ namespace pmscore
     )
     {
         int16_t k = 0;
-        int16_t omega = m_speed_profile.compute_speed(__distance);
 
-        if (omega != m_omega) {
-            m_heading_mode = heading_mode::Off;
-            m_omega        = omega;
-        } else if (m_heading_mode == heading_mode::Off) {
-            m_heading_mode = heading_mode::Fix;
-        }
-
-        switch (m_heading_mode) {
-            case heading_mode::Fix:
+        switch (m_speed_mode) {
+            case speed_mode::Run:
                 {
-                    real gamma = (__tposition - __rposition).angle() - M_PI_2;
+                    int16_t omega = -m_speed_profile.compute_speed(__distance);
 
-                    if (
-                        m_heading_speed_profile.init(
-                            __rangle,
-                            gamma,
-                            static_cast<uint8_t>(255 - m_omega)
-                        )
-                    )
-                    {
-                        m_heading_mode = heading_mode::Turn;
+                    if (omega != m_omega) {
+                        if (omega < m_omega) {
+                            m_heading_speed_mode = heading_speed_mode::Fix;
+                        }
+
+                        m_omega = omega;
                     }
                 }
 
                 break;
-            case heading_mode::Off:
+            case speed_mode::Off:
+                m_omega = 0;
+
                 break;
-            case heading_mode::Turn:
+        }
+
+        switch (m_heading_speed_mode) {
+            case heading_speed_mode::Fix:
                 {
-                    k = m_heading_speed_profile.compute_speed(__rangle);
+                    real gamma = fmod(
+                        (__tposition - __rposition).angle() - M_PI_2,
+                        M_2PI
+                    );
+
+                    if (
+                        (
+                            (m_soi_speed_mode == soi_speed_mode::Off) &&
+                            m_heading_speed_profile.init(
+                                fmod(__rangle, M_2PI),
+                                gamma,
+                                static_cast<uint8_t>(255 - m_omega)
+                            )
+                        ) ||
+                        (
+                            (m_soi_speed_mode == soi_speed_mode::Run) &&
+                            m_soi_speed_profile.init(
+                                fmod(__rangle, M_2PI),
+                                gamma
+                            )
+                        )
+                    )
+                    {
+                        m_heading_speed_mode = heading_speed_mode::Turn;
+                    } else {
+                        m_soi_speed_mode = soi_speed_mode::Off;
+                        m_speed_mode     = speed_mode::Run;
+                    }
+                }
+
+                break;
+            case heading_speed_mode::Off:
+                break;
+            case heading_speed_mode::Turn:
+                {
+                    switch (m_soi_speed_mode) {
+                        case soi_speed_mode::Off:
+                            k = m_heading_speed_profile.compute_speed(
+                                fmod(__rangle, M_2PI)
+                            );
+
+                            break;
+                        case soi_speed_mode::Run:
+                            k = m_soi_speed_profile.compute_speed(
+                                fmod(__rangle, M_2PI)
+                            );
+
+                            break;
+                    }
 
                     if (k == 0) {
-                        m_heading_mode = heading_mode::Fix;
+                        m_heading_speed_mode = heading_speed_mode::Fix;
+                        m_soi_speed_mode     = soi_speed_mode::Off;
+                        m_speed_mode         = speed_mode::Run;
                     }
                 }
 

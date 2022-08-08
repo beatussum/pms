@@ -60,19 +60,29 @@ namespace pmscore
     {
         using namespace arduino;
 
-        m_distance = (m_rpos - m_tvertex).norm();
+        m_distance = dot(m_rpos - m_tvertex, m_ti->unit());
 
         if (m_tcurrent_edge == -1.) {
-            if (m_distance <= m_vertex_radius) {
+            if (abs(m_distance - m_ti->norm()) <= m_vertex_radius) {
+                m_tvertex += *m_ti;
+
+                if (++m_ti == (m_tpath + m_tpath_size)) {
+                    m_ti = m_tpath;
+                }
+
+                m_tangle         = m_ti->angle();
+                m_tangle_a_0     = __last_angle_a;
+                m_tangle_b_0     = __last_angle_b;
                 m_tcurrent_edge  = m_ti->norm();
-                m_tvertex       += *m_ti;
-                m_distance       = (m_rpos - m_tvertex).norm();
+                m_tpos          += m_tcurrent_pos;
+                m_tcurrent_pos   = {};
+                m_distance       = dot(m_rpos - m_tvertex, m_ti->unit());
 
                 m_tpos += vector::with_polar_coordinates(
                     m_tadvance * m_tcurrent_edge, m_tangle
                 );
 
-                m_correcter->next_edge(m_distance, 0);
+                m_correcter->next_edge(m_distance, m_tcurrent_edge);
             }
         } else {
             real v = (r / 2) * (
@@ -83,16 +93,7 @@ namespace pmscore
             m_tcurrent_pos = {v * cos(m_tangle), v * sin(m_tangle)};
 
             if (abs(v) >= (1 - m_tadvance) * m_tcurrent_edge) {
-                if (++m_ti == (m_tpath + m_tpath_size)) {
-                    m_ti = m_tpath;
-                }
-
-                m_tpos          += m_tcurrent_pos;
-                m_tcurrent_pos   = {};
-                m_tangle         = m_ti->angle();
-                m_tangle_a_0     = __last_angle_a;
-                m_tangle_b_0     = __last_angle_b;
-                m_tcurrent_edge  = -1.;
+                m_tcurrent_edge = -1.;
             }
         }
     }

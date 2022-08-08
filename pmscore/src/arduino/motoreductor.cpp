@@ -88,15 +88,18 @@ namespace pmscore::arduino
     void motoreductor::__set_direction_and_reverse(direction __d)
     {
         if (__d != m_direction) {
-            switch (__d) {
-                case direction::Front:
-                case direction::Back:
-                    m_encoder->reverse();
-
-                    break;
-                case direction::Brake:
-                case direction::Off:
-                    break;
+            if (
+                (
+                    (m_direction == direction::Front) &&
+                    (__d == direction::Back)
+                ) ||
+                (
+                    (m_direction == direction::Back) &&
+                    (__d == direction::Front)
+                )
+            )
+            {
+                m_encoder->reverse();
             }
 
             __set_direction(m_direction = __d);
@@ -110,12 +113,9 @@ namespace pmscore::arduino
         if (m_power < 0) {
             __set_direction_and_reverse(direction::Back);
             analogWrite(m_pin_pwm, static_cast<int>(-m_power));
-        } else if (m_power > 0) {
+        } else {
             __set_direction_and_reverse(direction::Front);
             analogWrite(m_pin_pwm, static_cast<int>(m_power));
-        } else {
-            __set_direction_and_reverse(direction::Off);
-            analogWrite(m_pin_pwm, 0);
         }
     }
 }

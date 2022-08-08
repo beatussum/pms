@@ -42,6 +42,7 @@ namespace pmscore
     constexpr vector operator-(const vector&, const vector&) noexcept;
     constexpr vector operator*(real, const vector&) noexcept;
     constexpr vector operator/(const vector&, real);
+    constexpr real dot(const vector&, const vector&) noexcept;
 
     class vector
     {
@@ -70,6 +71,7 @@ namespace pmscore
         constexpr vector& operator-=(const vector&) noexcept;
         constexpr vector& operator*=(real) noexcept;
         constexpr vector& operator/=(real);
+        constexpr real dot(const vector&) const noexcept;
     public:
         real x = 0.;
         real y = 0.;

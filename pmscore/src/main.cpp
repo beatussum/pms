@@ -20,6 +20,7 @@
 #include "arduino/encoder.hpp"
 #include "arduino/encoders.hpp"
 #include "arduino/motoreductor.hpp"
+#include "speed_profile/constant.hpp"
 #include "speed_profile/trapezoidal.hpp"
 #include "correcter.hpp"
 #include "position_computer.hpp"
@@ -37,30 +38,29 @@ arduino::motoreductor motor_b(6, 7, 5, &encoder_b);
 correcter corr(
     &motor_a,
     &motor_b,
+    speed_profile::trapezoidal(10., .01, 10, 0, 20, &angle_distance),
+    speed_profile::constant(.01, 100, &angle_distance),
 
-    speed_profile::trapezoidal(
-        1.,
-        20.,
-        80,
+    speed_profile::trapezoidal(2., 20., 100, 90, 180,
         [] (real __a, real __b) { return __b - __a; }
-    ),
+    )
 
-    speed_profile::trapezoidal(10., .01, 10, &angle_distance)
 );
 
 position_computer computer(
     &corr,
-    .1,
+    .2,
     {{0., 1'000.}, {-1'000., 0.}, {0., -1'000.}, {1'000., 0.}},
-    40.
+    5.
 );
 
 arduino::encoders encoders(&encoder_a, &encoder_b, &computer);
 
 void setup()
 {
-    arduino::set_main_encoders(encoders);
     Serial.begin(9600);
+
+    arduino::set_main_encoders(encoders);
     chopper.enable();
 }
 

@@ -19,43 +19,41 @@
 namespace pmscore::speed_profile
 {
     template <class _Distance>
-    bool trapezoidal<_Distance>::init(
-        real __x_0,
-        real __x_f,
-        uint8_t __M
-    ) noexcept
+    bool trapezoidal<_Distance>::init(real __x_0, real __x_f) noexcept
     {
         real diff = m_distance(__x_0, __x_f);
 
         if (abs(diff) > m_epsilon) {
-            m_is_increasing = (diff > 0);
+            m_is_increasing = (diff > 0.);
 
             m_x_0 = __x_0;
             m_x_f = __x_f;
 
             if (m_is_increasing) {
-                m_M = -static_cast<int16_t>(__M);
+                m_x_1 = m_x_0 +
+                    (static_cast<real>(m_M) - static_cast<real>(m_m_0)) / m_a;
 
-                m_x_1 = m_x_0 -
-                    (static_cast<real>(m_m) + static_cast<real>(m_M)) / m_a;
-
-                m_x_2 = m_x_f + static_cast<real>(m_M) / m_a;
+                m_x_2 = m_x_f +
+                    (static_cast<real>(m_m_f) - static_cast<real>(m_M)) / m_a;
             } else {
-                m_M = static_cast<int16_t>(__M);
-
-                m_x_1 = m_x_f + static_cast<real>(m_M) / m_a;
+                m_x_1 = m_x_f +
+                    (static_cast<real>(m_M) - static_cast<real>(m_m_f)) / m_a;
 
                 m_x_2 = m_x_0 +
-                    (static_cast<real>(m_m) - static_cast<real>(m_M)) / m_a;
+                    (static_cast<real>(m_m_0) - static_cast<real>(m_M)) / m_a;
             }
 
-            if ((m_x_2 - m_x_1) < 0) {
+            if ((m_x_2 - m_x_1) < 0.) {
                 m_is_triangular = true;
 
                 if (m_is_increasing) {
-                    m_x_3 = (m_x_0 + m_x_f) / 2 + m_m / (2 * m_a);
+                    m_x_3 = (m_x_0 + m_x_f) / 2 +
+                        (static_cast<real>(m_m_f) - static_cast<real>(m_m_0)) /
+                        (2 * m_a);
                 } else {
-                    m_x_3 = (m_x_0 + m_x_f) / 2 - m_m / (2 * m_a);
+                    m_x_3 = (m_x_0 + m_x_f) / 2 +
+                        (static_cast<real>(m_m_0) - static_cast<real>(m_m_f)) /
+                        (2 * m_a);
                 }
             } else {
                 m_is_triangular = false;
@@ -68,14 +66,30 @@ namespace pmscore::speed_profile
     }
 
     template <class _Distance>
+    bool trapezoidal<_Distance>::init(
+        real __x_0,
+        real __x_f,
+        uint8_t __M
+    ) noexcept
+    {
+        m_M = __M;
+
+        return init(__x_0, __x_f);
+    }
+
+    template <class _Distance>
     int16_t trapezoidal<_Distance>::compute_speed(real __x) noexcept
     {
         int16_t speed;
 
         if ((__x < m_x_0) == m_is_increasing) {
-            speed = m_is_increasing ? -m_m : m_m;
+            speed = m_is_increasing ?
+                -static_cast<int16_t>(m_m_0) :
+                static_cast<int16_t>(m_m_0);
         } else if ((__x > m_x_f) == m_is_increasing) {
-            speed = 0;
+            speed = m_is_increasing ?
+                -static_cast<int16_t>(m_m_f) :
+                static_cast<int16_t>(m_m_f);
         } else {
             if (
                 ((__x < m_x_1) && m_is_triangular) ||
@@ -84,8 +98,8 @@ namespace pmscore::speed_profile
             {
                 speed = static_cast<int16_t>(round(
                     m_is_increasing ?
-                    m_a * (m_x_0 - __x) - m_m :
-                    m_a * (__x - m_x_f)
+                    m_a * (m_x_0 - __x) - static_cast<real>(m_m_0) :
+                    m_a * (__x - m_x_f) + static_cast<real>(m_m_f)
                 ));
             } else if (
                 m_is_triangular ||
@@ -94,11 +108,13 @@ namespace pmscore::speed_profile
             {
                 speed = static_cast<int16_t>(round(
                     m_is_increasing ?
-                    m_a * (__x - m_x_f) :
-                    m_a * (m_x_0 - __x) + m_m
+                    m_a * (__x - m_x_f) - static_cast<real>(m_m_f) :
+                    m_a * (m_x_0 - __x) + static_cast<real>(m_m_0)
                 ));
             } else {
-                speed = m_M;
+            speed = m_is_increasing ?
+                -static_cast<int16_t>(m_M) :
+                static_cast<int16_t>(m_M);
             }
         }
 

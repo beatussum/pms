@@ -75,7 +75,6 @@ namespace pmscore
         const vector* get_current_edge() const noexcept { return m_ti; }
         size_t get_path_size() const noexcept { return m_tpath_size; }
         vector get_tpos() const noexcept { return m_tpos + m_tcurrent_pos; }
-        vector get_tvertex() const noexcept { return m_tvertex; }
         real get_distance() const noexcept { return m_distance; }
     private:
         correcter_base* m_correcter;

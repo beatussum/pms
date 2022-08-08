@@ -43,12 +43,12 @@ namespace pmscore
             m_tadvance * m_tcurrent_edge, m_tangle
         ))
 
-        , m_tvertex(__tpath[0])
-        , m_distance(__tpath[0].norm())
+        , m_tvertex()
+        , m_distance(0.)
     {
         copy(begin(__tpath), end(__tpath), m_tpath);
 
-        m_correcter->next_edge(m_distance, 0);
+        m_correcter->next_edge(m_distance, m_tcurrent_edge);
     }
 
     template <size_t _n>

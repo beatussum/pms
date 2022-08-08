@@ -18,7 +18,7 @@
 
 #include "math/math.hpp"
 
-#include <Arduino.h>
+#include <math.h>
 
 namespace pmscore
 {

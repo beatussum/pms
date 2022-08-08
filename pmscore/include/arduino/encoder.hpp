@@ -38,6 +38,7 @@ namespace pmscore::arduino
     public:
         real get_angle() const noexcept;
         real get_incrementation() const noexcept { return m_incrementation; }
+        bool is_reverse() const noexcept { return m_reverse; }
 
         void reverse() noexcept { m_reverse = !m_reverse; }
     private:

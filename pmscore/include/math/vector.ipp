@@ -66,6 +66,11 @@ namespace pmscore
         return {__a.x / __b, __a.y / __b};
     }
 
+    constexpr real dot(const vector& __a, const vector& __b) noexcept
+    {
+        return __a.x * __b.x + __a.y * __b.y;
+    }
+
     /************************
      * Assignment operators *
      ************************/
@@ -88,5 +93,10 @@ namespace pmscore
     constexpr vector& vector::operator/=(real __b) noexcept
     {
         return *this = (*this / __b);
+    }
+
+    constexpr real vector::dot(const vector& __b) const noexcept
+    {
+        return pmscore::dot(*this, __b);
     }
 }
