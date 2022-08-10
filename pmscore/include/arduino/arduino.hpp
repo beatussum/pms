@@ -29,6 +29,9 @@ namespace pmscore::arduino
 
     constexpr real d = 7.2; /* in centimeter */
     constexpr real r = 2.2; /* in centimeter */
+
+    constexpr real r_2  = (r / 2);
+    constexpr real r_2d = (r / (2 * d));
 }
 
 #endif // PMSCORE_ARDUINO_ARDUINO_HPP

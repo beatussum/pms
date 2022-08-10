@@ -19,7 +19,7 @@
 #include "position_computer.hpp"
 
 #include "arduino/arduino.hpp"
-#include "correcter.hpp"
+#include "core/core.hpp"
 
 namespace pmscore
 {
@@ -46,10 +46,10 @@ namespace pmscore
     {
         using namespace arduino;
 
-        real v = (r / 2) *
+        real v = r_2 *
             ((__angle_a - __last_angle_a) + (__angle_b - __last_angle_b));
 
-        m_rangle  = (r / (2 * d)) * (__last_angle_b - __last_angle_a);
+        m_rangle  = r_2d * (__last_angle_b - __last_angle_a);
         m_rpos   += {-v * sin(m_rangle), v * cos(m_rangle)};
     }
 
@@ -62,21 +62,23 @@ namespace pmscore
 
         m_distance = dot(m_rpos - m_tvertex, m_ti->unit());
 
-        if (m_tcurrent_edge == -1.) {
-            if (abs(m_distance - m_ti->norm()) <= m_vertex_radius) {
+        if (m_tis_vertex_reached) {
+            if (abs(m_distance - m_tcurrent_edge) <= m_vertex_radius) {
                 m_tvertex += *m_ti;
 
                 if (++m_ti == (m_tpath + m_tpath_size)) {
                     m_ti = m_tpath;
                 }
 
-                m_tangle         = m_ti->angle();
-                m_tangle_a_0     = __last_angle_a;
-                m_tangle_b_0     = __last_angle_b;
-                m_tcurrent_edge  = m_ti->norm();
-                m_tpos          += m_tcurrent_pos;
-                m_tcurrent_pos   = {};
-                m_distance       = dot(m_rpos - m_tvertex, m_ti->unit());
+                m_tangle              = m_ti->angle();
+                m_tangle_a_0          = __last_angle_a;
+                m_tangle_b_0          = __last_angle_b;
+                m_tcurrent_edge       = m_ti->norm();
+                m_ttarget             = (1 - m_tadvance) * m_tcurrent_edge;
+                m_tpos               += m_tcurrent_pos;
+                m_tcurrent_pos        = {};
+                m_distance            = dot(m_rpos - m_tvertex, m_ti->unit());
+                m_tis_vertex_reached  = false;
 
                 m_tpos += vector::with_polar_coordinates(
                     m_tadvance * m_tcurrent_edge, m_tangle
@@ -85,15 +87,15 @@ namespace pmscore
                 m_correcter->next_edge(m_distance, m_tcurrent_edge);
             }
         } else {
-            real v = (r / 2) * (
+            real v = r_2 * (
                 (__last_angle_a - m_tangle_a_0) +
                 (__last_angle_b - m_tangle_b_0)
             );
 
             m_tcurrent_pos = {v * cos(m_tangle), v * sin(m_tangle)};
 
-            if (abs(v) >= (1 - m_tadvance) * m_tcurrent_edge) {
-                m_tcurrent_edge = -1.;
+            if (abs(v) >= m_ttarget) {
+                m_tis_vertex_reached = true;
             }
         }
     }
@@ -109,5 +111,10 @@ namespace pmscore
         __update_tstatus(__last_angle_a, __last_angle_b);
 
         m_correcter->update_status(m_distance, m_rangle, m_rpos, get_tpos());
+    }
+
+    bool position_computer::is_vertex_reached() const noexcept
+    {
+        return m_tis_vertex_reached;
     }
 }

@@ -34,6 +34,13 @@ namespace pmscore
     constexpr _T&& forward(remove_reference_t<_T>&&) noexcept;
 
     /********
+     * move *
+     ********/
+
+    template <class _T>
+    constexpr remove_reference_t<_T>&& move(_T&&) noexcept;
+
+    /********
      * pair *
      ********/
 

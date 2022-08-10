@@ -24,7 +24,7 @@ namespace pmscore
         real __tadvance,
         const vector (&__tpath)[_n],
         real __vertex_radius
-    ) noexcept
+    )
         : m_correcter(__c)
         , m_tadvance(__tadvance)
         , m_tpath(new vector[_n])
@@ -35,8 +35,10 @@ namespace pmscore
         , m_tangle_a_0(0.)
         , m_tangle_b_0(0.)
         , m_tcurrent_edge(__tpath[0].norm())
+        , m_ttarget((1 - m_tadvance) * m_tcurrent_edge)
         , m_tcurrent_pos()
         , m_ti(m_tpath)
+        , m_tis_vertex_reached(false)
         , m_tpath_size(_n)
 
         , m_tpos(vector::with_polar_coordinates(

@@ -72,10 +72,10 @@ namespace pmscore
         explicit constexpr correcter(
             arduino::motoreductor* __motor_a,
             arduino::motoreductor* __motor_b,
-            _HeadingSpeedProfile&& __hs,
-            _SoiSpeedProfile&& __ss,
-            _SpeedProfile&& __s
-        ) noexcept
+            _HeadingSpeedProfile&& __hs = _HeadingSpeedProfile(),
+            _SoiSpeedProfile&& __ss = _SoiSpeedProfile(),
+            _SpeedProfile&& __s = _SpeedProfile()
+        )
             : m_motor_a(__motor_a)
             , m_motor_b(__motor_b)
             , m_heading_speed_profile(forward<_HeadingSpeedProfile>(__hs))

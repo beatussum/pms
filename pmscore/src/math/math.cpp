@@ -18,13 +18,11 @@
 
 #include "math/math.hpp"
 
-#include <math.h>
-
 namespace pmscore
 {
     real angle_distance(real __a, real __b)
     {
-        __a = fmod(__b, M_2PI) - fmod(__a, M_2PI);
+        __a = simplify_angle(__b) - simplify_angle(__a);
 
         if (__a > M_PI) {
             __a -= M_2PI;

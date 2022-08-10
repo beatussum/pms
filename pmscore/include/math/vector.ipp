@@ -61,7 +61,7 @@ namespace pmscore
         return {__a * __b.x, __a * __b.y};
     }
 
-    constexpr vector operator/(const vector& __a, real __b) noexcept
+    constexpr vector operator/(const vector& __a, real __b)
     {
         return {__a.x / __b, __a.y / __b};
     }
@@ -90,7 +90,7 @@ namespace pmscore
         return *this = (__a * *this);
     }
 
-    constexpr vector& vector::operator/=(real __b) noexcept
+    constexpr vector& vector::operator/=(real __b)
     {
         return *this = (*this / __b);
     }

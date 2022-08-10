@@ -72,24 +72,23 @@ namespace pmscore
         switch (m_heading_speed_mode) {
             case heading_speed_mode::Fix:
                 {
-                    real gamma = fmod(
-                        (__tposition - __rposition).angle() - M_PI_2,
-                        M_2PI
+                    real gamma = simplify_angle(
+                        (__tposition - __rposition).angle() - M_PI_2
                     );
 
                     if (
                         (
                             (m_soi_speed_mode == soi_speed_mode::Off) &&
                             m_heading_speed_profile.init(
-                                fmod(__rangle, M_2PI),
+                                simplify_angle(__rangle),
                                 gamma,
-                                static_cast<uint8_t>(255 - m_omega)
+                                255 - m_omega
                             )
                         ) ||
                         (
                             (m_soi_speed_mode == soi_speed_mode::Run) &&
                             m_soi_speed_profile.init(
-                                fmod(__rangle, M_2PI),
+                                simplify_angle(__rangle),
                                 gamma
                             )
                         )
@@ -110,13 +109,13 @@ namespace pmscore
                     switch (m_soi_speed_mode) {
                         case soi_speed_mode::Off:
                             k = m_heading_speed_profile.compute_speed(
-                                fmod(__rangle, M_2PI)
+                                simplify_angle(__rangle)
                             );
 
                             break;
                         case soi_speed_mode::Run:
                             k = m_soi_speed_profile.compute_speed(
-                                fmod(__rangle, M_2PI)
+                                simplify_angle(__rangle)
                             );
 
                             break;

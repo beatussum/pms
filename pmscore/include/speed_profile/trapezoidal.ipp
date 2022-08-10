@@ -69,7 +69,7 @@ namespace pmscore::speed_profile
     bool trapezoidal<_Distance>::init(
         real __x_0,
         real __x_f,
-        uint8_t __M
+        int16_t __M
     ) noexcept
     {
         m_M = __M;
@@ -83,13 +83,9 @@ namespace pmscore::speed_profile
         int16_t speed;
 
         if ((__x < m_x_0) == m_is_increasing) {
-            speed = m_is_increasing ?
-                -static_cast<int16_t>(m_m_0) :
-                static_cast<int16_t>(m_m_0);
+            speed = m_is_increasing ? -m_m_0 : m_m_0;
         } else if ((__x > m_x_f) == m_is_increasing) {
-            speed = m_is_increasing ?
-                -static_cast<int16_t>(m_m_f) :
-                static_cast<int16_t>(m_m_f);
+            speed = m_is_increasing ? -m_m_f : m_m_f;
         } else {
             if (
                 ((__x < m_x_1) && m_is_triangular) ||
@@ -112,12 +108,17 @@ namespace pmscore::speed_profile
                     m_a * (m_x_0 - __x) + static_cast<real>(m_m_0)
                 ));
             } else {
-            speed = m_is_increasing ?
-                -static_cast<int16_t>(m_M) :
-                static_cast<int16_t>(m_M);
+                speed = m_is_increasing ? -m_M : m_M;
             }
         }
 
         return speed;
+    }
+
+    template <class _Distance>
+    typename trapezoidal<_Distance>::distance_type
+    trapezoidal<_Distance>::set_distance(distance_type __d)
+    {
+        m_distance = move(__d);
     }
 }

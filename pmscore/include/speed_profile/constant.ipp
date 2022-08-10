@@ -39,7 +39,7 @@ namespace pmscore::speed_profile
     bool constant<_Distance>::init(
         real __x_0,
         real __x_f,
-        uint8_t __M
+        [[maybe_unused]] int16_t __M
     ) noexcept
     {
         return init(__x_0, __x_f);
@@ -51,9 +51,7 @@ namespace pmscore::speed_profile
         if ((__x > m_x_f) == m_is_increasing) {
             return 0;
         } else {
-            return m_is_increasing ?
-                -static_cast<int16_t>(m_M) :
-                static_cast<int16_t>(m_M);
+            return m_is_increasing ? -m_M : m_M;
         }
     }
 }

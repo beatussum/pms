@@ -19,9 +19,9 @@
 #ifndef PMSCORE_POSITION_COMPUTER_HPP
 #define PMSCORE_POSITION_COMPUTER_HPP
 
-#include "core/core.hpp"
 #include "core/iterator.hpp"
 #include "math/vector.hpp"
+#include "correcter.hpp"
 
 namespace pmscore
 {
@@ -36,7 +36,7 @@ namespace pmscore
             real __tadvance,
             const vector (&__tpath)[_n],
             real __vertex_radius
-        ) noexcept;
+        );
 
         ~position_computer();
     public:
@@ -73,6 +73,7 @@ namespace pmscore
         vector get_rpos() const noexcept { return m_rpos; }
         real get_tangle() const noexcept { return m_tangle; }
         const vector* get_current_edge() const noexcept { return m_ti; }
+        bool is_vertex_reached() const noexcept;
         size_t get_path_size() const noexcept { return m_tpath_size; }
         vector get_tpos() const noexcept { return m_tpos + m_tcurrent_pos; }
         real get_distance() const noexcept { return m_distance; }
@@ -88,8 +89,10 @@ namespace pmscore
         real          m_tangle_a_0;
         real          m_tangle_b_0;
         real          m_tcurrent_edge;
+        real          m_ttarget;
         vector        m_tcurrent_pos;
         const vector* m_ti;
+        bool          m_tis_vertex_reached;
         size_t        m_tpath_size;
         vector        m_tpos;
         vector        m_tvertex;

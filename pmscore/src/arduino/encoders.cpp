@@ -44,11 +44,6 @@ namespace pmscore::arduino
         m_last_angle_b = angle_b;
     }
 
-    void set_main_encoders(const encoders& __e) noexcept
-    {
-        set_main_encoders(__e.m_encoder_a, __e.m_encoder_b);
-    }
-
     void set_main_encoders(encoder* __a, encoder* __b) noexcept
     {
         if (main_encoders[0] != nullptr) {
@@ -77,5 +72,10 @@ namespace pmscore::arduino
                 CHANGE
             );
         }
+    }
+
+    void set_main_encoders(const encoders& __e) noexcept
+    {
+        set_main_encoders(__e.m_encoder_a, __e.m_encoder_b);
     }
 }

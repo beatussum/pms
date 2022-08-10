@@ -19,6 +19,8 @@
 #ifndef PMSCORE_MATH_MATH_HPP
 #define PMSCORE_MATH_MATH_HPP
 
+#include <math.h>
+
 #define M_2PI 6.283185307179586476925286766559
 
 namespace pmscore
@@ -26,6 +28,7 @@ namespace pmscore
     using real = double;
 
     real angle_distance(real, real);
+    inline real simplify_angle(real __a) { return fmod(__a, M_2_PI); }
 }
 
 #endif // PMSCORE_MATH_MATH_HPP

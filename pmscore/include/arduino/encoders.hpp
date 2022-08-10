@@ -57,8 +57,8 @@ namespace pmscore::arduino
 
     inline encoder* main_encoders[] = {nullptr, nullptr};
 
-    void set_main_encoders(const encoders&) noexcept;
     void set_main_encoders(encoder*, encoder*) noexcept;
+    void set_main_encoders(const encoders&) noexcept;
 
     template <size_t>
     void update_main_encoder_status() noexcept;
