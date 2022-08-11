@@ -96,6 +96,51 @@ namespace pmscore
             vector __rposition,
             vector __tposition
         ) override;
+    public:
+        arduino::motoreductor* get_motor_a() const noexcept
+            { return m_motor_a; }
+
+        void set_motor_a(arduino::motoreductor* __m) noexcept
+            { m_motor_a = __m; }
+
+        arduino::motoreductor* get_motor_b() const noexcept
+            { return m_motor_b; }
+
+        void set_motor_b(arduino::motoreductor* __m) noexcept
+            { m_motor_b = __m; }
+
+        heading_speed_profile_type get_heading_speed_profile()
+        const noexcept_mov(heading_speed_profile_type)
+            { return m_heading_speed_profile; }
+
+        void set_heading_speed_profile(heading_speed_profile_type __hs)
+        noexcept_cm(heading_speed_profile_type)
+            { m_heading_speed_profile = move(__hs); }
+
+        soi_speed_profile_type get_soi_speed_profile()
+        const noexcept_mov(soi_speed_profile_type)
+            { return m_soi_speed_profile; }
+
+        void set_soi_speed_profile(soi_speed_profile_type __ss)
+        noexcept_cm(soi_speed_profile_type)
+            { m_soi_speed_profile = move(__ss); }
+
+        speed_profile_type get_speed_profile()
+        const noexcept_mov(speed_profile_type)
+            { return m_speed_profile; }
+
+        void set_speed_profile(speed_profile_type __s)
+        noexcept_cm(speed_profile_type)
+            { m_speed_profile = move(__s); }
+
+        heading_speed_mode get_heading_speed_mode() const noexcept
+            { return m_heading_speed_mode; }
+
+        soi_speed_mode get_soi_speed_mode() const noexcept
+            { return m_soi_speed_mode; }
+
+        speed_mode get_speed_mode() const noexcept { return m_speed_mode; }
+        int16_t get_omega() const noexcept { return m_omega; }
     private:
         arduino::motoreductor*     m_motor_a;
         arduino::motoreductor*     m_motor_b;

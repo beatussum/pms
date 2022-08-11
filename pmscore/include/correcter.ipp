@@ -27,8 +27,7 @@ namespace pmscore
         _HeadingSpeedProfile,
         _SoiSpeedProfile,
         _SpeedProfile
-    >::
-    next_edge(real __x_0, real __x_f) noexcept
+    >::next_edge(real __x_0, real __x_f) noexcept
     {
         m_heading_speed_mode = heading_speed_mode::Fix;
         m_soi_speed_mode     = soi_speed_mode::Run;
@@ -42,8 +41,11 @@ namespace pmscore
         class _SoiSpeedProfile,
         class _SpeedProfile
     >
-    void correcter<_HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile>::
-    update_status(
+    void correcter<
+        _HeadingSpeedProfile,
+        _SoiSpeedProfile,
+        _SpeedProfile
+    >::update_status(
         real __distance,
         real __rangle,
         vector __rposition,

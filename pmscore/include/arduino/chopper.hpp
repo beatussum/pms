@@ -26,12 +26,14 @@ namespace pmscore::arduino
     class chopper
     {
     public:
-        explicit chopper(pin_t __stby);
+        explicit chopper(pin_t __pin_stby);
     public:
         void enable(bool = true) const;
         void disable() const { enable(false); }
+    public:
+        pin_t get_pin_stby() const noexcept { return m_pin_stby; }
     private:
-        pin_t m_stby;
+        pin_t m_pin_stby;
     };
 }
 

@@ -36,6 +36,7 @@ namespace pmscore::arduino
     public:
         explicit encoder(pin_t __pin);
     public:
+        pin_t get_pin() const noexcept { return m_pin; }
         real get_angle() const noexcept;
         real get_incrementation() const noexcept { return m_incrementation; }
         bool is_reverse() const noexcept { return m_reverse; }

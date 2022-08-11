@@ -35,8 +35,8 @@ namespace pmscore::arduino
         , m_pin_b(__pinb)
         , m_pin_pwm(__pwm)
         , m_encoder(__e)
-        , m_direction(__direction_from_power(__power))
         , m_power(__power)
+        , m_direction(__direction_from_power(m_power))
     {
         pinMode(m_pin_a, OUTPUT);
         pinMode(m_pin_b, OUTPUT);

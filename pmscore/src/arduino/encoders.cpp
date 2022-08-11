@@ -44,6 +44,11 @@ namespace pmscore::arduino
         m_last_angle_b = angle_b;
     }
 
+    void encoders::set_computer(position_computer* __c) noexcept
+    {
+        m_computer = __c;
+    }
+
     void set_main_encoders(encoder* __a, encoder* __b) noexcept
     {
         if (main_encoders[0] != nullptr) {

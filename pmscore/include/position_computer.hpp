@@ -61,8 +61,7 @@ namespace pmscore
         correcter_base* get_correcter() const noexcept { return m_correcter; }
         real get_tadvance() const noexcept { return m_tadvance; }
 
-        const vector* get_path() const noexcept { return m_tpath; }
-        vector* get_path() noexcept { return m_tpath; }
+        vector* get_path() const noexcept { return m_tpath; }
 
         template <size_t _n>
         void set_path(const vector (&)[_n]) noexcept;

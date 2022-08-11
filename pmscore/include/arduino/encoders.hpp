@@ -46,6 +46,18 @@ namespace pmscore::arduino
         {}
     public:
         void update_status();
+    public:
+        encoder* get_encoder_a() const noexcept { return m_encoder_a; }
+        void set_encoder_a(encoder* __e) noexcept { m_encoder_a = __e; }
+
+        encoder* get_encoder_b() const noexcept { return m_encoder_b; }
+        void set_encoder_b(encoder* __e) noexcept { m_encoder_b = __e; }
+
+        position_computer* get_computer() const noexcept { return m_computer; }
+        void set_computer(position_computer* __c) noexcept;
+
+        real get_last_angle_a() const noexcept { return m_last_angle_a; }
+        real get_last_angle_b() const noexcept { return m_last_angle_a; }
     private:
         encoder*           m_encoder_a;
         encoder*           m_encoder_b;

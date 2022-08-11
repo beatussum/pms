@@ -22,14 +22,14 @@
 
 namespace pmscore::arduino
 {
-    chopper::chopper(pin_t __stby)
-        : m_stby(__stby)
+    chopper::chopper(pin_t __pin_stby)
+        : m_pin_stby(__pin_stby)
     {
-        pinMode(m_stby, OUTPUT);
+        pinMode(m_pin_stby, OUTPUT);
     }
 
     void chopper::enable(bool __b) const
     {
-        digitalWrite(m_stby, __b);
+        digitalWrite(m_pin_stby, __b);
     }
 }
