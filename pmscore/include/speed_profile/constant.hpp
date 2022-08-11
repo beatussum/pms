@@ -34,7 +34,7 @@ namespace pmscore::speed_profile
     public:
         using distance_type = _Distance;
     public:
-        explicit constant(
+        explicit constexpr constant(
             real __epsilon,
             int16_t __M
         ) noexcept_def(_Distance)
@@ -43,7 +43,7 @@ namespace pmscore::speed_profile
             , m_distance()
         {}
 
-        explicit constant(
+        explicit constexpr constant(
             real __epsilon,
             int16_t __M,
             _Distance&& __d
@@ -53,19 +53,22 @@ namespace pmscore::speed_profile
             , m_distance(forward<_Distance>(__d))
         {}
     public:
-        bool init(real __x_0, real __x_f) noexcept;
-        int16_t compute_speed(real __x) noexcept;
+        constexpr bool init(real __x_0, real __x_f) noexcept;
+        constexpr int16_t compute_speed(real __x) noexcept;
     public:
-        real get_epsilon() const noexcept { return m_epsilon; }
-        void set_epsilon(real __e) noexcept { m_epsilon = __e; }
+        constexpr real get_epsilon() const noexcept { return m_epsilon; }
+        constexpr void set_epsilon(real __e) noexcept { m_epsilon = __e; }
 
-        int16_t get_M() const noexcept { return m_M; }
-        void set_M(int16_t __M) noexcept { m_M = __M; }
+        constexpr int16_t get_M() const noexcept { return m_M; }
+        constexpr void set_M(int16_t __M) noexcept { m_M = __M; }
 
-        distance_type get_distance() const { return m_distance; }
-        void set_distance(distance_type __d) const { m_distance = move(__d); }
+        constexpr distance_type
+        get_distance() const noexcept_mov(distance_type);
 
-        bool is_increasing() const noexcept { return m_is_increasing; }
+        constexpr void
+        set_distance(distance_type __d) noexcept_cm(distance_type);
+
+        constexpr bool is_increasing() const noexcept { return m_is_increasing; }
     private:
         real          m_epsilon;
         int16_t       m_M;

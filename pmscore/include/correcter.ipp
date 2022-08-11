@@ -23,7 +23,11 @@ namespace pmscore
         class _SoiSpeedProfile,
         class _SpeedProfile
     >
-    void correcter<_HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile>::
+    constexpr void correcter<
+        _HeadingSpeedProfile,
+        _SoiSpeedProfile,
+        _SpeedProfile
+    >::
     next_edge(real __x_0, real __x_f) noexcept
     {
         m_heading_speed_mode = heading_speed_mode::Fix;

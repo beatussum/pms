@@ -88,7 +88,7 @@ namespace pmscore
             , m_omega(0)
         {}
     public:
-        void next_edge(real __x_0, real __x_f) noexcept override;
+        constexpr void next_edge(real __x_0, real __x_f) noexcept override;
 
         void update_status(
             real __distance,

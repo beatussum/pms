@@ -19,7 +19,10 @@
 namespace pmscore::speed_profile
 {
     template <class _Distance>
-    bool trapezoidal<_Distance>::init(real __x_0, real __x_f) noexcept
+    constexpr bool trapezoidal<_Distance>::init(
+        real __x_0,
+        real __x_f
+    ) noexcept
     {
         real diff = m_distance(__x_0, __x_f);
 
@@ -66,7 +69,7 @@ namespace pmscore::speed_profile
     }
 
     template <class _Distance>
-    int16_t trapezoidal<_Distance>::compute_speed(real __x) noexcept
+    constexpr int16_t trapezoidal<_Distance>::compute_speed(real __x) noexcept
     {
         int16_t speed;
 
@@ -104,9 +107,29 @@ namespace pmscore::speed_profile
     }
 
     template <class _Distance>
-    typename trapezoidal<_Distance>::distance_type
-    trapezoidal<_Distance>::set_distance(distance_type __d)
+    constexpr typename trapezoidal<_Distance>::distance_type
+    trapezoidal<_Distance>::get_distance() const noexcept_mov(distance_type)
+    {
+        return m_distance;
+    }
+
+    template <class _Distance>
+    constexpr void trapezoidal<_Distance>::set_distance(
+        distance_type __d
+    ) noexcept_cm(distance_type)
     {
         m_distance = move(__d);
+    }
+
+    template <class _Distance>
+    constexpr bool trapezoidal<_Distance>::is_increasing() const noexcept
+    {
+        return m_is_increasing;
+    }
+
+    template <class _Distance>
+    constexpr bool trapezoidal<_Distance>::is_triangular() const noexcept
+    {
+        return m_is_triangular;
     }
 }

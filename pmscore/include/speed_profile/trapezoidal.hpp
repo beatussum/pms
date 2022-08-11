@@ -33,7 +33,7 @@ namespace pmscore::speed_profile
     public:
         using distance_type = _Distance;
     public:
-        explicit trapezoidal(
+        explicit constexpr trapezoidal(
             real __a,
             real __epsilon,
             int16_t __m_0,
@@ -54,7 +54,7 @@ namespace pmscore::speed_profile
             , m_x_2(0.)
         {}
 
-        explicit trapezoidal(
+        explicit constexpr trapezoidal(
             real __a,
             real __epsilon,
             int16_t __m_0,
@@ -76,35 +76,38 @@ namespace pmscore::speed_profile
             , m_x_2(0.)
         {}
     public:
-        bool init(real __x_0, real __x_f) noexcept;
-        int16_t compute_speed(real __x) noexcept;
+        constexpr bool init(real __x_0, real __x_f) noexcept;
+        constexpr int16_t compute_speed(real __x) noexcept;
     public:
-        real get_a() const noexcept { return m_a; }
-        void set_a(real __a) noexcept { m_a = __a; }
+        constexpr real get_a() const noexcept { return m_a; }
+        constexpr void set_a(real __a) noexcept { m_a = __a; }
 
-        real get_epsilon() const noexcept { return m_epsilon; }
-        void set_epsilon(real __e) noexcept { m_epsilon = __e; }
+        constexpr real get_epsilon() const noexcept { return m_epsilon; }
+        constexpr void set_epsilon(real __e) noexcept { m_epsilon = __e; }
 
-        int16_t get_m_0() const noexcept { return m_m_0; }
-        void set_m_0(int16_t __m) noexcept { m_m_0 = __m; }
+        constexpr int16_t get_m_0() const noexcept { return m_m_0; }
+        constexpr void set_m_0(int16_t __m) noexcept { m_m_0 = __m; }
 
-        int16_t get_m_f() const noexcept { return m_m_f; }
-        void set_m_f(int16_t __m) noexcept { m_m_f = __m; }
+        constexpr int16_t get_m_f() const noexcept { return m_m_f; }
+        constexpr void set_m_f(int16_t __m) noexcept { m_m_f = __m; }
 
-        int16_t get_M() const noexcept { return m_M; }
-        void set_M(int16_t __M) noexcept { m_M = __M; }
+        constexpr int16_t get_M() const noexcept { return m_M; }
+        constexpr void set_M(int16_t __M) noexcept { m_M = __M; }
 
-        distance_type get_distance() const { return m_distance; }
-        distance_type set_distance(distance_type);
+        constexpr distance_type
+        get_distance() const noexcept_mov(distance_type);
 
-        bool is_increasing() const noexcept { return m_is_increasing; }
-        bool is_triangular() const noexcept { return m_is_triangular; }
+        constexpr void
+        set_distance(distance_type) noexcept_cm(distance_type);
 
-        real get_x_0() const noexcept { return m_x_0; }
-        real get_x_f() const noexcept { return m_x_f; }
-        real get_x_1() const noexcept { return m_x_1; }
-        real get_x_2() const noexcept { return m_x_2; }
-        real get_x_3() const noexcept { return m_x_3; }
+        constexpr bool is_increasing() const noexcept;
+        constexpr bool is_triangular() const noexcept;
+
+        constexpr real get_x_0() const noexcept { return m_x_0; }
+        constexpr real get_x_f() const noexcept { return m_x_f; }
+        constexpr real get_x_1() const noexcept { return m_x_1; }
+        constexpr real get_x_2() const noexcept { return m_x_2; }
+        constexpr real get_x_3() const noexcept { return m_x_3; }
     private:
         real          m_a;
         real          m_epsilon;

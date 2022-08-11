@@ -19,7 +19,7 @@
 namespace pmscore::speed_profile
 {
     template <class _Distance>
-    bool constant<_Distance>::init(real __x_0, real __x_f) noexcept
+    constexpr bool constant<_Distance>::init(real __x_0, real __x_f) noexcept
     {
         real diff = m_distance(__x_0, __x_f);
 
@@ -36,12 +36,27 @@ namespace pmscore::speed_profile
     }
 
     template <class _Distance>
-    int16_t constant<_Distance>::compute_speed(real __x) noexcept
+    constexpr int16_t constant<_Distance>::compute_speed(real __x) noexcept
     {
         if ((__x > m_x_f) == m_is_increasing) {
             return 0;
         } else {
             return m_is_increasing ? -m_M : m_M;
         }
+    }
+
+    template <class _Distance>
+    constexpr typename constant<_Distance>::distance_type
+    constant<_Distance>::get_distance() const noexcept_mov(distance_type)
+    {
+        return m_distance;
+    }
+
+    template <class _Distance>
+    constexpr void constant<_Distance>::set_distance(
+        distance_type __d
+    ) noexcept_cm(distance_type)
+    {
+        m_distance = move(__d);
     }
 }

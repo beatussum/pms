@@ -160,7 +160,7 @@ namespace pmscore
      ***********/
 
     template <class _T>
-    decltype(detail::declval<_T>(0)) declval() noexcept;
+    constexpr decltype(detail::declval<_T>(0)) declval() noexcept;
 
     /**********************
      * is_*_constructible *

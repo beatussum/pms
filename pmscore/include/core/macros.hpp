@@ -23,21 +23,48 @@
 
 namespace pmscore::detail
 {
+    /***************
+     * noexcept_cm *
+     ***************/
+
+    template <class _T>
+    struct is_nothrow_cm_constructible
+        : bool_constant<
+            is_nothrow_copy_constructible_v<_T> &&
+            is_nothrow_move_constructible_v<_T>
+        >
+    {};
+
+    template <class... _T>
+    struct are_nothrow_cm_constructible
+        : conjunction<is_nothrow_cm_constructible<_T>...>
+    {};
+
     /****************
      * noexcept_def *
      ****************/
 
     template <class... _T>
-    using are_nothrow_default_constructible =
-        conjunction<is_nothrow_default_constructible<_T>...>;
+    struct are_nothrow_default_constructible
+        : conjunction<is_nothrow_default_constructible<_T>...>
+    {};
+
+    /****************
+     * noexcept_mov *
+     ****************/
+
+    template <class... _T>
+    struct are_nothrow_move_constructible
+        : conjunction<is_nothrow_move_constructible<_T>...>
+    {};
 
     /***************
      * noexcept_pf *
      ***************/
 
     template <class _T>
-    using is_noexcept_pf =
-        conditional_t<
+    struct is_noexcept_pf
+        : conditional_t<
             is_same_v<_T, add_lvalue_reference_t<add_const_t<_T>>>,
             is_nothrow_copy_constructible<_T>,
 
@@ -46,14 +73,21 @@ namespace pmscore::detail
                 is_nothrow_move_constructible<_T>,
                 false_type
             >
-        >;
+        >
+    {};
 
     template <class... _T>
-    using are_noexcept_pf = conjunction<is_noexcept_pf<_T>...>;
+    struct are_noexcept_pf : conjunction<is_noexcept_pf<_T>...> {};
 }
+
+#define noexcept_cm(...)                                               \
+    noexcept(detail::are_nothrow_cm_constructible<__VA_ARGS__>::value)
 
 #define noexcept_def(...)                                                   \
     noexcept(detail::are_nothrow_default_constructible<__VA_ARGS__>::value)
+
+#define noexcept_mov(...)                                                \
+    noexcept(detail::are_nothrow_move_constructible<__VA_ARGS__>::value)
 
 #define noexcept_pf(...) noexcept(detail::are_noexcept_pf<__VA_ARGS__>::value)
 
