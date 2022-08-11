@@ -28,7 +28,7 @@ namespace pmscore
     using real = double;
 
     real angle_distance(real, real);
-    inline real simplify_angle(real __a) { return fmod(__a, M_2_PI); }
+    inline real simplify_angle(real __a) { return fmod(__a, M_2PI); }
 }
 
 #endif // PMSCORE_MATH_MATH_HPP
