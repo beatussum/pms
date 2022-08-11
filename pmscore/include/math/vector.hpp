@@ -41,7 +41,6 @@ namespace pmscore
     constexpr vector operator+(const vector&, const vector&) noexcept;
     constexpr vector operator-(const vector&, const vector&) noexcept;
     constexpr vector operator*(real, const vector&) noexcept;
-    constexpr vector operator/(const vector&, real);
     constexpr real dot(const vector&, const vector&) noexcept;
 
     class vector
@@ -62,6 +61,7 @@ namespace pmscore
 
         constexpr vector operator+() const noexcept;
         constexpr vector operator-() const noexcept;
+        constexpr vector operator/(real) const;
 
         /************************
          * Assignment operators *

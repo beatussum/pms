@@ -46,6 +46,11 @@ namespace pmscore
         return {-x, -y};
     }
 
+    constexpr vector vector::operator/(real __b) const
+    {
+        return {x / __b, y / __b};
+    }
+
     constexpr vector operator+(const vector& __a, const vector& __b) noexcept
     {
         return {__a.x + __b.x, __a.y + __b.y};
@@ -59,11 +64,6 @@ namespace pmscore
     constexpr vector operator*(real __a, const vector& __b) noexcept
     {
         return {__a * __b.x, __a * __b.y};
-    }
-
-    constexpr vector operator/(const vector& __a, real __b)
-    {
-        return {__a.x / __b, __a.y / __b};
     }
 
     constexpr real dot(const vector& __a, const vector& __b) noexcept
