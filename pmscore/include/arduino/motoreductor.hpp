@@ -44,9 +44,7 @@ namespace pmscore::arduino
             int16_t __power = 0
         );
     private:
-        static direction __direction_from_power(int16_t) noexcept;
-        void __set_direction(direction) const;
-        void __set_direction_and_reverse(direction);
+        void __set_direction(direction);
     public:
         pin_t get_pin_a() const noexcept { return m_pin_a; }
         void set_pin_a(pin_t __p) noexcept { m_pin_a = __p; }
@@ -68,8 +66,8 @@ namespace pmscore::arduino
         void increase_power(int16_t __p = 1) { set_power(m_power + __p); }
         void reduce_power(int16_t __p = 1) { increase_power(-__p); }
     public:
-        void brake() { __set_direction_and_reverse(direction::Brake); }
-        void disable() { __set_direction_and_reverse(direction::Off); }
+        void brake() { __set_direction(direction::Brake); }
+        void disable() { __set_direction(direction::Off); }
     private:
         pin_t    m_pin_a;
         pin_t    m_pin_b;
