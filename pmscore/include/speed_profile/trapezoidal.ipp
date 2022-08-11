@@ -66,18 +66,6 @@ namespace pmscore::speed_profile
     }
 
     template <class _Distance>
-    bool trapezoidal<_Distance>::init(
-        real __x_0,
-        real __x_f,
-        int16_t __M
-    ) noexcept
-    {
-        m_M = __M;
-
-        return init(__x_0, __x_f);
-    }
-
-    template <class _Distance>
     int16_t trapezoidal<_Distance>::compute_speed(real __x) noexcept
     {
         int16_t speed;

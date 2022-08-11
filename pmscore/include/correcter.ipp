@@ -81,8 +81,7 @@ namespace pmscore
                             (m_soi_speed_mode == soi_speed_mode::Off) &&
                             m_heading_speed_profile.init(
                                 simplify_angle(__rangle),
-                                gamma,
-                                255 - m_omega
+                                gamma
                             )
                         ) ||
                         (

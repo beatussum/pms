@@ -20,6 +20,7 @@
 #define PMSCORE_CORRECTER_HPP
 
 #include "arduino/motoreductor.hpp"
+#include "core/macros.hpp"
 #include "core/utility.hpp"
 #include "math/vector.hpp"
 
@@ -72,10 +73,10 @@ namespace pmscore
         explicit constexpr correcter(
             arduino::motoreductor* __motor_a,
             arduino::motoreductor* __motor_b,
-            _HeadingSpeedProfile&& __hs = _HeadingSpeedProfile(),
-            _SoiSpeedProfile&& __ss = _SoiSpeedProfile(),
-            _SpeedProfile&& __s = _SpeedProfile()
-        )
+            _HeadingSpeedProfile&& __hs,
+            _SoiSpeedProfile&& __ss,
+            _SpeedProfile&& __s
+        ) noexcept_pf(_HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile)
             : m_motor_a(__motor_a)
             , m_motor_b(__motor_b)
             , m_heading_speed_profile(forward<_HeadingSpeedProfile>(__hs))

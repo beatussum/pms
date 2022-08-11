@@ -38,7 +38,7 @@ arduino::motoreductor motor_b(6, 7, 5, &encoder_b);
 correcter corr(
     &motor_a,
     &motor_b,
-    speed_profile::trapezoidal(10., .01, 10, 0, 20, &angle_distance),
+    speed_profile::trapezoidal(10., .01, 10, 0, 25, &angle_distance),
     speed_profile::constant(.01, 100, &angle_distance),
 
     speed_profile::trapezoidal(2., 20., 100, 90, 180,

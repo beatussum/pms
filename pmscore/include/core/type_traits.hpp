@@ -21,6 +21,47 @@
 
 namespace pmscore
 {
+    namespace detail
+    {
+        /************************
+         * add_*value_reference *
+         ************************/
+
+        template <class _T>
+        struct type_identity
+        {
+            using type = _T;
+        };
+
+        template <class _T>
+        type_identity<_T&> try_add_lvalue_reference(int);
+
+        template <class _T>
+        type_identity<_T> try_add_lvalue_reference(long);
+
+        template <class _T>
+        type_identity<_T&&> try_add_rvalue_reference(int);
+
+        template <class _T>
+        type_identity<_T> try_add_rvalue_reference(long);
+
+        /***********
+         * declval *
+         ***********/
+
+        template <class _T, class = _T&&>
+        _T&& declval(int);
+
+        template <class _T>
+        _T declval(long);
+
+        template <class>
+        struct protector
+        {
+            static constexpr bool stop = false;
+        };
+    }
+
     /*********************
      * integral_constant *
      *********************/
@@ -41,14 +82,129 @@ namespace pmscore
     template <bool _v>
     using bool_constant = integral_constant<bool, _v>;
 
-    using false_type = integral_constant<bool, false>;
-    using true_type  = integral_constant<bool, true>;
+    using false_type = bool_constant<false>;
+    using true_type  = bool_constant<true>;
+
+    /*************
+     * add_const *
+     *************/
+
+    template <class _T>
+    struct add_const
+    {
+        using type = const _T;
+    };
+
+    template <class _T>
+    using add_const_t = typename add_const<_T>::type;
+
+    /************************
+     * add_*value_reference *
+     ************************/
+
+    template <class _T>
+    struct add_lvalue_reference
+        : decltype(detail::try_add_lvalue_reference<_T>(0))
+    {};
+
+    template <class _T>
+    using add_lvalue_reference_t = typename add_lvalue_reference<_T>::type;
+
+    template <class _T>
+    struct add_rvalue_reference
+        : decltype(detail::try_add_rvalue_reference<_T>(0))
+    {};
+
+    template <class _T>
+    using add_rvalue_reference_t = typename add_rvalue_reference<_T>::type;
+
+    /***************
+     * conditional *
+     ***************/
+
+    template <bool _b, class _A, class _B>
+    struct conditional
+    {
+        using type = _A;
+    };
+
+    template <class _A, class _B>
+    struct conditional<false, _A, _B>
+    {
+        using type = _B;
+    };
+
+    template <bool _b, class _A, class _B>
+    using conditional_t = typename conditional<_b, _A, _B>::type;
+
+    /***************
+     * conjunction *
+     ***************/
+
+    template <class...>
+    struct conjunction : true_type {};
+
+    template <class _A>
+    struct conjunction<_A> : _A {};
+
+    template <class _A, class... _B>
+    struct conjunction<_A, _B...>
+        : conditional_t<bool(_A::value), conjunction<_B...>, _A>
+    {};
+
+    template<class... _B>
+    constexpr bool conjunction_v = conjunction<_B...>::value;
+
+    /***********
+     * declval *
+     ***********/
+
+    template <class _T>
+    decltype(detail::declval<_T>(0)) declval() noexcept;
+
+    /**********************
+     * is_*_constructible *
+     **********************/
+
+    template <class _T, class... _Args>
+    struct is_nothrow_constructible
+        : bool_constant<noexcept(_T(declval<_Args>()...))>
+    {};
+
+    template <class _T, class... _Args>
+    constexpr bool is_nothrow_constructible_v =
+        is_nothrow_constructible<_T, _Args...>::value;
+
+    template <class _T>
+    struct is_nothrow_copy_constructible
+        : is_nothrow_constructible<_T, add_lvalue_reference_t<add_const_t<_T>>>
+    {};
+
+    template <class _T>
+    constexpr bool is_nothrow_copy_constructible_v =
+        is_nothrow_copy_constructible<_T>::value;
+
+    template <class _T>
+    struct is_nothrow_default_constructible : is_nothrow_constructible<_T> {};
+
+    template <class _T>
+    constexpr bool is_nothrow_default_constructible_v =
+        is_nothrow_default_constructible<_T>::value;
+
+    template <class _T>
+    struct is_nothrow_move_constructible
+        : is_nothrow_constructible<_T, add_rvalue_reference_t<_T>>
+    {};
+
+    template <class _T>
+    constexpr bool is_nothrow_move_constructible_v =
+        is_nothrow_move_constructible<_T>::value;
 
     /***********************
      * is_lvalue_reference *
      ***********************/
 
-    template <class>
+    template <class _T>
     struct is_lvalue_reference : false_type {};
 
     template <class _T>
@@ -56,6 +212,19 @@ namespace pmscore
 
     template <class _T>
     constexpr bool is_lvalue_reference_v = is_lvalue_reference<_T>::value;
+
+    /***********
+     * is_same *
+     ***********/
+
+    template <class _A, class _B>
+    struct is_same : false_type {};
+
+    template <class _T>
+    struct is_same<_T, _T> : true_type {};
+
+    template <class _A, class _B>
+    constexpr bool is_same_v = is_same<_A, _B>::value;
 
     /********************
      * remove_reference *
@@ -82,5 +251,7 @@ namespace pmscore
     template <class _T>
     using remove_reference_t = typename remove_reference<_T>::type;
 }
+
+#include "core/type_traits.ipp"
 
 #endif // PMSCORE_CORE_TYPE_TRAITS_HPP

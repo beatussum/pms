@@ -20,6 +20,7 @@
 #define PMSCORE_SPEED_PROFILE_CONSTANT_HPP
 
 #include "core/core.hpp"
+#include "core/macros.hpp"
 #include "core/utility.hpp"
 #include "math/math.hpp"
 
@@ -35,22 +36,24 @@ namespace pmscore::speed_profile
     public:
         explicit constant(
             real __epsilon,
+            int16_t __M
+        ) noexcept_def(_Distance)
+            : m_epsilon(__epsilon)
+            , m_M(__M)
+            , m_distance()
+        {}
+
+        explicit constant(
+            real __epsilon,
             int16_t __M,
-            _Distance&& __d = _Distance()
-        )
+            _Distance&& __d
+        ) noexcept_pf(_Distance)
             : m_epsilon(__epsilon)
             , m_M(__M)
             , m_distance(forward<_Distance>(__d))
         {}
     public:
         bool init(real __x_0, real __x_f) noexcept;
-
-        bool init(
-            real __x_0,
-            real __x_f,
-            [[maybe_unused]] int16_t __M
-        ) noexcept;
-
         int16_t compute_speed(real __x) noexcept;
     public:
         real get_epsilon() const noexcept { return m_epsilon; }

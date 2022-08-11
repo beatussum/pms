@@ -20,6 +20,7 @@
 #define PMSCORE_SPEED_PROFILE_TRAPEZOIDAL_HPP
 
 #include "core/core.hpp"
+#include "core/macros.hpp"
 #include "core/utility.hpp"
 
 #include <Arduino.h>
@@ -37,15 +38,14 @@ namespace pmscore::speed_profile
             real __epsilon,
             int16_t __m_0,
             int16_t __m_f,
-            int16_t __M,
-            _Distance&& __d = _Distance()
-        )
+            int16_t __M
+        ) noexcept_def(_Distance)
             : m_a(__a)
             , m_epsilon(__epsilon)
             , m_m_0(__m_0)
             , m_m_f(__m_f)
             , m_M(__M)
-            , m_distance(forward<_Distance>(__d))
+            , m_distance()
             , m_is_increasing(false)
             , m_is_triangular(false)
             , m_x_0(0.)
@@ -59,20 +59,24 @@ namespace pmscore::speed_profile
             real __epsilon,
             int16_t __m_0,
             int16_t __m_f,
-            _Distance&& __d = _Distance()
-        )
-            : trapezoidal(
-                __a,
-                __epsilon,
-                __m_0,
-                __m_f,
-                0,
-                forward<_Distance>(__d)
-            )
+            int16_t __M,
+            _Distance&& __d
+        ) noexcept_pf(_Distance)
+            : m_a(__a)
+            , m_epsilon(__epsilon)
+            , m_m_0(__m_0)
+            , m_m_f(__m_f)
+            , m_M(__M)
+            , m_distance(forward<_Distance>(__d))
+            , m_is_increasing(false)
+            , m_is_triangular(false)
+            , m_x_0(0.)
+            , m_x_f(0.)
+            , m_x_1(0.)
+            , m_x_2(0.)
         {}
     public:
         bool init(real __x_0, real __x_f) noexcept;
-        bool init(real __x_0, real __x_f, int16_t __M) noexcept;
         int16_t compute_speed(real __x) noexcept;
     public:
         real get_a() const noexcept { return m_a; }

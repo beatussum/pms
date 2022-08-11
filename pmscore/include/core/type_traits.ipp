@@ -16,32 +16,16 @@
  */
 
 
-namespace pmscore::speed_profile
+namespace pmscore
 {
-    template <class _Distance>
-    bool constant<_Distance>::init(real __x_0, real __x_f) noexcept
+    template <class _T>
+    decltype(detail::declval<_T>(0)) declval() noexcept
     {
-        real diff = m_distance(__x_0, __x_f);
+        static_assert(
+            detail::protector<_T>::stop,
+            "declval() must not be used!"
+        );
 
-        if (abs(diff) > m_epsilon) {
-            m_is_increasing = (diff > 0.);
-
-            m_x_0 = __x_0;
-            m_x_f = __x_f;
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    template <class _Distance>
-    int16_t constant<_Distance>::compute_speed(real __x) noexcept
-    {
-        if ((__x > m_x_f) == m_is_increasing) {
-            return 0;
-        } else {
-            return m_is_increasing ? -m_M : m_M;
-        }
+        return detail::declval<_T>(0);
     }
 }
