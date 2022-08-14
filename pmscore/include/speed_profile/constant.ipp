@@ -38,7 +38,7 @@ namespace pmscore::speed_profile
     template <class _Distance>
     constexpr int16_t constant<_Distance>::compute_speed(real __x) noexcept
     {
-        if ((__x > m_x_f) == m_is_increasing) {
+        if ((m_distance(__x, m_x_f) < 0.) == m_is_increasing) {
             return 0;
         } else {
             return m_is_increasing ? -m_M : m_M;

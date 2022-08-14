@@ -46,7 +46,7 @@ namespace pmscore::speed_profile
                     (static_cast<real>(m_m_0) - static_cast<real>(m_M)) / m_a;
             }
 
-            if ((m_x_2 - m_x_1) < 0.) {
+            if (m_x_1 > m_x_2) {
                 m_is_triangular = true;
 
                 if (m_is_increasing) {
@@ -73,14 +73,14 @@ namespace pmscore::speed_profile
     {
         int16_t speed;
 
-        if ((__x < m_x_0) == m_is_increasing) {
+        if ((m_distance(__x, m_x_0) > 0.) == m_is_increasing) {
             speed = m_is_increasing ? -m_m_0 : m_m_0;
-        } else if ((__x > m_x_f) == m_is_increasing) {
+        } else if ((m_distance(__x, m_x_f) < 0.) == m_is_increasing) {
             speed = m_is_increasing ? -m_m_f : m_m_f;
         } else {
             if (
-                ((__x < m_x_1) && m_is_triangular) ||
-                ((__x < m_x_3) && !m_is_triangular)
+                (m_is_triangular && (m_distance(__x, m_x_1) > 0.)) ||
+                (!m_is_triangular && (m_distance(__x, m_x_3) > 0.))
             )
             {
                 speed = static_cast<int16_t>(round(
@@ -90,7 +90,7 @@ namespace pmscore::speed_profile
                 ));
             } else if (
                 m_is_triangular ||
-                ((__x > m_x_2) && !m_is_triangular)
+                (!m_is_triangular && (m_distance(__x, m_x_2) < 0.))
             )
             {
                 speed = static_cast<int16_t>(round(
