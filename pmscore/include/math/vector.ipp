@@ -66,9 +66,22 @@ namespace pmscore
         return {__a * __b.x, __a * __b.y};
     }
 
+    /*************************
+     * Arithmetic operations *
+     *************************/
+
     constexpr real dot(const vector& __a, const vector& __b) noexcept
     {
         return __a.x * __b.x + __a.y * __b.y;
+    }
+
+    /********************************
+     * Member arithmetic operations *
+     ********************************/
+
+    constexpr real vector::dot(const vector& __b) const noexcept
+    {
+        return pmscore::dot(*this, __b);
     }
 
     /************************
@@ -93,10 +106,5 @@ namespace pmscore
     constexpr vector& vector::operator/=(real __b)
     {
         return *this = (*this / __b);
-    }
-
-    constexpr real vector::dot(const vector& __b) const noexcept
-    {
-        return pmscore::dot(*this, __b);
     }
 }

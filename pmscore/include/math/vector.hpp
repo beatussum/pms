@@ -41,6 +41,11 @@ namespace pmscore
     constexpr vector operator+(const vector&, const vector&) noexcept;
     constexpr vector operator-(const vector&, const vector&) noexcept;
     constexpr vector operator*(real, const vector&) noexcept;
+
+    /*************************
+     * Arithmetic operations *
+     *************************/
+
     constexpr real dot(const vector&, const vector&) noexcept;
 
     class vector
@@ -52,6 +57,7 @@ namespace pmscore
         explicit operator String() const;
     public:
         real angle() const noexcept { return atan2(y, x); }
+        constexpr real dot(const vector&) const noexcept;
         real norm() const noexcept { return sqrt(sq(x) + sq(y)); }
         vector unit() const { return (*this / norm()); }
     public:
@@ -71,7 +77,6 @@ namespace pmscore
         constexpr vector& operator-=(const vector&) noexcept;
         constexpr vector& operator*=(real) noexcept;
         constexpr vector& operator/=(real);
-        constexpr real dot(const vector&) const noexcept;
     public:
         real x = 0.;
         real y = 0.;
