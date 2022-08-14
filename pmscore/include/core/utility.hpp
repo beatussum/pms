@@ -28,7 +28,8 @@ namespace pmscore
      ***********/
 
     template <class _T>
-    constexpr _T&& forward(remove_reference_t<_T>&) noexcept;
+    constexpr _T&& forward(remove_reference_t<_T>& __t) noexcept
+        { return static_cast<_T&&>(__t); }
 
     template <class _T>
     constexpr _T&& forward(remove_reference_t<_T>&&) noexcept;
@@ -38,7 +39,8 @@ namespace pmscore
      ********/
 
     template <class _T>
-    constexpr remove_reference_t<_T>&& move(_T&&) noexcept;
+    constexpr remove_reference_t<_T>&& move(_T&& __t) noexcept
+        { return static_cast<remove_reference_t<_T>&&>(__t); }
 
     /********
      * pair *

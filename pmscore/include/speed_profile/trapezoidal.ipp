@@ -105,31 +105,4 @@ namespace pmscore::speed_profile
 
         return speed;
     }
-
-    template <class _Distance>
-    constexpr typename trapezoidal<_Distance>::distance_type
-    trapezoidal<_Distance>::get_distance() const noexcept_mov(distance_type)
-    {
-        return m_distance;
-    }
-
-    template <class _Distance>
-    constexpr void trapezoidal<_Distance>::set_distance(
-        distance_type __d
-    ) noexcept_cm(distance_type)
-    {
-        m_distance = move(__d);
-    }
-
-    template <class _Distance>
-    constexpr bool trapezoidal<_Distance>::is_increasing() const noexcept
-    {
-        return m_is_increasing;
-    }
-
-    template <class _Distance>
-    constexpr bool trapezoidal<_Distance>::is_triangular() const noexcept
-    {
-        return m_is_triangular;
-    }
 }

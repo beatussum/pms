@@ -18,18 +18,6 @@
 
 namespace pmscore
 {
-    template <class _T, unsigned long _N>
-    constexpr _T* begin(_T (&__array)[_N]) noexcept
-    {
-        return &__array[0];
-    }
-
-    template <class _T, unsigned long _N>
-    constexpr _T* end(_T (&__array)[_N]) noexcept
-    {
-        return &__array[_N];
-    }
-
     template <class _InputIt, class _OutputIt>
     _OutputIt copy(_InputIt __afirst, _InputIt __alast, _OutputIt __bfirst)
     {

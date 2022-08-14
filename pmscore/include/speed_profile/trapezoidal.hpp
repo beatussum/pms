@@ -94,14 +94,19 @@ namespace pmscore::speed_profile
         constexpr int16_t get_M() const noexcept { return m_M; }
         constexpr void set_M(int16_t __M) noexcept { m_M = __M; }
 
-        constexpr distance_type
-        get_distance() const noexcept_mov(distance_type);
+        constexpr distance_type get_distance()
+        const noexcept_mov(distance_type)
+            { return m_distance; }
 
-        constexpr void
-        set_distance(distance_type) noexcept_cm(distance_type);
+        constexpr void set_distance(distance_type __d)
+        noexcept_cm(distance_type)
+            { m_distance = move(__d); }
 
-        constexpr bool is_increasing() const noexcept;
-        constexpr bool is_triangular() const noexcept;
+        constexpr bool is_increasing() const noexcept
+            { return m_is_increasing; }
+
+        constexpr bool is_triangular() const noexcept
+            { return m_is_triangular; }
 
         constexpr real get_x_0() const noexcept { return m_x_0; }
         constexpr real get_x_f() const noexcept { return m_x_f; }

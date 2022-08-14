@@ -44,19 +44,4 @@ namespace pmscore::speed_profile
             return m_is_increasing ? -m_M : m_M;
         }
     }
-
-    template <class _Distance>
-    constexpr typename constant<_Distance>::distance_type
-    constant<_Distance>::get_distance() const noexcept_mov(distance_type)
-    {
-        return m_distance;
-    }
-
-    template <class _Distance>
-    constexpr void constant<_Distance>::set_distance(
-        distance_type __d
-    ) noexcept_cm(distance_type)
-    {
-        m_distance = move(__d);
-    }
 }
