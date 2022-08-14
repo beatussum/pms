@@ -41,21 +41,6 @@ namespace pmscore
     template <class _T>
     constexpr remove_reference_t<_T>&& move(_T&& __t) noexcept
         { return static_cast<remove_reference_t<_T>&&>(__t); }
-
-    /********
-     * pair *
-     ********/
-
-    template <class _First, class _Second = _First>
-    class pair
-    {
-    public:
-        using first_type  = _First;
-        using second_type = _Second;
-    public:
-        _First  first;
-        _Second second;
-    };
 }
 
 #include "core/utility.ipp"
