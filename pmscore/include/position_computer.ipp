@@ -30,14 +30,15 @@ namespace pmscore
         , m_tpath(new vector[_n])
         , m_vertex_radius(__vertex_radius)
         , m_rangle(0.)
+        , m_distance(0.)
         , m_rpos()
         , m_tangle(__tpath[0].angle())
         , m_tangle_a_0(0.)
         , m_tangle_b_0(0.)
         , m_tcurrent_edge(__tpath[0].norm())
-        , m_ttarget((1 - m_tadvance) * m_tcurrent_edge)
         , m_tcurrent_pos()
         , m_ti(m_tpath)
+        , m_ti_unit(__tpath[0].unit())
         , m_tis_vertex_reached(false)
         , m_tpath_size(_n)
 
@@ -45,8 +46,8 @@ namespace pmscore
             m_tadvance * m_tcurrent_edge, m_tangle
         ))
 
+        , m_ttarget((1 - m_tadvance) * m_tcurrent_edge)
         , m_tvertex()
-        , m_distance(0.)
     {
         copy(begin(__tpath), end(__tpath), m_tpath);
 

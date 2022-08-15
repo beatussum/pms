@@ -60,7 +60,7 @@ namespace pmscore
     {
         using namespace arduino;
 
-        m_distance = dot(m_rpos - m_tvertex, m_ti->unit());
+        m_distance = dot(m_rpos - m_tvertex, m_ti_unit);
 
         if (m_tis_vertex_reached) {
             if (abs(m_distance - m_tcurrent_edge) <= m_vertex_radius) {
@@ -70,15 +70,18 @@ namespace pmscore
                     m_ti = m_tpath;
                 }
 
+                m_ti_unit = m_ti->unit();
+
+                m_distance            = dot(m_rpos - m_tvertex, m_ti_unit);
                 m_tangle              = m_ti->angle();
                 m_tangle_a_0          = __last_angle_a;
                 m_tangle_b_0          = __last_angle_b;
                 m_tcurrent_edge       = m_ti->norm();
-                m_ttarget             = (1 - m_tadvance) * m_tcurrent_edge;
-                m_tpos               += m_tcurrent_pos;
-                m_tcurrent_pos        = {};
-                m_distance            = dot(m_rpos - m_tvertex, m_ti->unit());
                 m_tis_vertex_reached  = false;
+                m_tpos               += m_tcurrent_pos;
+                m_ttarget             = (1 - m_tadvance) * m_tcurrent_edge;
+
+                m_tcurrent_pos = {};
 
                 m_tpos += vector::with_polar_coordinates(
                     m_tadvance * m_tcurrent_edge, m_tangle

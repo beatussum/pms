@@ -82,20 +82,21 @@ namespace pmscore
         vector*         m_tpath;
         real            m_vertex_radius;
 
+        real          m_distance;
         real          m_rangle;
         vector        m_rpos;
         real          m_tangle;
         real          m_tangle_a_0;
         real          m_tangle_b_0;
         real          m_tcurrent_edge;
-        real          m_ttarget;
         vector        m_tcurrent_pos;
         const vector* m_ti;
+        vector        m_ti_unit;
         bool          m_tis_vertex_reached;
         size_t        m_tpath_size;
         vector        m_tpos;
+        real          m_ttarget;
         vector        m_tvertex;
-        real          m_distance;
     };
 }
 
