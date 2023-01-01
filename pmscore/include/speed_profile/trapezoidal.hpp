@@ -25,6 +25,12 @@
 
 #include <Arduino.h>
 
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente un profil de vitesse trapézoïdal.
+ */
+
 namespace pmscore::speed_profile
 {
     template <class _Distance>

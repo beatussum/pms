@@ -15,7 +15,6 @@
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 #ifndef PMSCORE_ARDUINO_ARDUINO_HPP
 #define PMSCORE_ARDUINO_ARDUINO_HPP
 
@@ -23,15 +22,54 @@
 
 #include <stdint.h>
 
+/**
+ * @dir
+ *
+ * @brief Ce dossier implémente une interface logiciel-machine.
+ */
+
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente les éléménts communs et nécessaires au bon
+ * fonctionnement des autres objets implémentés dans ce dossier.
+ *
+ * En particulier, ce fichier définie un certain nombre de constantes dont leur
+ * correspondance physique est illustrée dans le schéma cinématique en annexe.
+ */
+
+/**
+ * @brief Cet espace de nommage implémente une interface logiciel-machine.
+ */
+
 namespace pmscore::arduino
 {
+    /**
+     * @brief Type utilisé pour décrire un pin de la carte Arduino.
+     */
+
     using pin_t = uint8_t;
 
-    constexpr real d = 8.20; /* in centimeter */
-    constexpr real r = 2.55; /* in centimeter */
+    /**
+     * @brief Définition de \f$ d \f$.
+     *
+     * @note Cette variable est exprimée en centimètre.
+     * @see Schéma cinématique en annexe.
+     */
 
-    constexpr real r_2  = (r / 2);
-    constexpr real r_2d = (r / (2 * d));
+    constexpr real d = 8.20;
+
+    /**
+     * @brief Définition de \f$ r \f$.
+     *
+     * @note Cette variable est exprimée en centimètre.
+     * @see Schéma cinématique en annexe.
+     */
+
+    constexpr real r = 2.55;
+
+    constexpr real r_2  = (r / 2);       ///< Valeur de \f$ \frac{r}{2} \f$.
+    constexpr real r_2d = (r / (2 * d)); ///< Valeur de \f$ \frac{r}{2d} \f$.
 }
 
 #endif // PMSCORE_ARDUINO_ARDUINO_HPP

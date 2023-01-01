@@ -26,6 +26,12 @@
 
 #include <Arduino.h>
 
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente un profil de vitesse constant.
+ */
+
 namespace pmscore::speed_profile
 {
     template <class _Distance>

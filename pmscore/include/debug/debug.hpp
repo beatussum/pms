@@ -21,12 +21,39 @@
 
 #include <Arduino.h>
 
+/**
+ * @dir
+ *
+ * @brief Ce dossier implémente divers outils facilitant le débogage du
+ * programme.
+ */
+
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente les éléménts communs et nécessaires au bon
+ * fonctionnement des autres objets implémentés dans ce dossier.
+ */
+
+/**
+ * @brief Imprime dans la console Arduino un message.
+ *
+ * @param __msg Le message à imprimer.
+ */
+
 #define PMSCORE_DEBUG_MSG(__msg)                     \
     Serial.println(                                  \
         "\u001B[31m(\u001B[1;33mDEBUG\u001B[0;31m) " \
         "\u001B[0m(\u001B[0;32mmessage\u001B[0m) "   \
         __msg                                        \
     )
+
+/**
+ * @brief Imprime dans la console Arduino le nom d'une variable ainsi que sa
+ * valeur.
+ *
+ * @param __var La variable à imprimer.
+ */
 
 #define PMSCORE_DEBUG_VAR(__var)                     \
     Serial.println(                                  \

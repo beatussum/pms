@@ -16,19 +16,13 @@
  */
 
 
-#ifndef PMSCORE_CORE_CORE_HPP
-#define PMSCORE_CORE_CORE_HPP
-
-#include <Arduino.h>
+#ifndef PMSCORE_SPEED_PROFILE_SPEED_PROFILE_HPP
+#define PMSCORE_SPEED_PROFILE_SPEED_PROFILE_HPP
 
 /**
  * @dir
  *
- * @brief Ce dossier implémente des objets nécessaire au fonctionnement interne
- * du programme.
- *
- * @warning La plupart des objets implémentés ne doivent donc pas être utilisé
- * directement par l'utilisateur.
+ * @brief Ce dossier implémente différents profils de vitesse.
  */
 
 /**
@@ -38,25 +32,4 @@
  * fonctionnement des autres objets implémentés dans ce dossier.
  */
 
-/**
- * @namespace pmscore::detail
- *
- * @brief Cet espace de nommage implémente des objets nécessaire au
- * fonctionnement interne du programme.
- *
- * @warning La plupart des objets implémentés ne doivent donc pas être utilisé
- * directement par l'utilisateur.
- */
-
-/**
- * @brief Espace de nommage principal.
- */
-
-namespace pmscore
-{
-    String operator ""_s(const char*, size_t);
-    inline String operator ""_s(const char* __c) { return String(__c); }
-    inline String operator ""_s(char __c) { return String(__c); }
-}
-
-#endif // PMSCORE_CORE_CORE_HPP
+#endif // PMSCORE_SPEED_PROFILE_SPEED_PROFILE_HPP

@@ -22,6 +22,13 @@
 #include "arduino/encoder.hpp"
 #include "math/math.hpp"
 
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente une classe facilitant le pilotage entre deux
+ * encodeurs.
+ */
+
 namespace pmscore
 {
     class position_computer;
@@ -29,10 +36,38 @@ namespace pmscore
 
 namespace pmscore::arduino
 {
+    /**
+     * @brief Cette classe facilite le pilotage de deux encodeur.
+     */
+
     class encoders
     {
-        friend void set_main_encoders(const encoders&) noexcept;
+        /**
+         * @brief Spécifie deux `encoder`s en tant qu'encodeurs principaux.
+         *
+         * Afin qu'un `encoder` puisse correctement monitoré le moteur auquel
+         * il est associé (afin que le membre `m_incrementation` est incrémenté
+         * à chaque tour), il doit être défini en tant qu'encodeur principal.
+         *
+         * @param __e L'objet `encoders` regroupant les deux `encoder`s à spécifier
+         * en tant qu'encodeurs principaux.
+         */
+
+        friend void set_main_encoders(const encoders& __e) noexcept;
     public:
+        /**
+         * @brief Construit un objet `encoders`.
+         *
+         * @param __encoder_a Pointeur pointant vers l'encodeur A soit celui
+         *                    monitorant le moteur de la roue gauche.
+         *
+         * @param __encoder_b Pointeur pointant vers l'encodeur B soit celui
+         *                    monitorant le moteur de la roue gauche.
+         *
+         * @param __c Pointeur vers un objet `position_computer`, un
+         *            calculateur de position.
+         */
+
         explicit constexpr encoders(
             encoder* __encoder_a,
             encoder* __encoder_b,
@@ -45,6 +80,13 @@ namespace pmscore::arduino
             , m_last_angle_b(0.)
         {}
     public:
+        /**
+         * @brief Actualise le statut de l'objet.
+         *
+         * Actualise les valeurs des membres `m_encoder_a` et `m_encoder_b`,
+         * puis actualise le calculateur de position.
+         */
+
         void update_status();
     public:
         encoder* get_encoder_a() const noexcept { return m_encoder_a; }
@@ -67,13 +109,22 @@ namespace pmscore::arduino
         real m_last_angle_b;
     };
 
+    /**
+     * @brief Tableau contenant deux pointeurs pointant vers les deux encodeurs
+     * principaux.
+     *
+     * Les deux encodeurs principaux sont les deux encodeurs dont la position
+     * est effectivement monitorée par le programme. Cette implémentation
+     * s'explique par les limitations imposées par les _« interrupt handler
+     * functions »_.
+     *
+     * Le premier élément correspond à l'encodeur A (celui de gauche) et le
+     * deuxième élément à l'encodeur B (celui de droite).
+     *
+     * @see avr/interrupt.h
+     */
+
     inline encoder* main_encoders[] = {nullptr, nullptr};
-
-    void set_main_encoders(encoder*, encoder*) noexcept;
-    void set_main_encoders(const encoders&) noexcept;
-
-    template <size_t>
-    void update_main_encoder_status() noexcept;
 }
 
 #include "arduino/encoders.ipp"

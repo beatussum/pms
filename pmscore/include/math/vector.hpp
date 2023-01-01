@@ -23,6 +23,13 @@
 
 #include <Arduino.h>
 
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente un vecteur plan et les outils associés
+ * permettant de le manipuler correctement.
+ */
+
 namespace pmscore
 {
     class vector;
@@ -48,17 +55,70 @@ namespace pmscore
 
     constexpr real dot(const vector&, const vector&) noexcept;
 
+    /**
+     * @brief Implémentation d'un vecteur du plan.
+     */
+
     class vector
     {
     public:
+        /**
+         * @brief Crée un `vector` à partir de ses coordonnées polaires.
+         *
+         * @param __r     La coordonnée radiale du vecteur.
+         * @param __angle La coordonnée angulaire du vecteur.
+         * @return Le `vector` créé.
+         */
+
         static vector with_polar_coordinates(real __r, real __angle);
+
+        /**
+         * @brief Crée un `vector` à partir de ses coordonnées polaires.
+         *
+         * La coordonée radiale est définie commme unitaire.
+         *
+         * @param __angle La coordonnée angulaire du vecteur.
+         * @return Le `vector` créé.
+         * @see vector::with_polar_coordinates(real, real)
+         */
+
         static vector with_polar_coordinates(real __angle);
     public:
         explicit operator String() const;
     public:
+        /**
+         * @brief Retourne l'argument principal du complexe dont l'affixe dans
+         * le plan est ce vecteur.
+         *
+         * @return La valeur de l'argument principal dans l'intervalle
+         * \f$ [-\pi ; \pi] \f$.
+         */
+
         real angle() const noexcept { return atan2(y, x); }
-        constexpr real dot(const vector&) const noexcept;
+
+        /**
+         * @brief Calcule un produit scalaire
+         *
+         * @param __b La deuxième opérande du produit scalaire.
+         * @return La valeur du produit scalaire avec \p __b.
+         */
+
+        constexpr real dot(const vector& __b) const noexcept;
+
+        /**
+         * @brief Calcule la norme du vecteur.
+         *
+         * @return La norme du vecteur.
+         */
+
         real norm() const noexcept { return sqrt(sq(x) + sq(y)); }
+
+        /**
+         * @brief Calcule le vecteur unitaire associé à ce vecteur.
+         *
+         * @return Le vecteur unitaire associé à ce vecteur
+         */
+
         vector unit() const { return (*this / norm()); }
     public:
         /************************

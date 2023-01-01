@@ -21,14 +21,42 @@
 
 #include "arduino/arduino.hpp"
 
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente une interface logiciel-machine avec un hacheur.
+ */
+
 namespace pmscore::arduino
 {
+    /**
+     * @brief Cette classe permet le pilotage d'un hacheur.
+     */
+
     class chopper
     {
     public:
+        /**
+         * @brief Construit un objet `chopper`.
+         *
+         * @param __pin_stby Pin de la carte Arduino sur lequel STBY est branché.
+         */
+
         explicit chopper(pin_t __pin_stby);
     public:
-        void enable(bool = true) const;
+        /**
+         * @brief Active ou désactive le hacheur.
+         *
+         * @param __b Si cette variable vaut `true`, alors le hacheur est
+         *            activé ; sinon, le hacheur est désactivé.
+         */
+
+        void enable(bool __b = true) const;
+
+        /**
+         * @brief Désactive le hacheur.
+         */
+
         void disable() const { enable(false); }
     public:
         pin_t get_pin_stby() const noexcept { return m_pin_stby; }

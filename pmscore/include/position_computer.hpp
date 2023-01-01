@@ -23,20 +23,56 @@
 #include "math/vector.hpp"
 #include "correcter.hpp"
 
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente un calculateur de position.
+ */
+
 namespace pmscore
 {
     class correcter_base;
 
+    /**
+     * @brief Cette classe permet le calcul de la position du robot en fonction
+     * de la position angulaire de l'axe des deux motoréducteurs.
+     */
+
     class position_computer
     {
     public:
+        /**
+         * @brief Construit un objet `position_computer`.
+         *
+         * @tparam _n Nombre de vecteurs-arrêtes que comporte le chemin.
+         * @param __c Pointeur vers le correcteur (de position).
+         *
+         * @param __tadvance Pourcentage de la norme du vecteur-arrête courant
+         *                   qui est ajouté en avance à la position théorique
+         *                   sur la position réelle.
+         *
+         * @param __tpath Chemin sous la forme de tableau de `_n`
+         *                vecteurs-arrêtes.
+         *
+         * @param __vertex_radius Rayon autour du prochain sommet à atteindre
+         *                        où, s'il est dans cette zone, le robot passe
+         *                        au vecteur-arrête suivant.
+         */
+
         template <size_t _n>
         explicit position_computer(
-            correcter_base*,
+            correcter_base* __c,
             real __tadvance,
             const vector (&__tpath)[_n],
             real __vertex_radius
         );
+
+        /**
+         * @brief Détruit l'objet.
+         *
+         * Ce destructeur s'occupe de la libération de la mémoire occupé par le
+         * chemin de vecteurs-arrêtes.
+         */
 
         ~position_computer();
     public:
@@ -51,6 +87,22 @@ namespace pmscore
 
         void __update_tstatus(real __last_angle_a, real __last_angle_b);
     public:
+        /**
+         * @brief Actualise la position selon les paramètres donnés.
+         *
+         * @param __angle_a Position angulaire de l'axe du moteur A (le moteur
+         *                  gauche).
+         *
+         * @param __angle_b Position angulaire de l'axe du moteur B (le moteur
+         *                  droit).
+         *
+         * @param __last_angle_a Précédente position angulaire de l'axe du
+         *                       moteur A (le moteur gauche).
+         *
+         * @param __last_angle_b Précédente position angulaire de l'axe du
+         *                       moteur B (le moteur droit).
+         */
+
         void update_status(
             real __angle_a,
             real __angle_b,
