@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>P.M.S. core:  Fichier source de include/position_computer.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">P.M.S. core<span id="projectnumber">&#160;0.9</span>
+   </div>
+   <div id="projectbrief">My T.I.P.E. project: Parking Monitoring System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">position_computer.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="position__computer_8hpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle &lt;beatussum@protonmail.com&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * This program is free software: you can redistribute it and/or modify it</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * under the terms of the GNU General Public License as published by the Free</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * Software Foundation, either version 3 of the License, or (at your option)</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * any later version.</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * This program is distributed in the hope that it will be useful, but WITHOUT</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * more details.</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * You should have received a copy of the GNU General Public License along with</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#ifndef PMSCORE_POSITION_COMPUTER_HPP</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#define PMSCORE_POSITION_COMPUTER_HPP</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;core/iterator.hpp&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;<a class="code" href="vector_8hpp.html">math/vector.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;<a class="code" href="correcter_8hpp.html">correcter.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacepmscore.html">pmscore</a></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>{</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">class </span>correcter_base;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classpmscore_1_1position__computer.html">   41</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classpmscore_1_1position__computer.html">position_computer</a></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> _n&gt;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classpmscore_1_1position__computer.html#a0eeb247f0418245816c23f3341ede4f6">   63</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classpmscore_1_1position__computer.html#a0eeb247f0418245816c23f3341ede4f6">position_computer</a>(</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <a class="code hl_class" href="classpmscore_1_1correcter__base.html">correcter_base</a>* __c,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __tadvance,</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keyword">const</span> <a class="code hl_class" href="classpmscore_1_1vector.html">vector</a> (&amp;__tpath)[_n],</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __vertex_radius</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        );</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classpmscore_1_1position__computer.html#a862e0361b96158cae66e5fde54ec7f10">   77</a></span>        <a class="code hl_function" href="classpmscore_1_1position__computer.html#a862e0361b96158cae66e5fde54ec7f10">~position_computer</a>();</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keyword">explicit</span> <span class="keyword">operator</span> String() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordtype">void</span> __update_rstatus(</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __angle_a,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __angle_b,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __last_angle_a,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __last_angle_b</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        );</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordtype">void</span> __update_tstatus(<a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __last_angle_a, <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __last_angle_b);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="classpmscore_1_1position__computer.html#a467d2baa1b465c09ca820b161e471857">  106</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classpmscore_1_1position__computer.html#a467d2baa1b465c09ca820b161e471857">update_status</a>(</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __angle_a,</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __angle_b,</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __last_angle_a,</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __last_angle_b</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        );</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <a class="code hl_class" href="classpmscore_1_1correcter__base.html">correcter_base</a>* get_correcter() const noexcept { <span class="keywordflow">return</span> m_correcter; }</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> get_tadvance() const noexcept { <span class="keywordflow">return</span> m_tadvance; }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        vector* get_path() const noexcept { <span class="keywordflow">return</span> m_tpath; }</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> _n&gt;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="keywordtype">void</span> set_path(<span class="keyword">const</span> vector (&amp;)[_n]) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> get_vertex_radius() const noexcept { <span class="keywordflow">return</span> m_vertex_radius; }</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> get_rangle() const noexcept { <span class="keywordflow">return</span> m_rangle; }</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        vector get_rpos() const noexcept { <span class="keywordflow">return</span> m_rpos; }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> get_tangle() const noexcept { <span class="keywordflow">return</span> m_tangle; }</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keyword">const</span> vector* get_current_edge() const noexcept { <span class="keywordflow">return</span> m_ti; }</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keywordtype">bool</span> is_vertex_reached() const noexcept;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        <span class="keywordtype">size_t</span> get_path_size() const noexcept { <span class="keywordflow">return</span> m_tpath_size; }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        vector get_tpos() const noexcept { <span class="keywordflow">return</span> m_tpos + m_tcurrent_pos; }</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> get_distance() const noexcept { <span class="keywordflow">return</span> m_distance; }</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        correcter_base* m_correcter;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>            m_tadvance;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        vector*         m_tpath;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>            m_vertex_radius;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>          m_distance;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>          m_rangle;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        vector        m_rpos;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>          m_tangle;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>          m_tangle_a_0;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>          m_tangle_b_0;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>          m_tcurrent_edge;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        vector        m_tcurrent_pos;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="keyword">const</span> vector* m_ti;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        vector        m_ti_unit;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="keywordtype">bool</span>          m_tis_vertex_reached;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="keywordtype">size_t</span>        m_tpath_size;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        vector        m_tpos;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>          m_ttarget;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        vector        m_tvertex;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    };</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>}</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">#include &quot;position_computer.ipp&quot;</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">#endif </span><span class="comment">// PMSCORE_POSITION_COMPUTER_HPP</span></div>
+<div class="ttc" id="aclasspmscore_1_1correcter__base_html"><div class="ttname"><a href="classpmscore_1_1correcter__base.html">pmscore::correcter_base</a></div><div class="ttdoc">Cette interface permet l'implémentation d'un correcter.</div><div class="ttdef"><b>Definition:</b> correcter.hpp:40</div></div>
+<div class="ttc" id="aclasspmscore_1_1position__computer_html"><div class="ttname"><a href="classpmscore_1_1position__computer.html">pmscore::position_computer</a></div><div class="ttdoc">Cette classe permet le calcul de la position du robot en fonction de la position angulaire de l'axe d...</div><div class="ttdef"><b>Definition:</b> position_computer.hpp:42</div></div>
+<div class="ttc" id="aclasspmscore_1_1position__computer_html_a0eeb247f0418245816c23f3341ede4f6"><div class="ttname"><a href="classpmscore_1_1position__computer.html#a0eeb247f0418245816c23f3341ede4f6">pmscore::position_computer::position_computer</a></div><div class="ttdeci">position_computer(correcter_base *__c, real __tadvance, const vector(&amp;__tpath)[_n], real __vertex_radius)</div><div class="ttdoc">Construit un objet position_computer.</div></div>
+<div class="ttc" id="aclasspmscore_1_1position__computer_html_a467d2baa1b465c09ca820b161e471857"><div class="ttname"><a href="classpmscore_1_1position__computer.html#a467d2baa1b465c09ca820b161e471857">pmscore::position_computer::update_status</a></div><div class="ttdeci">void update_status(real __angle_a, real __angle_b, real __last_angle_a, real __last_angle_b)</div><div class="ttdoc">Actualise la position selon les paramètres donnés.</div></div>
+<div class="ttc" id="aclasspmscore_1_1position__computer_html_a862e0361b96158cae66e5fde54ec7f10"><div class="ttname"><a href="classpmscore_1_1position__computer.html#a862e0361b96158cae66e5fde54ec7f10">pmscore::position_computer::~position_computer</a></div><div class="ttdeci">~position_computer()</div><div class="ttdoc">Détruit l'objet.</div></div>
+<div class="ttc" id="aclasspmscore_1_1vector_html"><div class="ttname"><a href="classpmscore_1_1vector.html">pmscore::vector</a></div><div class="ttdoc">Implémentation d'un vecteur du plan.</div><div class="ttdef"><b>Definition:</b> vector.hpp:63</div></div>
+<div class="ttc" id="acorrecter_8hpp_html"><div class="ttname"><a href="correcter_8hpp.html">correcter.hpp</a></div><div class="ttdoc">Ce fichier implémente un correcteur de position.</div></div>
+<div class="ttc" id="anamespacepmscore_html"><div class="ttname"><a href="namespacepmscore.html">pmscore</a></div><div class="ttdoc">Espace de nommage principal.</div><div class="ttdef"><b>Definition:</b> arduino.hpp:46</div></div>
+<div class="ttc" id="anamespacepmscore_html_a7063e563190973411e70e9673baa094e"><div class="ttname"><a href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">pmscore::real</a></div><div class="ttdeci">double real</div><div class="ttdoc">Type réel utilisé.</div><div class="ttdef"><b>Definition:</b> math.hpp:50</div></div>
+<div class="ttc" id="avector_8hpp_html"><div class="ttname"><a href="vector_8hpp.html">vector.hpp</a></div><div class="ttdoc">Ce fichier implémente un vecteur plan et les outils associés permettant de le manipuler correctement.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

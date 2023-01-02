@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>P.M.S. core:  Fichier source de include/math/math.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">P.M.S. core<span id="projectnumber">&#160;0.9</span>
+   </div>
+   <div id="projectbrief">My T.I.P.E. project: Parking Monitoring System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fba38f648377aa56ae5d69782adf9e53.html">math</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">math.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="math_8hpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle &lt;beatussum@protonmail.com&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * This program is free software: you can redistribute it and/or modify it</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * under the terms of the GNU General Public License as published by the Free</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * Software Foundation, either version 3 of the License, or (at your option)</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * any later version.</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * This program is distributed in the hope that it will be useful, but WITHOUT</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * more details.</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * You should have received a copy of the GNU General Public License along with</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#ifndef PMSCORE_MATH_MATH_HPP</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#define PMSCORE_MATH_MATH_HPP</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="math_8hpp.html#a4aa2c43b09c1300c334821f5507d6f71">   28</a></span><span class="preprocessor">#define M_2PI 6.283185307179586476925286766559</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacepmscore.html">pmscore</a></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">   50</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> = double;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="namespacepmscore.html#abe29b8a8b826e252a8f40cb2a575a07c">   62</a></span>    <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> <a class="code hl_function" href="namespacepmscore.html#abe29b8a8b826e252a8f40cb2a575a07c">angle_distance</a>(<a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __a, <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __b);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="namespacepmscore.html#a25d50728001932ad8b70ed5368c09f9e">   72</a></span>    <span class="keyword">inline</span> <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> <a class="code hl_function" href="namespacepmscore.html#a25d50728001932ad8b70ed5368c09f9e">simplify_angle</a>(<a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __a) { <span class="keywordflow">return</span> fmod(__a, <a class="code hl_define" href="math_8hpp.html#a4aa2c43b09c1300c334821f5507d6f71">M_2PI</a>); }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif </span><span class="comment">// PMSCORE_MATH_MATH_HPP</span></div>
+<div class="ttc" id="amath_8hpp_html_a4aa2c43b09c1300c334821f5507d6f71"><div class="ttname"><a href="math_8hpp.html#a4aa2c43b09c1300c334821f5507d6f71">M_2PI</a></div><div class="ttdeci">#define M_2PI</div><div class="ttdoc">Valeur (approchée) de .</div><div class="ttdef"><b>Definition:</b> math.hpp:28</div></div>
+<div class="ttc" id="anamespacepmscore_html"><div class="ttname"><a href="namespacepmscore.html">pmscore</a></div><div class="ttdoc">Espace de nommage principal.</div><div class="ttdef"><b>Definition:</b> arduino.hpp:46</div></div>
+<div class="ttc" id="anamespacepmscore_html_a25d50728001932ad8b70ed5368c09f9e"><div class="ttname"><a href="namespacepmscore.html#a25d50728001932ad8b70ed5368c09f9e">pmscore::simplify_angle</a></div><div class="ttdeci">real simplify_angle(real __a)</div><div class="ttdoc">Simplifie la valeur d'un angle.</div><div class="ttdef"><b>Definition:</b> math.hpp:72</div></div>
+<div class="ttc" id="anamespacepmscore_html_a7063e563190973411e70e9673baa094e"><div class="ttname"><a href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">pmscore::real</a></div><div class="ttdeci">double real</div><div class="ttdoc">Type réel utilisé.</div><div class="ttdef"><b>Definition:</b> math.hpp:50</div></div>
+<div class="ttc" id="anamespacepmscore_html_abe29b8a8b826e252a8f40cb2a575a07c"><div class="ttname"><a href="namespacepmscore.html#abe29b8a8b826e252a8f40cb2a575a07c">pmscore::angle_distance</a></div><div class="ttdeci">real angle_distance(real __a, real __b)</div><div class="ttdoc">Calcule la distance minimale entre deux angles.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

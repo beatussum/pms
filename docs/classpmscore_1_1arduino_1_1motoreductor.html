@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>P.M.S. core: Référence de la classe pmscore::arduino::motoreductor</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">P.M.S. core<span id="projectnumber">&#160;0.9</span>
+   </div>
+   <div id="projectbrief">My T.I.P.E. project: Parking Monitoring System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespacepmscore.html">pmscore</a></li><li class="navelem"><a class="el" href="namespacepmscore_1_1arduino.html">arduino</a></li><li class="navelem"><a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html">motoreductor</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Types publics</a> &#124;
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="classpmscore_1_1arduino_1_1motoreductor-members.html">Liste de tous les membres</a>  </div>
+  <div class="headertitle"><div class="title">Référence de la classe pmscore::arduino::motoreductor</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Cette classe permet le pilotage d'un motoréducteur.  
+ <a href="classpmscore_1_1arduino_1_1motoreductor.html#details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="motoreductor_8hpp_source.html">motoreductor.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Types publics</h2></td></tr>
+<tr class="memitem:aaec106fc27847b7b0cac14574e653b9b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#aaec106fc27847b7b0cac14574e653b9b">direction</a> : uint8_t { <a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#aaec106fc27847b7b0cac14574e653b9ba5835bab1ade0060909e31a06af2e2cde">Front</a>
+, <a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#aaec106fc27847b7b0cac14574e653b9ba0557fa923dcee4d0f86b1409f5c2167f">Back</a>
+, <a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#aaec106fc27847b7b0cac14574e653b9ba9af901a16c3d66abda1f656f0b7c4e15">Brake</a>
+, <a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#aaec106fc27847b7b0cac14574e653b9bad15305d7a4e34e02489c74a5ef542f36">Off</a>
+ }</td></tr>
+<tr class="memdesc:aaec106fc27847b7b0cac14574e653b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Différents modes de fonctionnement du motoréducteur.  <a href="classpmscore_1_1arduino_1_1motoreductor.html#aaec106fc27847b7b0cac14574e653b9b">Plus de détails...</a><br /></td></tr>
+<tr class="separator:aaec106fc27847b7b0cac14574e653b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:a621e1db2a3db9fabdfe4a23b255d40be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#a621e1db2a3db9fabdfe4a23b255d40be">motoreductor</a> (<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __pin_a, <a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __pin_b, <a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __pin_pwm, <a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *__e, int16_t __power=0)</td></tr>
+<tr class="memdesc:a621e1db2a3db9fabdfe4a23b255d40be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construit un objet <code>motoreductor</code>.  <a href="classpmscore_1_1arduino_1_1motoreductor.html#a621e1db2a3db9fabdfe4a23b255d40be">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a621e1db2a3db9fabdfe4a23b255d40be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18d9baf2e4cc76485e9f6d9e16b96504"><td class="memItemLeft" align="right" valign="top"><a id="a18d9baf2e4cc76485e9f6d9e16b96504" name="a18d9baf2e4cc76485e9f6d9e16b96504"></a>
+<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_pin_a</b> () const noexcept</td></tr>
+<tr class="separator:a18d9baf2e4cc76485e9f6d9e16b96504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ec02124003d37d2a19cad202fbecd8e"><td class="memItemLeft" align="right" valign="top"><a id="a0ec02124003d37d2a19cad202fbecd8e" name="a0ec02124003d37d2a19cad202fbecd8e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_pin_a</b> (<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __p) noexcept</td></tr>
+<tr class="separator:a0ec02124003d37d2a19cad202fbecd8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe980b0da5025c3e9f33fb8df8898556"><td class="memItemLeft" align="right" valign="top"><a id="afe980b0da5025c3e9f33fb8df8898556" name="afe980b0da5025c3e9f33fb8df8898556"></a>
+<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_pin_b</b> () const noexcept</td></tr>
+<tr class="separator:afe980b0da5025c3e9f33fb8df8898556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32027fb49b6f142af046695ac95dcc62"><td class="memItemLeft" align="right" valign="top"><a id="a32027fb49b6f142af046695ac95dcc62" name="a32027fb49b6f142af046695ac95dcc62"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_pin_b</b> (<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __p) noexcept</td></tr>
+<tr class="separator:a32027fb49b6f142af046695ac95dcc62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9f239155b6db8b4f5d66b7ad48c0f43"><td class="memItemLeft" align="right" valign="top"><a id="ac9f239155b6db8b4f5d66b7ad48c0f43" name="ac9f239155b6db8b4f5d66b7ad48c0f43"></a>
+<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_pin_pwm</b> () const noexcept</td></tr>
+<tr class="separator:ac9f239155b6db8b4f5d66b7ad48c0f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d138b5c74a7421f6ceae8ab7a52e8dd"><td class="memItemLeft" align="right" valign="top"><a id="a7d138b5c74a7421f6ceae8ab7a52e8dd" name="a7d138b5c74a7421f6ceae8ab7a52e8dd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_pin_pwm</b> (<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __p) noexcept</td></tr>
+<tr class="separator:a7d138b5c74a7421f6ceae8ab7a52e8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf44c6d67507abc99822b6376be23acd"><td class="memItemLeft" align="right" valign="top"><a id="acf44c6d67507abc99822b6376be23acd" name="acf44c6d67507abc99822b6376be23acd"></a>
+<a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_encoder</b> () const noexcept</td></tr>
+<tr class="separator:acf44c6d67507abc99822b6376be23acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bb0168bf2dcdbb5c37a88a7c6a65272"><td class="memItemLeft" align="right" valign="top"><a id="a3bb0168bf2dcdbb5c37a88a7c6a65272" name="a3bb0168bf2dcdbb5c37a88a7c6a65272"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_encoder</b> (<a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *__e) noexcept</td></tr>
+<tr class="separator:a3bb0168bf2dcdbb5c37a88a7c6a65272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915ff6bc954d3305817c1091b60082af"><td class="memItemLeft" align="right" valign="top"><a id="a915ff6bc954d3305817c1091b60082af" name="a915ff6bc954d3305817c1091b60082af"></a>
+int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_power</b> () const noexcept</td></tr>
+<tr class="separator:a915ff6bc954d3305817c1091b60082af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa536b99b936ab9761b4cebd545527a1"><td class="memItemLeft" align="right" valign="top"><a id="afa536b99b936ab9761b4cebd545527a1" name="afa536b99b936ab9761b4cebd545527a1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_power</b> (int16_t)</td></tr>
+<tr class="separator:afa536b99b936ab9761b4cebd545527a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea43be2c8d62d29cd463e0e4e00b4c35"><td class="memItemLeft" align="right" valign="top"><a id="aea43be2c8d62d29cd463e0e4e00b4c35" name="aea43be2c8d62d29cd463e0e4e00b4c35"></a>
+<a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#aaec106fc27847b7b0cac14574e653b9b">direction</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_direction</b> () const noexcept</td></tr>
+<tr class="separator:aea43be2c8d62d29cd463e0e4e00b4c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4589f95236bd97995bb5b438b24e6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#a4c4589f95236bd97995bb5b438b24e6b">increase_power</a> (int16_t __p=1)</td></tr>
+<tr class="memdesc:a4c4589f95236bd97995bb5b438b24e6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Augmente la puissance du motoréducteur.  <a href="classpmscore_1_1arduino_1_1motoreductor.html#a4c4589f95236bd97995bb5b438b24e6b">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a4c4589f95236bd97995bb5b438b24e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fcd94b6ee90fb89190215bcf606a198"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#a8fcd94b6ee90fb89190215bcf606a198">reduce_power</a> (int16_t __p=1)</td></tr>
+<tr class="memdesc:a8fcd94b6ee90fb89190215bcf606a198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Diminue la puissance du motoréducteur.  <a href="classpmscore_1_1arduino_1_1motoreductor.html#a8fcd94b6ee90fb89190215bcf606a198">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a8fcd94b6ee90fb89190215bcf606a198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb83228734102c8c3311e00718b1fd95"><td class="memItemLeft" align="right" valign="top"><a id="afb83228734102c8c3311e00718b1fd95" name="afb83228734102c8c3311e00718b1fd95"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>brake</b> ()</td></tr>
+<tr class="memdesc:afb83228734102c8c3311e00718b1fd95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Met la <em>direction</em> du motoréducteur à <em>Brake</em>. <br /></td></tr>
+<tr class="separator:afb83228734102c8c3311e00718b1fd95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c37946fcb6675e1a5105d1b7f1fb0e6"><td class="memItemLeft" align="right" valign="top"><a id="a2c37946fcb6675e1a5105d1b7f1fb0e6" name="a2c37946fcb6675e1a5105d1b7f1fb0e6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>disable</b> ()</td></tr>
+<tr class="memdesc:a2c37946fcb6675e1a5105d1b7f1fb0e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Met la <em>direction</em> du motoréducteur à <em>Off</em>. <br /></td></tr>
+<tr class="separator:a2c37946fcb6675e1a5105d1b7f1fb0e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p >Cette classe permet le pilotage d'un motoréducteur. </p>
+</div><h2 class="groupheader">Documentation des énumérations membres</h2>
+<a id="aaec106fc27847b7b0cac14574e653b9b" name="aaec106fc27847b7b0cac14574e653b9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaec106fc27847b7b0cac14574e653b9b">&#9670;&#160;</a></span>direction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#aaec106fc27847b7b0cac14574e653b9b">pmscore::arduino::motoreductor::direction</a> : uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Différents modes de fonctionnement du motoréducteur. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Valeurs énumérées</th></tr><tr><td class="fieldname"><a id="aaec106fc27847b7b0cac14574e653b9ba5835bab1ade0060909e31a06af2e2cde" name="aaec106fc27847b7b0cac14574e653b9ba5835bab1ade0060909e31a06af2e2cde"></a>Front&#160;</td><td class="fielddoc"><p >en marche avant. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aaec106fc27847b7b0cac14574e653b9ba0557fa923dcee4d0f86b1409f5c2167f" name="aaec106fc27847b7b0cac14574e653b9ba0557fa923dcee4d0f86b1409f5c2167f"></a>Back&#160;</td><td class="fielddoc"><p >en marche arrière. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aaec106fc27847b7b0cac14574e653b9ba9af901a16c3d66abda1f656f0b7c4e15" name="aaec106fc27847b7b0cac14574e653b9ba9af901a16c3d66abda1f656f0b7c4e15"></a>Brake&#160;</td><td class="fielddoc"><p >en mode freinage (le motoréducteur ne tourne pas mais exerce un couple résistant). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aaec106fc27847b7b0cac14574e653b9bad15305d7a4e34e02489c74a5ef542f36" name="aaec106fc27847b7b0cac14574e653b9bad15305d7a4e34e02489c74a5ef542f36"></a>Off&#160;</td><td class="fielddoc"><p >en mode désactivé (le motoréducteur ne tourne pas et n'exerce pas un couple résistant). </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a id="a621e1db2a3db9fabdfe4a23b255d40be" name="a621e1db2a3db9fabdfe4a23b255d40be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a621e1db2a3db9fabdfe4a23b255d40be">&#9670;&#160;</a></span>motoreductor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">pmscore::arduino::motoreductor::motoreductor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td>
+          <td class="paramname"><em>__pin_a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td>
+          <td class="paramname"><em>__pin_b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td>
+          <td class="paramname"><em>__pin_pwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *&#160;</td>
+          <td class="paramname"><em>__e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>__power</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construit un objet <code>motoreductor</code>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__pin_a</td><td>Pin A. </td></tr>
+    <tr><td class="paramname">__pin_b</td><td>Pin B. </td></tr>
+    <tr><td class="paramname">__pin_pwm</td><td>Pin P.W.M..</td></tr>
+    <tr><td class="paramname">__e</td><td>Pointeur vers l'encodeur qui monitore le moteur en question.</td></tr>
+    <tr><td class="paramname">__power</td><td>Le rapport cyclique du signal P.W.M. alimentant le motoréducteur. Cette valeur varie entre -255 et 255. Si cette valeur est négative, le moteur a pour <em>direction</em> <em>Back</em> ; sinon, le moteur a pour <em>direction</em> <em>Front</em>. Le rapport cyclique est en lui-même codé sur 8 bits (soit une valeur variant entre 0 et 255). La valeur par défaut est nulle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions membres</h2>
+<a id="a4c4589f95236bd97995bb5b438b24e6b" name="a4c4589f95236bd97995bb5b438b24e6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c4589f95236bd97995bb5b438b24e6b">&#9670;&#160;</a></span>increase_power()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pmscore::arduino::motoreductor::increase_power </td>
+          <td>(</td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>__p</em> = <code>1</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Augmente la puissance du motoréducteur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__p</td><td>La valeur dont on augmente la puissance du motoréducteur. Cette valeur peut être aussi bien positive que négative. De plus, si celle-ci sort de l'intervalle de valeurs toléré (à savoir <picture><source srcset="form_8_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ [-255; 255] $" src="form_8.png" width="59" height="14"/></picture>), alors elle sature à la valeur extrême (basse ou haute). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8fcd94b6ee90fb89190215bcf606a198" name="a8fcd94b6ee90fb89190215bcf606a198"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fcd94b6ee90fb89190215bcf606a198">&#9670;&#160;</a></span>reduce_power()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pmscore::arduino::motoreductor::reduce_power </td>
+          <td>(</td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>__p</em> = <code>1</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Diminue la puissance du motoréducteur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__p</td><td>La valeur dont on diminue la puissance du motoréducteur.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>Voir également</dt><dd><a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html#a4c4589f95236bd97995bb5b438b24e6b" title="Augmente la puissance du motoréducteur.">increase_power</a> </dd></dl>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>include/arduino/<a class="el" href="motoreductor_8hpp_source.html">motoreductor.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

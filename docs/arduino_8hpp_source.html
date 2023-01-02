@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>P.M.S. core:  Fichier source de include/arduino/arduino.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">P.M.S. core<span id="projectnumber">&#160;0.9</span>
+   </div>
+   <div id="projectbrief">My T.I.P.E. project: Parking Monitoring System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fb12fe2d477868dc007cb48b5e4a7d3f.html">arduino</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">arduino.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="arduino_8hpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright (C) 2022 Mattéo Rossillol‑‑Laruelle &lt;beatussum@protonmail.com&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * This program is free software: you can redistribute it and/or modify it</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * under the terms of the GNU General Public License as published by the Free</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * Software Foundation, either version 3 of the License, or (at your option)</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * any later version.</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * This program is distributed in the hope that it will be useful, but WITHOUT</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * more details.</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * You should have received a copy of the GNU General Public License along with</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifndef PMSCORE_ARDUINO_ARDUINO_HPP</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#define PMSCORE_ARDUINO_ARDUINO_HPP</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="math_8hpp.html">math/math.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="namespacepmscore.html">   45</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacepmscore_1_1arduino.html">pmscore::arduino</a></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>{</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">   51</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> = uint8_t;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespacepmscore_1_1arduino.html#aeb72b330dc0f2a50bd0ef6e61f673139">   60</a></span>    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> <a class="code hl_variable" href="namespacepmscore_1_1arduino.html#aeb72b330dc0f2a50bd0ef6e61f673139">d</a> = 8.20;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="namespacepmscore_1_1arduino.html#ad6b0f57bea8a9e1ae82de774149c13ad">   69</a></span>    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> <a class="code hl_variable" href="namespacepmscore_1_1arduino.html#ad6b0f57bea8a9e1ae82de774149c13ad">r</a> = 2.55;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="namespacepmscore_1_1arduino.html#ae1371a5f655246c45a55a06af384f7f5">   71</a></span>    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> <a class="code hl_variable" href="namespacepmscore_1_1arduino.html#ae1371a5f655246c45a55a06af384f7f5">r_2</a>  = (<a class="code hl_variable" href="namespacepmscore_1_1arduino.html#ad6b0f57bea8a9e1ae82de774149c13ad">r</a> / 2);       </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="namespacepmscore_1_1arduino.html#a354ff6b2024442ba23c0a3880475ad2a">   72</a></span>    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> <a class="code hl_variable" href="namespacepmscore_1_1arduino.html#a354ff6b2024442ba23c0a3880475ad2a">r_2d</a> = (<a class="code hl_variable" href="namespacepmscore_1_1arduino.html#ad6b0f57bea8a9e1ae82de774149c13ad">r</a> / (2 * <a class="code hl_variable" href="namespacepmscore_1_1arduino.html#aeb72b330dc0f2a50bd0ef6e61f673139">d</a>)); </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif </span><span class="comment">// PMSCORE_ARDUINO_ARDUINO_HPP</span></div>
+<div class="ttc" id="amath_8hpp_html"><div class="ttname"><a href="math_8hpp.html">math.hpp</a></div><div class="ttdoc">Ce fichier implémente les éléménts communs et nécessaires au bon fonctionnement des autres objets imp...</div></div>
+<div class="ttc" id="anamespacepmscore_1_1arduino_html"><div class="ttname"><a href="namespacepmscore_1_1arduino.html">pmscore::arduino</a></div><div class="ttdoc">Cet espace de nommage implémente une interface logiciel-machine.</div><div class="ttdef"><b>Definition:</b> arduino.hpp:46</div></div>
+<div class="ttc" id="anamespacepmscore_1_1arduino_html_a1da7d44e82945a6e313f3f49ba0f6df4"><div class="ttname"><a href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pmscore::arduino::pin_t</a></div><div class="ttdeci">uint8_t pin_t</div><div class="ttdoc">Type utilisé pour décrire un pin de la carte Arduino.</div><div class="ttdef"><b>Definition:</b> arduino.hpp:51</div></div>
+<div class="ttc" id="anamespacepmscore_1_1arduino_html_a354ff6b2024442ba23c0a3880475ad2a"><div class="ttname"><a href="namespacepmscore_1_1arduino.html#a354ff6b2024442ba23c0a3880475ad2a">pmscore::arduino::r_2d</a></div><div class="ttdeci">constexpr real r_2d</div><div class="ttdoc">Valeur de .</div><div class="ttdef"><b>Definition:</b> arduino.hpp:72</div></div>
+<div class="ttc" id="anamespacepmscore_1_1arduino_html_ad6b0f57bea8a9e1ae82de774149c13ad"><div class="ttname"><a href="namespacepmscore_1_1arduino.html#ad6b0f57bea8a9e1ae82de774149c13ad">pmscore::arduino::r</a></div><div class="ttdeci">constexpr real r</div><div class="ttdoc">Définition de .</div><div class="ttdef"><b>Definition:</b> arduino.hpp:69</div></div>
+<div class="ttc" id="anamespacepmscore_1_1arduino_html_ae1371a5f655246c45a55a06af384f7f5"><div class="ttname"><a href="namespacepmscore_1_1arduino.html#ae1371a5f655246c45a55a06af384f7f5">pmscore::arduino::r_2</a></div><div class="ttdeci">constexpr real r_2</div><div class="ttdoc">Valeur de .</div><div class="ttdef"><b>Definition:</b> arduino.hpp:71</div></div>
+<div class="ttc" id="anamespacepmscore_1_1arduino_html_aeb72b330dc0f2a50bd0ef6e61f673139"><div class="ttname"><a href="namespacepmscore_1_1arduino.html#aeb72b330dc0f2a50bd0ef6e61f673139">pmscore::arduino::d</a></div><div class="ttdeci">constexpr real d</div><div class="ttdoc">Définition de .</div><div class="ttdef"><b>Definition:</b> arduino.hpp:60</div></div>
+<div class="ttc" id="anamespacepmscore_html_a7063e563190973411e70e9673baa094e"><div class="ttname"><a href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">pmscore::real</a></div><div class="ttdeci">double real</div><div class="ttdoc">Type réel utilisé.</div><div class="ttdef"><b>Definition:</b> math.hpp:50</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>
