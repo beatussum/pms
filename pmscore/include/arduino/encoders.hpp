@@ -125,6 +125,8 @@ namespace pmscore::arduino
      */
 
     inline encoder* main_encoders[] = {nullptr, nullptr};
+
+    void set_main_encoders(const encoders& __e) noexcept;
 }
 
 #include "arduino/encoders.ipp"
