@@ -125,4 +125,28 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     add_gcc_cxx_flags(-Werror -Wfatal-errors)
 endif()
 
-add_subdirectory("${CMAKE_SOURCE_DIR}/src")
+set(
+    PMSEXP_HPP
+    include/gui/ItemizeWidget.hpp
+)
+
+set(PMSEXP_IPP)
+
+set(
+    PMSEXP_CPP
+    src/main.cpp
+    src/gui/ItemizeWidget.cpp
+)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include/gui")
+
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/")
+find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+
+add_executable(pmsexp "${PMSEXP_HPP}" "${PMSEXP_IPP}" "${PMSEXP_CPP}")
+target_include_directories(pmsexp PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries(pmsexp Qt5::Core Qt5::Gui Qt5::Widgets)
+
+add_to_doc("${PMSEXP_HPP}")
