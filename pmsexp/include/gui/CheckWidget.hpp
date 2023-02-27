@@ -31,16 +31,16 @@ namespace gui
     public:
         explicit CheckWidget(
             QString __info,
-            bool __status = false,
-            QWidget* __parent = nullptr,
+            bool __status       = false,
+            QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = Qt::WindowFlags()
         )
             : ItemizeWidget(
-                    __info,
-                    QIcon::fromTheme(__status ? "list-add" : "list-remove"),
-                    __parent,
-                    __f
-                )
+                std::move(__info),
+                QIcon::fromTheme(__status ? "list-add" : "list-remove"),
+                __parent,
+                __f
+            )
 
             , m_status(__status)
         {}

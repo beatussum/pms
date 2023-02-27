@@ -52,7 +52,7 @@ namespace gui
             QString __info,
             QPixmap,
             QWidget* __parent = nullptr,
-            Qt::WindowFlags = Qt::WindowFlags()
+            Qt::WindowFlags   = Qt::WindowFlags()
         );
 
         explicit ItemizeWidget(
@@ -74,7 +74,7 @@ namespace gui
         QString get_info() const { return m_ui->m_info_label->text(); }
         QPixmap get_pixmap() const;
     public slots:
-        void set_info(QString __i) { m_ui->m_info_label->setText(__i); }
+        void set_info(QString);
     protected slots:
         void set_pixmap(QPixmap);
         void set_pixmap(const QIcon&);
