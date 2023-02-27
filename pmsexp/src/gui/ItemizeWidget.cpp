@@ -37,11 +37,6 @@ namespace gui
         set_info(__info);
     }
 
-    ItemizeWidget::~ItemizeWidget()
-    {
-        delete m_ui;
-    }
-
     void ItemizeWidget::__set_status(bool __s)
     {
         m_ui->m_check_label->setPixmap(

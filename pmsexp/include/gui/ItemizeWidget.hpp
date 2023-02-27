@@ -21,11 +21,6 @@
 
 #include "ui_ItemizeWidget.h"
 
-namespace Ui
-{
-    class ItemizeWidget;
-}
-
 namespace gui
 {
     class ItemizeWidget : public QWidget
@@ -40,11 +35,11 @@ namespace gui
             Qt::WindowFlags __f = Qt::WindowFlags()
         );
 
-        ~ItemizeWidget();
+        virtual ~ItemizeWidget() { delete m_ui; }
     private:
         void __set_status(bool);
     public:
-        bool get_status() const { return m_status; }
+        bool get_status() const noexcept { return m_status; }
         QString get_info() const { return m_ui->m_info_label->text(); }
     public slots:
         void set_info(QString __i) { m_ui->m_info_label->setText(__i); }
