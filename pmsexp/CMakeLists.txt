@@ -129,6 +129,7 @@ set(
     PMSEXP_HPP
     include/gui/CheckWidget.hpp
     include/gui/ItemizeWidget.hpp
+    include/gui/UploadWidget.hpp
 )
 
 set(PMSEXP_IPP)
@@ -138,6 +139,7 @@ set(
     src/main.cpp
     src/gui/CheckWidget.cpp
     src/gui/ItemizeWidget.cpp
+    src/gui/UploadWidget.cpp
 )
 
 set(CMAKE_AUTOMOC ON)
