@@ -127,6 +127,7 @@ endif()
 
 set(
     PMSEXP_HPP
+    include/gui/CheckWidget.hpp
     include/gui/ItemizeWidget.hpp
 )
 
@@ -135,6 +136,7 @@ set(PMSEXP_IPP)
 set(
     PMSEXP_CPP
     src/main.cpp
+    src/gui/CheckWidget.cpp
     src/gui/ItemizeWidget.cpp
 )
 

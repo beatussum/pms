@@ -18,31 +18,40 @@
 
 #include "gui/ItemizeWidget.hpp"
 
-#include <QtGui/QIcon>
-
 namespace gui
 {
     ItemizeWidget::ItemizeWidget(
         QString __info,
-        bool __status,
+        QPixmap __p,
         QWidget* __parent,
         Qt::WindowFlags __f
     )
         : QWidget(__parent, __f)
-        , m_status(__status)
         , m_ui(new Ui::ItemizeWidget())
     {
         m_ui->setupUi(this);
-        __set_status(m_status);
         set_info(__info);
+        set_pixmap(__p);
     }
 
-    void ItemizeWidget::__set_status(bool __s)
+    QPixmap ItemizeWidget::get_pixmap() const
     {
-        m_ui->m_check_label->setPixmap(
-            QIcon::fromTheme(
-                __s ? "list-add" : "list-remove"
-            ).pixmap({32, 32})
-        );
+        return m_ui->m_pixmap_label->pixmap(Qt::ReturnByValueConstant());
+    }
+
+    void ItemizeWidget::set_pixmap(QPixmap __p)
+    {
+        m_ui->m_pixmap_label->setPixmap(__p);
+    }
+
+    void ItemizeWidget::set_pixmap(const QIcon& __i)
+    {
+        set_pixmap(__i.pixmap({32, 32}));
+    }
+
+    void ItemizeWidget::clear()
+    {
+        m_ui->m_pixmap_label->clear();
+        m_ui->m_info_label->clear();
     }
 }

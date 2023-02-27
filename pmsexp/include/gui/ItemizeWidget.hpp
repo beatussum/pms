@@ -21,31 +21,66 @@
 
 #include "ui_ItemizeWidget.h"
 
+#include <QtGui/QIcon>
+
 namespace gui
 {
     class ItemizeWidget : public QWidget
     {
         Q_OBJECT
 
+        Q_PROPERTY(
+            QString info
+            READ get_info
+            WRITE set_info
+            RESET clear
+            STORED false
+            REQUIRED
+        )
+
+        Q_PROPERTY(
+            QPixmap pixmap
+            READ get_pixmap
+            WRITE set_pixmap
+            RESET clear
+            STORED false
+            REQUIRED
+        )
+
     public:
         explicit ItemizeWidget(
             QString __info,
-            bool __status = false,
+            QPixmap,
             QWidget* __parent = nullptr,
-            Qt::WindowFlags __f = Qt::WindowFlags()
+            Qt::WindowFlags = Qt::WindowFlags()
         );
 
+        explicit ItemizeWidget(
+            QString __info,
+            const QIcon& __i,
+            QWidget* __parent = nullptr,
+            Qt::WindowFlags __f = Qt::WindowFlags()
+        )
+            : ItemizeWidget(
+                std::move(__info),
+                __i.pixmap({32, 32}),
+                __parent,
+                __f
+            )
+        {}
+
         virtual ~ItemizeWidget() { delete m_ui; }
-    private:
-        void __set_status(bool);
     public:
-        bool get_status() const noexcept { return m_status; }
         QString get_info() const { return m_ui->m_info_label->text(); }
+        QPixmap get_pixmap() const;
     public slots:
         void set_info(QString __i) { m_ui->m_info_label->setText(__i); }
-        void set_status(bool __s) { __set_status(m_status = __s); }
+    protected slots:
+        void set_pixmap(QPixmap);
+        void set_pixmap(const QIcon&);
+
+        void clear();
     private:
-        bool               m_status;
         Ui::ItemizeWidget* m_ui;
     };
 }
