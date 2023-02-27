@@ -40,6 +40,13 @@ namespace gui
         setAcceptDrops(true);
     }
 
+    void UploadWidget::reset_file_path()
+    {
+        m_file_path.clear();
+
+        emit file_path_updated(m_file_path);
+    }
+
     void UploadWidget::dragEnterEvent(QDragEnterEvent* __e)
     {
         if (

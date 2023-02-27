@@ -39,12 +39,17 @@ namespace gui
         explicit UploadWidget(
             QString __info,
             QWidget* __parent = nullptr,
-            Qt::WindowFlags   = Qt::WindowFlags()
+            Qt::WindowFlags   = {}
         );
+
+        UploadWidget(QWidget* __parent = nullptr, Qt::WindowFlags __f = {})
+            : UploadWidget(QString(), __parent, __f)
+        {}
     public:
         QString get_file_path() const { return m_file_path; }
+        bool is_empty() const { return m_file_path.isEmpty(); }
     public slots:
-        void reset_file_path() { m_file_path.clear(); }
+        void reset_file_path();
     signals:
         void file_path_updated(QString __new_file_path);
     protected:

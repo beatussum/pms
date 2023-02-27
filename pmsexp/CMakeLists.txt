@@ -129,6 +129,7 @@ set(
     PMSEXP_HPP
     include/gui/CheckWidget.hpp
     include/gui/ItemizeWidget.hpp
+    include/gui/MainWindow.hpp
     include/gui/UploadWidget.hpp
 )
 
@@ -139,6 +140,7 @@ set(
     src/main.cpp
     src/gui/CheckWidget.cpp
     src/gui/ItemizeWidget.cpp
+    src/gui/MainWindow.cpp
     src/gui/UploadWidget.cpp
 )
 

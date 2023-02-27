@@ -33,7 +33,7 @@ namespace gui
             QString __info,
             bool __status       = false,
             QWidget* __parent   = nullptr,
-            Qt::WindowFlags __f = Qt::WindowFlags()
+            Qt::WindowFlags __f = {}
         )
             : ItemizeWidget(
                 std::move(__info),
@@ -43,6 +43,10 @@ namespace gui
             )
 
             , m_status(__status)
+        {}
+
+        CheckWidget(QWidget* __parent = nullptr, Qt::WindowFlags __f = {})
+            : CheckWidget(QString(), false, __parent, __f)
         {}
     public:
         bool get_status() const noexcept { return m_status; }

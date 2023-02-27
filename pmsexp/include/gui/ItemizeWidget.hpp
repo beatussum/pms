@@ -52,14 +52,14 @@ namespace gui
             QString __info,
             QPixmap,
             QWidget* __parent = nullptr,
-            Qt::WindowFlags   = Qt::WindowFlags()
+            Qt::WindowFlags   = {}
         );
 
         explicit ItemizeWidget(
             QString __info,
             const QIcon& __i,
             QWidget* __parent = nullptr,
-            Qt::WindowFlags __f = Qt::WindowFlags()
+            Qt::WindowFlags __f = {}
         )
             : ItemizeWidget(
                 std::move(__info),
@@ -67,6 +67,10 @@ namespace gui
                 __parent,
                 __f
             )
+        {}
+
+        ItemizeWidget(QWidget* __parent = nullptr, Qt::WindowFlags __f = {})
+            : ItemizeWidget(QString(), QPixmap(), __parent, __f)
         {}
 
         virtual ~ItemizeWidget() { delete m_ui; }
