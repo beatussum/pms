@@ -30,9 +30,9 @@ namespace gui::widgets
         Q_PROPERTY(
             QString file_path
             READ get_file_path
+            WRITE set_file_path
             RESET reset_file_path
             NOTIFY file_path_updated
-            DESIGNABLE false
         )
 
     public:
@@ -49,9 +49,10 @@ namespace gui::widgets
         QString get_file_path() const { return m_file_path; }
         bool is_empty() const { return m_file_path.isEmpty(); }
     public slots:
+        void set_file_path(QString);
         void reset_file_path();
     signals:
-        void file_path_updated(QString __new_file_path);
+        void file_path_updated(const QString& __new_file_path);
     protected:
         virtual void dragEnterEvent(QDragEnterEvent*) override;
         virtual void dropEvent(QDropEvent*) override;

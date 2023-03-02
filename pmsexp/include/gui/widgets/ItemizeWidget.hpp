@@ -33,18 +33,14 @@ namespace gui::widgets
             QString info
             READ get_info
             WRITE set_info
-            RESET clear
             STORED false
-            REQUIRED
         )
 
         Q_PROPERTY(
             QPixmap pixmap
             READ get_pixmap
             WRITE set_pixmap
-            RESET clear
             STORED false
-            REQUIRED
         )
 
     public:
@@ -82,8 +78,6 @@ namespace gui::widgets
     protected slots:
         void set_pixmap(QPixmap);
         void set_pixmap(const QIcon&);
-
-        void clear();
     private:
         Ui::ItemizeWidget* m_ui;
     };

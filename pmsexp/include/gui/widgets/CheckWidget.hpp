@@ -26,7 +26,14 @@ namespace gui::widgets
     class CheckWidget : public ItemizeWidget
     {
         Q_OBJECT
-        Q_PROPERTY(bool status READ get_status WRITE set_status)
+
+        Q_PROPERTY(
+            bool status
+            READ get_status
+            WRITE set_status
+            RESET reset_status
+            NOTIFY status_changed
+        )
 
     public:
         explicit CheckWidget(
@@ -50,8 +57,11 @@ namespace gui::widgets
         {}
     public:
         bool get_status() const noexcept { return m_status; }
+    signals:
+        void status_changed(bool __new_status);
     public slots:
         void set_status(bool);
+        void reset_status() { set_status(false); }
     private:
         bool m_status;
     };

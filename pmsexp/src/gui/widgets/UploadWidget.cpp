@@ -40,6 +40,13 @@ namespace gui::widgets
         setAcceptDrops(true);
     }
 
+    void UploadWidget::set_file_path(QString __f)
+    {
+        m_file_path = std::move(__f);
+
+        emit file_path_updated(m_file_path);
+    }
+
     void UploadWidget::reset_file_path()
     {
         m_file_path.clear();

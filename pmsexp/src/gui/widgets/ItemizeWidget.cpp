@@ -53,10 +53,4 @@ namespace gui::widgets
     {
         set_pixmap(__i.pixmap({32, 32}));
     }
-
-    void ItemizeWidget::clear()
-    {
-        m_ui->m_pixmap_label->clear();
-        m_ui->m_info_label->clear();
-    }
 }

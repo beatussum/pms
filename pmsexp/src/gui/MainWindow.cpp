@@ -27,64 +27,114 @@ namespace gui
         m_ui->setupUi(this);
 
         QObject::connect(
-            m_ui->m_action_reset,
-            &QAction::triggered,
-            this,
-            &MainWindow::when_action_reset_triggered
-        );
-
-        QObject::connect(
-            m_ui->m_return_button,
-            &QPushButton::clicked,
-            this,
-            &MainWindow::when_return_button_clicked
-        );
-
-        QObject::connect(
             m_ui->m_ex_uploader,
             &widgets::UploadWidget::file_path_updated,
             this,
-            &MainWindow::when_uploader_update
+            &MainWindow::ex_uploaded
         );
 
         QObject::connect(
             m_ui->m_th_uploader,
             &widgets::UploadWidget::file_path_updated,
             this,
-            &MainWindow::when_uploader_update
+            &MainWindow::th_uploaded
+        );
+
+        QObject::connect(
+            m_ui->m_ex_uploader,
+            &widgets::UploadWidget::file_path_updated,
+            this,
+            &MainWindow::upload_status_changed
+        );
+
+        QObject::connect(
+            m_ui->m_th_uploader,
+            &widgets::UploadWidget::file_path_updated,
+            this,
+            &MainWindow::upload_status_changed
+        );
+
+        QObject::connect(
+            m_ui->m_action_reset,
+            &QAction::triggered,
+            this,
+            &MainWindow::reset_upload_status
+        );
+
+        QObject::connect(
+            m_ui->m_return_button,
+            &QPushButton::clicked,
+            this,
+            &MainWindow::previous
         );
 
         QObject::connect(
             m_ui->m_valid_button,
             &QPushButton::clicked,
             this,
-            &MainWindow::when_valid_button_clicked
+            &MainWindow::valid
+        );
+
+        QObject::connect(
+            m_ui->m_ex_uploader,
+            &widgets::UploadWidget::file_path_updated,
+            this,
+            &MainWindow::update_upload_status
+        );
+
+        QObject::connect(
+            m_ui->m_th_uploader,
+            &widgets::UploadWidget::file_path_updated,
+            this,
+            &MainWindow::update_upload_status
         );
     }
 
-    void MainWindow::when_action_reset_triggered()
+    bool MainWindow::has_ex_uploaded() const
     {
-        m_ui->m_ex_uploader->reset_file_path();
-        m_ui->m_th_uploader->reset_file_path();
+        return !m_ui->m_ex_uploader->is_empty();
     }
 
-    void MainWindow::when_return_button_clicked()
+    bool MainWindow::has_th_uploaded() const
+    {
+        return !m_ui->m_th_uploader->is_empty();
+    }
+
+    bool MainWindow::is_upload_valid() const
+    {
+        return has_ex_uploaded() && has_th_uploaded();
+    }
+
+    void MainWindow::reset_upload_status()
+    {
+        reset_ex_status();
+        reset_th_status();
+    }
+
+    void MainWindow::previous()
     {
         m_ui->m_stacked_widget->setCurrentIndex(0);
     }
 
-    void MainWindow::when_uploader_update()
+    void MainWindow::valid()
     {
-        bool ex_status = !m_ui->m_ex_uploader->is_empty();
-        bool th_status = !m_ui->m_th_uploader->is_empty();
+        if (is_upload_valid()) {
+            m_ui->m_stacked_widget->setCurrentIndex(1);
+        } else {
+            throw std::runtime_error(
+                "This `gui::MainWindow` object must have the `upload_status` "
+                "property equal to `true` before calling `valid()`."
+            );
+        }
+    }
+
+    void MainWindow::update_upload_status()
+    {
+        bool ex_status = has_ex_uploaded();
+        bool th_status = has_th_uploaded();
 
         m_ui->m_ex_item->set_status(ex_status);
         m_ui->m_th_item->set_status(th_status);
         m_ui->m_valid_button->setEnabled(ex_status && th_status);
-    }
-
-    void MainWindow::when_valid_button_clicked()
-    {
-        m_ui->m_stacked_widget->setCurrentIndex(1);
     }
 }

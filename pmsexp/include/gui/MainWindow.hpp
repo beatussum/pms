@@ -27,14 +27,50 @@ namespace gui
     {
         Q_OBJECT
 
+        Q_PROPERTY(
+            bool ex_upload_status
+            READ has_ex_uploaded
+            RESET reset_ex_status
+            NOTIFY ex_uploaded
+            STORED false
+        )
+
+        Q_PROPERTY(
+            bool th_upload_status
+            READ has_th_uploaded
+            RESET reset_th_status
+            NOTIFY th_uploaded
+            STORED false
+        )
+
+        Q_PROPERTY(
+            bool upload_status
+            READ is_upload_valid
+            RESET reset_upload_status
+            NOTIFY upload_status_changed
+            STORED false
+        )
+
     public:
         explicit MainWindow(QWidget* __parent = nullptr, Qt::WindowFlags = {});
         virtual ~MainWindow() { delete m_ui; }
-    protected slots:
-        void when_action_reset_triggered();
-        void when_return_button_clicked();
-        void when_uploader_update();
-        void when_valid_button_clicked();
+    public:
+        bool has_ex_uploaded() const;
+        bool has_th_uploaded() const;
+        bool is_upload_valid() const;
+    signals:
+        void ex_uploaded();
+        void th_uploaded();
+        void upload_status_changed();
+    public slots:
+        void reset_ex_status() { m_ui->m_ex_uploader->reset_file_path(); }
+        void reset_th_status() { m_ui->m_th_uploader->reset_file_path(); }
+        void reset_upload_status();
+
+        void previous();
+        void valid();
+    private slots:
+        void update_upload_status();
     private:
         Ui::MainWindow* m_ui;
     };
