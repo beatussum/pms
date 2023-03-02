@@ -16,9 +16,9 @@
  */
 
 
-#include "gui/CheckWidget.hpp"
+#include "gui/widgets/CheckWidget.hpp"
 
-namespace gui
+namespace gui::widgets
 {
     void CheckWidget::set_status(bool __s)
     {

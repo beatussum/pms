@@ -16,12 +16,12 @@
  */
 
 
-#ifndef PMSEXP_GUI_STATISTIC_WIDGET_HPP
-#define PMSEXP_GUI_STATISTIC_WIDGET_HPP
+#ifndef PMSEXP_GUI_WIDGETS_STATISTIC_WIDGET_HPP
+#define PMSEXP_GUI_WIDGETS_STATISTIC_WIDGET_HPP
 
 #include "ui_StatisticWidget.h"
 
-namespace gui
+namespace gui::widgets
 {
     class StatisticWidget : public QWidget
     {
@@ -77,4 +77,4 @@ namespace gui
     };
 }
 
-#endif // PMSEXP_GUI_STATISTIC_WIDGET_HPP
+#endif // PMSEXP_GUI_WIDGETS_STATISTIC_WIDGET_HPP

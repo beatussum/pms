@@ -16,12 +16,12 @@
  */
 
 
-#ifndef PMSEXP_GUI_UPLOAD_WIDGET_HPP
-#define PMSEXP_GUI_UPLOAD_WIDGET_HPP
+#ifndef PMSEXP_GUI_WIDGETS_UPLOAD_WIDGET_HPP
+#define PMSEXP_GUI_WIDGETS_UPLOAD_WIDGET_HPP
 
-#include "gui/ItemizeWidget.hpp"
+#include "gui/widgets/ItemizeWidget.hpp"
 
-namespace gui
+namespace gui::widgets
 {
     class UploadWidget : public ItemizeWidget
     {
@@ -60,4 +60,4 @@ namespace gui
     };
 }
 
-#endif // PMSEXP_GUI_UPLOAD_WIDGET_HPP
+#endif // PMSEXP_GUI_WIDGETS_UPLOAD_WIDGET_HPP

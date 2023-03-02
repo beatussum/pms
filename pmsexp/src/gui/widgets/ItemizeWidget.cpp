@@ -16,9 +16,9 @@
  */
 
 
-#include "gui/ItemizeWidget.hpp"
+#include "gui/widgets/ItemizeWidget.hpp"
 
-namespace gui
+namespace gui::widgets
 {
     ItemizeWidget::ItemizeWidget(
         QString __info,

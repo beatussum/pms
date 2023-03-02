@@ -16,12 +16,12 @@
  */
 
 
-#include "gui/UploadWidget.hpp"
+#include "gui/widgets/UploadWidget.hpp"
 
 #include <QtCore/QMimeData>
 #include <QtGui/QDragEnterEvent>
 
-namespace gui
+namespace gui::widgets
 {
     UploadWidget::UploadWidget(
         QString __info,

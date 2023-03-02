@@ -17,9 +17,6 @@
    <layout class="QVBoxLayout" name="m_main_layout">
     <item>
      <widget class="QStackedWidget" name="m_stacked_widget">
-      <property name="currentIndex">
-       <number>1</number>
-      </property>
       <widget class="QWidget" name="m_upload_page">
        <layout class="QVBoxLayout" name="m_upload_layout">
         <item>
@@ -32,7 +29,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="gui::UploadWidget" name="m_ex_uploader" native="true">
+            <widget class="gui::widgets::UploadWidget" name="m_ex_uploader" native="true">
              <property name="info" stdset="0">
               <string>Charger les données expérimentales</string>
              </property>
@@ -46,7 +43,7 @@
             </widget>
            </item>
            <item>
-            <widget class="gui::UploadWidget" name="m_th_uploader" native="true">
+            <widget class="gui::widgets::UploadWidget" name="m_th_uploader" native="true">
              <property name="info" stdset="0">
               <string>Charger les données théoriques</string>
              </property>
@@ -62,14 +59,14 @@
           </property>
           <layout class="QVBoxLayout" name="m_item_layout">
            <item>
-            <widget class="gui::CheckWidget" name="m_ex_item" native="true">
+            <widget class="gui::widgets::CheckWidget" name="m_ex_item" native="true">
              <property name="info" stdset="0">
               <string>État de chargement des données expérimentales</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="gui::CheckWidget" name="m_th_item" native="true">
+            <widget class="gui::widgets::CheckWidget" name="m_th_item" native="true">
              <property name="info" stdset="0">
               <string>État de chargement des données théoriques</string>
              </property>
@@ -100,7 +97,7 @@
       <widget class="QWidget" name="m_statistic_page">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="gui::StatisticWidget" name="widget" native="true"/>
+         <widget class="gui::widgets::StatisticWidget" name="widget" native="true"/>
         </item>
         <item>
          <widget class="QPushButton" name="m_return_button">
@@ -174,21 +171,21 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>gui::CheckWidget</class>
+   <class>gui::widgets::CheckWidget</class>
    <extends>QWidget</extends>
-   <header>gui/CheckWidget.hpp</header>
+   <header>gui/widgets/CheckWidget.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>gui::UploadWidget</class>
+   <class>gui::widgets::UploadWidget</class>
    <extends>QWidget</extends>
-   <header>gui/UploadWidget.hpp</header>
+   <header>gui/widgets/UploadWidget.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>gui::StatisticWidget</class>
+   <class>gui::widgets::StatisticWidget</class>
    <extends>QWidget</extends>
-   <header>gui/StatisticWidget.hpp</header>
+   <header>gui/widgets/StatisticWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

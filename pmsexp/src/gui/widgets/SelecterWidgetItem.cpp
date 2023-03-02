@@ -16,9 +16,9 @@
  */
 
 
-#include "gui/SelecterWidgetItem.hpp"
+#include "gui/widgets/SelecterWidgetItem.hpp"
 
-namespace gui
+namespace gui::widgets
 {
     SelecterWidgetItem::SelecterWidgetItem(
         const QIcon& __i,

@@ -16,14 +16,14 @@
  */
 
 
-#ifndef PMSEXP_GUI_ITEMIZE_WIDGET_HPP
-#define PMSEXP_GUI_ITEMIZE_WIDGET_HPP
+#ifndef PMSEXP_GUI_WIDGETS_ITEMIZE_WIDGET_HPP
+#define PMSEXP_GUI_WIDGETS_ITEMIZE_WIDGET_HPP
 
 #include "ui_ItemizeWidget.h"
 
 #include <QtGui/QIcon>
 
-namespace gui
+namespace gui::widgets
 {
     class ItemizeWidget : public QWidget
     {
@@ -89,4 +89,4 @@ namespace gui
     };
 }
 
-#endif // PMSEXP_GUI_ITEMIZE_WIDGET_HPP
+#endif // PMSEXP_GUI_WIDGETS_ITEMIZE_WIDGET_HPP

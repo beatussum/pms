@@ -16,12 +16,12 @@
  */
 
 
-#ifndef PMSEXP_GUI_SELECTER_WIDGET_ITEM_HPP
-#define PMSEXP_GUI_SELECTER_WIDGET_ITEM_HPP
+#ifndef PMSEXP_GUI_WIDGETS_SELECTER_WIDGET_ITEM_HPP
+#define PMSEXP_GUI_WIDGETS_SELECTER_WIDGET_ITEM_HPP
 
 #include <QtWidgets/QListWidgetItem>
 
-namespace gui
+namespace gui::widgets
 {
     class SelecterWidgetItem : public QListWidgetItem
     {
@@ -48,4 +48,4 @@ namespace gui
     };
 }
 
-#endif // PMSEXP_GUI_SELECTER_WIDGET_ITEM_HPP
+#endif // PMSEXP_GUI_WIDGETS_SELECTER_WIDGET_ITEM_HPP

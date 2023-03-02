@@ -129,12 +129,12 @@ endif()
 
 set(
     PMSEXP_HPP
-    include/gui/CheckWidget.hpp
-    include/gui/ItemizeWidget.hpp
+    include/gui/widgets/CheckWidget.hpp
+    include/gui/widgets/ItemizeWidget.hpp
     include/gui/MainWindow.hpp
-    include/gui/SelecterWidgetItem.hpp
-    include/gui/StatisticWidget.hpp
-    include/gui/UploadWidget.hpp
+    include/gui/widgets/SelecterWidgetItem.hpp
+    include/gui/widgets/StatisticWidget.hpp
+    include/gui/widgets/UploadWidget.hpp
 )
 
 set(PMSEXP_IPP)
@@ -142,12 +142,12 @@ set(PMSEXP_IPP)
 set(
     PMSEXP_CPP
     src/main.cpp
-    src/gui/CheckWidget.cpp
-    src/gui/ItemizeWidget.cpp
+    src/gui/widgets/CheckWidget.cpp
+    src/gui/widgets/ItemizeWidget.cpp
     src/gui/MainWindow.cpp
-    src/gui/SelecterWidgetItem.cpp
-    src/gui/StatisticWidget.cpp
-    src/gui/UploadWidget.cpp
+    src/gui/widgets/SelecterWidgetItem.cpp
+    src/gui/widgets/StatisticWidget.cpp
+    src/gui/widgets/UploadWidget.cpp
 )
 
 set(CMAKE_AUTOMOC ON)

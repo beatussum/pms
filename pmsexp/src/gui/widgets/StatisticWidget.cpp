@@ -16,11 +16,11 @@
  */
 
 
-#include "gui/StatisticWidget.hpp"
+#include "gui/widgets/StatisticWidget.hpp"
 
-#include "gui/SelecterWidgetItem.hpp"
+#include "gui/widgets/SelecterWidgetItem.hpp"
 
-namespace gui
+namespace gui::widgets
 {
     StatisticWidget::StatisticWidget(QWidget* __parent, Qt::WindowFlags __f)
         : QWidget(__parent, __f)

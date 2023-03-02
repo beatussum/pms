@@ -42,14 +42,14 @@ namespace gui
 
         QObject::connect(
             m_ui->m_ex_uploader,
-            &UploadWidget::file_path_updated,
+            &widgets::UploadWidget::file_path_updated,
             this,
             &MainWindow::when_uploader_update
         );
 
         QObject::connect(
             m_ui->m_th_uploader,
-            &UploadWidget::file_path_updated,
+            &widgets::UploadWidget::file_path_updated,
             this,
             &MainWindow::when_uploader_update
         );
