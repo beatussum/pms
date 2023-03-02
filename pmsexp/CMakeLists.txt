@@ -25,6 +25,8 @@ project(pmsexp
 
 option(WITH_DOC "Build the documentation" OFF)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 unset(CMAKE_CXX_FLAGS_RELEASE CACHE)
 
 macro(add_gcc_cxx_flags _flags)
@@ -130,6 +132,8 @@ set(
     include/gui/CheckWidget.hpp
     include/gui/ItemizeWidget.hpp
     include/gui/MainWindow.hpp
+    include/gui/SelecterWidgetItem.hpp
+    include/gui/StatisticWidget.hpp
     include/gui/UploadWidget.hpp
 )
 
@@ -141,6 +145,8 @@ set(
     src/gui/CheckWidget.cpp
     src/gui/ItemizeWidget.cpp
     src/gui/MainWindow.cpp
+    src/gui/SelecterWidgetItem.cpp
+    src/gui/StatisticWidget.cpp
     src/gui/UploadWidget.cpp
 )
 
@@ -153,6 +159,6 @@ find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 
 add_executable(pmsexp "${PMSEXP_HPP}" "${PMSEXP_IPP}" "${PMSEXP_CPP}")
 target_include_directories(pmsexp PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
-target_link_libraries(pmsexp Qt5::Core Qt5::Gui Qt5::Widgets)
+target_link_libraries(pmsexp qcustomplot Qt5::Core Qt5::Gui Qt5::Widgets)
 
 add_to_doc("${PMSEXP_HPP}")

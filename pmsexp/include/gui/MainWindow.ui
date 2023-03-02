@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="m_stacked_widget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="m_upload_page">
        <layout class="QVBoxLayout" name="m_upload_layout">
@@ -100,7 +100,7 @@
       <widget class="QWidget" name="m_statistic_page">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QWidget" name="widget" native="true"/>
+         <widget class="gui::StatisticWidget" name="widget" native="true"/>
         </item>
         <item>
          <widget class="QPushButton" name="m_return_button">
@@ -183,6 +183,12 @@
    <class>gui::UploadWidget</class>
    <extends>QWidget</extends>
    <header>gui/UploadWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>gui::StatisticWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/StatisticWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
