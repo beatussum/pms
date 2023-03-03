@@ -50,7 +50,7 @@ namespace gui::widgets
         bool is_empty() const { return m_file_path.isEmpty(); }
     public slots:
         void set_file_path(QString);
-        void reset_file_path();
+        void reset_file_path() { set_file_path(QString()); }
     signals:
         void file_path_updated(const QString& __new_file_path);
     protected:
