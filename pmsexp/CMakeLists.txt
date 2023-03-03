@@ -133,6 +133,7 @@ set(
     include/gui/widgets/ItemizeWidget.hpp
     include/gui/MainWindow.hpp
     include/gui/widgets/SelecterWidgetItem.hpp
+    include/gui/widgets/SelectionWidget.hpp
     include/gui/widgets/StatisticWidget.hpp
     include/gui/widgets/UploadWidget.hpp
 )
@@ -146,6 +147,7 @@ set(
     src/gui/widgets/ItemizeWidget.cpp
     src/gui/MainWindow.cpp
     src/gui/widgets/SelecterWidgetItem.cpp
+    src/gui/widgets/SelectionWidget.cpp
     src/gui/widgets/StatisticWidget.cpp
     src/gui/widgets/UploadWidget.cpp
 )
@@ -155,10 +157,22 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include/gui")
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/")
+
 find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+
+find_package(OpenCV REQUIRED)
+include_directories("${OpenCV_INCLUDE_DIRS}")
 
 add_executable(pmsexp "${PMSEXP_HPP}" "${PMSEXP_IPP}" "${PMSEXP_CPP}")
 target_include_directories(pmsexp PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
-target_link_libraries(pmsexp qcustomplot Qt5::Core Qt5::Gui Qt5::Widgets)
+
+target_link_libraries(
+    pmsexp
+    "${OpenCV_LIBS}"
+    qcustomplot
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Widgets
+)
 
 add_to_doc("${PMSEXP_HPP}")
