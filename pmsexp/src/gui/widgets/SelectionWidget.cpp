@@ -31,7 +31,13 @@ namespace gui::widgets
         , m_origin()
         , m_rubber_band(QRubberBand::Rectangle, this)
     {
+        setAlignment(Qt::AlignCenter);
         setPixmap(__p);
+    }
+
+    void SelectionWidget::setPixmap(const cv::Mat& __m)
+    {
+        setPixmap(qpixmap_from_mat(__m));
     }
 
     void SelectionWidget::set_selection(QRect __s) noexcept
@@ -65,6 +71,8 @@ namespace gui::widgets
 
     void SelectionWidget::mousePressEvent(QMouseEvent* __e)
     {
+        setFocus();
+
         m_rubber_band.setGeometry(QRect((m_origin = __e->pos()), QSize()));
         m_rubber_band.show();
 

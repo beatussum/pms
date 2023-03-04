@@ -19,7 +19,7 @@
 #ifndef PMSEXP_GUI_WIDGETS_SELECTION_WIDGET_HPP
 #define PMSEXP_GUI_WIDGETS_SELECTION_WIDGET_HPP
 
-#include <opencv2/core/mat.hpp>
+#include "core/core.hpp"
 
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QRubberBand>
@@ -50,19 +50,7 @@ namespace gui::widgets
             QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = {}
         )
-            : SelectionWidget(
-                QPixmap::fromImage(
-                    QImage(
-                        static_cast<const uchar*>(__m.data),
-                        __m.cols,
-                        __m.rows,
-                        QImage::Format_RGB888
-                    )
-                ),
-
-                __parent,
-                __f
-            )
+            : SelectionWidget(qpixmap_from_mat(__m), __parent, __f)
         {}
 
         explicit SelectionWidget(
@@ -82,6 +70,9 @@ namespace gui::widgets
     signals:
         void selection_changed(const QRect& __new_selection);
     public slots:
+        void setPixmap(const QPixmap& __p) { return QLabel::setPixmap(__p); }
+        void setPixmap(const cv::Mat&);
+
         void set_selection(QRect) noexcept;
         void reset_selection() noexcept { set_selection(QRect()); }
     private:
