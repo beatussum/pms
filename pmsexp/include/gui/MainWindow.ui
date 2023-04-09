@@ -13,111 +13,7 @@
   <property name="windowTitle">
    <string>PMSExp</string>
   </property>
-  <widget class="QWidget" name="m_central_widget">
-   <layout class="QVBoxLayout" name="m_main_layout">
-    <item>
-     <widget class="QStackedWidget" name="m_stacked_widget">
-      <widget class="QWidget" name="m_upload_page">
-       <layout class="QVBoxLayout" name="m_upload_layout">
-        <item>
-         <widget class="QGroupBox" name="m_upload_box">
-          <property name="title">
-           <string>Chargement des données</string>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="gui::widgets::UploadWidget" name="m_ex_uploader" native="true">
-             <property name="info" stdset="0">
-              <string>Charger les données expérimentales</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="Line" name="m_line">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="gui::widgets::UploadWidget" name="m_th_uploader" native="true">
-             <property name="info" stdset="0">
-              <string>Charger les données théoriques</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="m_status_box">
-          <property name="title">
-           <string>Statut en cours</string>
-          </property>
-          <layout class="QVBoxLayout" name="m_item_layout">
-           <item>
-            <widget class="gui::widgets::CheckWidget" name="m_ex_item" native="true">
-             <property name="info" stdset="0">
-              <string>État de chargement des données expérimentales</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="gui::widgets::CheckWidget" name="m_th_item" native="true">
-             <property name="info" stdset="0">
-              <string>État de chargement des données théoriques</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="m_valid_button">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Valider</string>
-          </property>
-          <property name="icon">
-           <iconset theme="system-run">
-            <normaloff>.</normaloff>.</iconset>
-          </property>
-          <property name="shortcut">
-           <string>Ctrl+R</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="m_statistic_page">
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="gui::widgets::StatisticWidget" name="widget" native="true"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="m_return_button">
-          <property name="text">
-           <string>Retour</string>
-          </property>
-          <property name="icon">
-           <iconset theme="go-previous"/>
-          </property>
-          <property name="shortcut">
-           <string>Ctrl+S</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-   </layout>
-  </widget>
+  <widget class="gui::widgets::ButtonSelecterWidget" name="m_central_widget"/>
   <widget class="QStatusBar" name="m_status_bar"/>
   <widget class="QToolBar" name="m_tool_bar">
    <property name="windowTitle">
@@ -159,7 +55,8 @@
   </action>
   <action name="m_action_reset">
    <property name="icon">
-    <iconset theme="view-refresh"/>
+    <iconset theme="view-refresh">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Réinitialiser</string>
@@ -171,21 +68,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>gui::widgets::CheckWidget</class>
+   <class>gui::widgets::ButtonSelecterWidget</class>
    <extends>QWidget</extends>
-   <header>gui/widgets/CheckWidget.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>gui::widgets::UploadWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/widgets/UploadWidget.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>gui::widgets::StatisticWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/widgets/StatisticWidget.hpp</header>
+   <header>gui/widgets/ButtonSelecterWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

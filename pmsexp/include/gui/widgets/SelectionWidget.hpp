@@ -61,12 +61,11 @@ namespace gui::widgets
         {}
     public:
         QRect get_selection() const noexcept { return m_selection; }
-        bool has_selection() const noexcept { return m_selection.isEmpty(); }
+        bool has_selection() const noexcept { return !m_selection.isEmpty(); }
     protected:
         virtual void keyPressEvent(QKeyEvent*) override;
         virtual void mousePressEvent(QMouseEvent*) override;
         virtual void mouseMoveEvent(QMouseEvent*) override;
-        virtual void mouseReleaseEvent(QMouseEvent*) override;
     signals:
         void selection_changed(const QRect& __new_selection);
     public slots:
@@ -74,7 +73,7 @@ namespace gui::widgets
         void setPixmap(const cv::Mat&);
 
         void set_selection(QRect) noexcept;
-        void reset_selection() noexcept { set_selection(QRect()); }
+        void reset_selection() noexcept;
     private:
         QPoint      m_origin;
         QRubberBand m_rubber_band;

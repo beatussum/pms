@@ -16,34 +16,14 @@
  */
 
 
-#ifndef PMSEXP_GUI_MAIN_WINDOW_HPP
-#define PMSEXP_GUI_MAIN_WINDOW_HPP
-
-#include "ui_MainWindow.h"
+#include "gui/widgets/pages/Selection.hpp"
 
 namespace gui::widgets::pages
 {
-    class Selection;
-    class Upload;
-}
-
-namespace gui
-{
-    class MainWindow : public QMainWindow
+    Selection::Selection(QWidget* __parent)
+        : QScrollArea(__parent)
+        , m_ui(new Ui::Selection())
     {
-        Q_OBJECT
-
-    public:
-        explicit MainWindow(QWidget* __parent = nullptr, Qt::WindowFlags = {});
-        virtual ~MainWindow() { delete m_ui; }
-    protected slots:
-        void update_progess();
-    private:
-        Ui::MainWindow*                 m_ui;
-
-        gui::widgets::pages::Selection* m_selection_page;
-        gui::widgets::pages::Upload*    m_upload_page;
-    };
+        m_ui->setupUi(this);
+    }
 }
-
-#endif // PMSEXP_GUI_MAIN_WINDOW_HPP

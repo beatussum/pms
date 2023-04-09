@@ -18,123 +18,63 @@
 
 #include "gui/MainWindow.hpp"
 
+#include "gui/widgets/pages/Upload.hpp"
+#include "gui/widgets/pages/Selection.hpp"
+
 namespace gui
 {
     MainWindow::MainWindow(QWidget* __parent, Qt::WindowFlags __f)
         : QMainWindow(__parent, __f)
         , m_ui(new Ui::MainWindow())
+        , m_upload_page(new widgets::pages::Upload())
+        , m_selection_page(new widgets::pages::Selection())
     {
         m_ui->setupUi(this);
 
+        m_ui->m_central_widget->add_page(m_upload_page);
+        m_ui->m_central_widget->add_page(m_selection_page);
+
         QObject::connect(
-            m_ui->m_ex_uploader,
-            &widgets::UploadWidget::file_path_updated,
+            m_upload_page,
+            &widgets::pages::Upload::upload_status_changed,
             this,
-            &MainWindow::ex_uploaded
+            &MainWindow::update_progess
         );
 
         QObject::connect(
-            m_ui->m_th_uploader,
-            &widgets::UploadWidget::file_path_updated,
+            m_selection_page->get_selection_widget(),
+            &widgets::SelectionWidget::selection_changed,
             this,
-            &MainWindow::th_uploaded
-        );
-
-        QObject::connect(
-            m_ui->m_ex_uploader,
-            &widgets::UploadWidget::file_path_updated,
-            this,
-            &MainWindow::upload_status_changed
-        );
-
-        QObject::connect(
-            m_ui->m_th_uploader,
-            &widgets::UploadWidget::file_path_updated,
-            this,
-            &MainWindow::upload_status_changed
+            &MainWindow::update_progess
         );
 
         QObject::connect(
             m_ui->m_action_reset,
             &QAction::triggered,
-            this,
-            &MainWindow::reset_upload_status
+            m_upload_page,
+            &widgets::pages::Upload::reset_upload_status
         );
 
         QObject::connect(
-            m_ui->m_return_button,
-            &QPushButton::clicked,
-            this,
-            &MainWindow::previous
-        );
-
-        QObject::connect(
-            m_ui->m_valid_button,
-            &QPushButton::clicked,
-            this,
-            &MainWindow::valid
-        );
-
-        QObject::connect(
-            m_ui->m_ex_uploader,
-            &widgets::UploadWidget::file_path_updated,
-            this,
-            &MainWindow::update_upload_status
-        );
-
-        QObject::connect(
-            m_ui->m_th_uploader,
-            &widgets::UploadWidget::file_path_updated,
-            this,
-            &MainWindow::update_upload_status
+            m_ui->m_action_reset,
+            &QAction::triggered,
+            m_selection_page->get_selection_widget(),
+            &widgets::SelectionWidget::reset_selection
         );
     }
 
-    bool MainWindow::has_ex_uploaded() const
+    void MainWindow::update_progess()
     {
-        return !m_ui->m_ex_uploader->is_empty();
-    }
+        int progress = 0;
 
-    bool MainWindow::has_th_uploaded() const
-    {
-        return !m_ui->m_th_uploader->is_empty();
-    }
+        if (m_upload_page->is_upload_valid()) {
+            ++progress;
 
-    bool MainWindow::is_upload_valid() const
-    {
-        return has_ex_uploaded() && has_th_uploaded();
-    }
-
-    void MainWindow::reset_upload_status()
-    {
-        reset_ex_status();
-        reset_th_status();
-    }
-
-    void MainWindow::previous()
-    {
-        m_ui->m_stacked_widget->setCurrentIndex(0);
-    }
-
-    void MainWindow::valid()
-    {
-        if (is_upload_valid()) {
-            m_ui->m_stacked_widget->setCurrentIndex(1);
-        } else {
-            throw std::runtime_error(
-                "This `gui::MainWindow` object must have the `upload_status` "
-                "property equal to `true` before calling `valid()`."
-            );
+            if (m_selection_page->get_selection_widget()->has_selection()) {
+                ++progress;
+            }
         }
-    }
 
-    void MainWindow::update_upload_status()
-    {
-        bool ex_status = has_ex_uploaded();
-        bool th_status = has_th_uploaded();
-
-        m_ui->m_ex_item->set_status(ex_status);
-        m_ui->m_th_item->set_status(th_status);
-        m_ui->m_valid_button->setEnabled(ex_status && th_status);
+        m_ui->m_central_widget->set_progress(progress);
     }
 }

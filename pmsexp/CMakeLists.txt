@@ -130,13 +130,16 @@ endif()
 set(
     PMSEXP_HPP
     include/core/core.hpp
+    include/gui/MainWindow.hpp
+    include/gui/widgets/ButtonSelecterWidget.hpp
     include/gui/widgets/CheckWidget.hpp
     include/gui/widgets/ItemizeWidget.hpp
-    include/gui/MainWindow.hpp
-    include/gui/widgets/SelecterWidgetItem.hpp
+    include/gui/widgets/ListSelecterWidget.hpp
+    include/gui/widgets/SelecterWidget.hpp
     include/gui/widgets/SelectionWidget.hpp
-    include/gui/widgets/StatisticWidget.hpp
     include/gui/widgets/UploadWidget.hpp
+    include/gui/widgets/pages/Upload.hpp
+    include/gui/widgets/pages/Selection.hpp
 )
 
 set(PMSEXP_IPP)
@@ -145,13 +148,16 @@ set(
     PMSEXP_CPP
     src/main.cpp
     src/core/core.cpp
+    src/gui/MainWindow.cpp
+    src/gui/widgets/ButtonSelecterWidget.cpp
     src/gui/widgets/CheckWidget.cpp
     src/gui/widgets/ItemizeWidget.cpp
-    src/gui/MainWindow.cpp
-    src/gui/widgets/SelecterWidgetItem.cpp
+    src/gui/widgets/ListSelecterWidget.cpp
+    src/gui/widgets/SelecterWidget.cpp
     src/gui/widgets/SelectionWidget.cpp
-    src/gui/widgets/StatisticWidget.cpp
     src/gui/widgets/UploadWidget.cpp
+    src/gui/widgets/pages/Upload.cpp
+    src/gui/widgets/pages/Selection.cpp
 )
 
 set(CMAKE_AUTOMOC ON)

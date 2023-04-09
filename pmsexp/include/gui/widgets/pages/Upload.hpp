@@ -16,34 +16,39 @@
  */
 
 
-#ifndef PMSEXP_GUI_MAIN_WINDOW_HPP
-#define PMSEXP_GUI_MAIN_WINDOW_HPP
+#ifndef PMSEXP_GUI_WIDGETS_PAGES_UPLOAD_HPP
+#define PMSEXP_GUI_WIDGETS_PAGES_UPLOAD_HPP
 
-#include "ui_MainWindow.h"
+#include "ui_Upload.h"
 
 namespace gui::widgets::pages
 {
-    class Selection;
-    class Upload;
-}
-
-namespace gui
-{
-    class MainWindow : public QMainWindow
+    class Upload : public QWidget
     {
         Q_OBJECT
 
-    public:
-        explicit MainWindow(QWidget* __parent = nullptr, Qt::WindowFlags = {});
-        virtual ~MainWindow() { delete m_ui; }
-    protected slots:
-        void update_progess();
-    private:
-        Ui::MainWindow*                 m_ui;
+        Q_PROPERTY(
+            bool upload_status
+            READ is_upload_valid
+            RESET reset_upload_status
+            NOTIFY upload_status_changed
+            STORED false
+        )
 
-        gui::widgets::pages::Selection* m_selection_page;
-        gui::widgets::pages::Upload*    m_upload_page;
+    public:
+        explicit Upload(QWidget* __parent = nullptr, Qt::WindowFlags = {});
+        virtual ~Upload() { delete m_ui; }
+    public:
+        bool is_upload_valid() const;
+    signals:
+        void upload_status_changed();
+    private slots:
+        void update_upload_status();
+    public slots:
+        void reset_upload_status();
+    private:
+        Ui::Upload* m_ui;
     };
 }
 
-#endif // PMSEXP_GUI_MAIN_WINDOW_HPP
+#endif // PMSEXP_GUI_WIDGETS_PAGES_UPLOAD_HPP

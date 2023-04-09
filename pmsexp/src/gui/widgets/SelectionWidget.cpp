@@ -35,18 +35,6 @@ namespace gui::widgets
         setPixmap(__p);
     }
 
-    void SelectionWidget::setPixmap(const cv::Mat& __m)
-    {
-        setPixmap(qpixmap_from_mat(__m));
-    }
-
-    void SelectionWidget::set_selection(QRect __s) noexcept
-    {
-        m_selection = std::move(__s);
-
-        emit selection_changed(m_selection);
-    }
-
     void SelectionWidget::keyPressEvent(QKeyEvent* __e)
     {
         switch (__e->key()) {
@@ -59,7 +47,6 @@ namespace gui::widgets
                 break;
             case Qt::Key_Escape:
                 reset_selection();
-                m_rubber_band.hide();
 
                 break;
             default:
@@ -88,8 +75,21 @@ namespace gui::widgets
         QLabel::mouseMoveEvent(__e);
     }
 
-    void SelectionWidget::mouseReleaseEvent(QMouseEvent* __e)
+    void SelectionWidget::setPixmap(const cv::Mat& __m)
     {
-        QLabel::mouseReleaseEvent(__e);
+        setPixmap(qpixmap_from_mat(__m));
+    }
+
+    void SelectionWidget::set_selection(QRect __s) noexcept
+    {
+        m_selection = std::move(__s);
+
+        emit selection_changed(m_selection);
+    }
+
+    void SelectionWidget::reset_selection() noexcept
+    {
+        set_selection(QRect());
+        m_rubber_band.hide();
     }
 }
