@@ -138,8 +138,9 @@ set(
     include/gui/widgets/SelecterWidget.hpp
     include/gui/widgets/SelectionWidget.hpp
     include/gui/widgets/UploadWidget.hpp
-    include/gui/widgets/pages/Upload.hpp
     include/gui/widgets/pages/Selection.hpp
+    include/gui/widgets/pages/Statistics.hpp
+    include/gui/widgets/pages/Upload.hpp
 )
 
 set(PMSEXP_IPP)
@@ -156,8 +157,9 @@ set(
     src/gui/widgets/SelecterWidget.cpp
     src/gui/widgets/SelectionWidget.cpp
     src/gui/widgets/UploadWidget.cpp
-    src/gui/widgets/pages/Upload.cpp
     src/gui/widgets/pages/Selection.cpp
+    src/gui/widgets/pages/Statistics.cpp
+    src/gui/widgets/pages/Upload.cpp
 )
 
 set(CMAKE_AUTOMOC ON)

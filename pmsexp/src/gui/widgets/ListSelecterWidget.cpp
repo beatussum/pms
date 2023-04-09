@@ -33,8 +33,15 @@ namespace gui::widgets
         QObject::connect(
             m_ui->m_selecter,
             &QListWidget::currentRowChanged,
-            m_ui->m_stacked_widget,
-            &QStackedWidget::setCurrentIndex
+            this,
+            &ListSelecterWidget::set_page_index
+        );
+
+        QObject::connect(
+            this,
+            &ListSelecterWidget::page_index_changed,
+            m_ui->m_selecter,
+            [&] (int __i) { m_ui->m_selecter->setCurrentRow(__i); }
         );
 
         QObject::connect(

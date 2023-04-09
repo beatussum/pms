@@ -18,21 +18,24 @@
 
 #include "gui/MainWindow.hpp"
 
-#include "gui/widgets/pages/Upload.hpp"
 #include "gui/widgets/pages/Selection.hpp"
+#include "gui/widgets/pages/Statistics.hpp"
+#include "gui/widgets/pages/Upload.hpp"
 
 namespace gui
 {
     MainWindow::MainWindow(QWidget* __parent, Qt::WindowFlags __f)
         : QMainWindow(__parent, __f)
         , m_ui(new Ui::MainWindow())
-        , m_upload_page(new widgets::pages::Upload())
         , m_selection_page(new widgets::pages::Selection())
+        , m_statistics_page(new widgets::pages::Statistics())
+        , m_upload_page(new widgets::pages::Upload())
     {
         m_ui->setupUi(this);
 
         m_ui->m_central_widget->add_page(m_upload_page);
         m_ui->m_central_widget->add_page(m_selection_page);
+        m_ui->m_central_widget->add_page(m_statistics_page);
 
         QObject::connect(
             m_upload_page,
@@ -61,6 +64,15 @@ namespace gui
             m_selection_page->get_selection_widget(),
             &widgets::SelectionWidget::reset_selection
         );
+    }
+
+    MainWindow::~MainWindow()
+    {
+        delete m_ui;
+
+        delete m_selection_page;
+        delete m_statistics_page;
+        delete m_upload_page;
     }
 
     void MainWindow::update_progess()

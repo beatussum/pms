@@ -72,7 +72,7 @@ namespace gui::widgets
         QPushButton* next_button = m_ui->m_next_button;
 
         bool is_ended =
-            (__current_index == (m_ui->m_stacked_widget->count() - 1));
+            (__current_index == (m_ui->m_stacked_widget->count() - 2));
 
         m_ui->m_previous_button->setVisible(__current_index != 0);
 
@@ -85,6 +85,11 @@ namespace gui::widgets
         QKeySequence next_shortcut = m_ui->m_next_button->shortcut();
 
         next_button->setEnabled(m_progress > __current_index);
+
+        next_button->setVisible(
+            __current_index != (m_ui->m_stacked_widget->count() - 1)
+        );
+
         next_button->setText(is_ended ? tr("Lancer") : tr("Suivant"));
         next_button->setShortcut(next_shortcut);
     }

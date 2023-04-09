@@ -16,36 +16,27 @@
  */
 
 
-#ifndef PMSEXP_GUI_MAIN_WINDOW_HPP
-#define PMSEXP_GUI_MAIN_WINDOW_HPP
+#ifndef PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
+#define PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
 
-#include "ui_MainWindow.h"
+#include "gui/widgets/ListSelecterWidget.hpp"
+
+class QCustomPlot;
 
 namespace gui::widgets::pages
 {
-    class Selection;
-    class Statistics;
-    class Upload;
-}
-
-namespace gui
-{
-    class MainWindow : public QMainWindow
+    class Statistics : public ListSelecterWidget
     {
         Q_OBJECT
 
     public:
-        explicit MainWindow(QWidget* __parent = nullptr, Qt::WindowFlags = {});
-        virtual ~MainWindow();
-    protected slots:
-        void update_progess();
+        explicit Statistics(QWidget* __parent = nullptr, Qt::WindowFlags = {});
+        virtual ~Statistics();
     private:
-        Ui::MainWindow*                 m_ui;
-
-        gui::widgets::pages::Selection*  m_selection_page;
-        gui::widgets::pages::Statistics* m_statistics_page;
-        gui::widgets::pages::Upload*     m_upload_page;
+        QCustomPlot* m_trajectory;
+        QCustomPlot* m_angular_difference;
+        QCustomPlot* m_spatial_difference;
     };
 }
 
-#endif // PMSEXP_GUI_MAIN_WINDOW_HPP
+#endif // PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP

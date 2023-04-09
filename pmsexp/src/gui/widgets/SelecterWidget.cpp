@@ -41,7 +41,6 @@ namespace gui::widgets
             this,
             &SelecterWidget::page_added,
             this,
-
             [&] (int __i) { update_buttons(get_page_index()); }
         );
 
@@ -49,7 +48,6 @@ namespace gui::widgets
             this,
             &SelecterWidget::page_removed,
             this,
-
             [&] (int __i) { update_buttons(get_page_index()); }
         );
     }

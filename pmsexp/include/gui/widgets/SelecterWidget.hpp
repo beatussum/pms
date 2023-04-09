@@ -65,7 +65,7 @@ namespace gui::widgets
             { emit page_added(m_stacked_widget->addWidget(__w)); }
 
         virtual void insert_page(int __index, QWidget* __w)
-            { m_stacked_widget->insertWidget(__index, __w); }
+            { emit page_added(m_stacked_widget->insertWidget(__index, __w)); }
 
         virtual void remove_page(QWidget* __w)
             { m_stacked_widget->removeWidget(__w); }
