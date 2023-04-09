@@ -21,9 +21,19 @@
 namespace gui::widgets::pages
 {
     Selection::Selection(QWidget* __parent)
-        : QScrollArea(__parent)
+        : QWidget(__parent)
         , m_ui(new Ui::Selection())
     {
         m_ui->setupUi(this);
+
+        m_ui->m_help_label->setText(
+            tr(
+                "Utilisez la souris pour sélectionner la zone à monitorer. "
+                "Appuyez sur « %1 » pour valider la sélection et « %2 » pour "
+                "effacer la précédente."
+            )
+            .arg(QKeySequence(Qt::Key_Enter).toString())
+            .arg(QKeySequence(Qt::Key_Escape).toString())
+        );
     }
 }

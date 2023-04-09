@@ -23,7 +23,7 @@
 
 namespace gui::widgets::pages
 {
-    class Selection : public QScrollArea
+    class Selection : public QWidget
     {
         Q_OBJECT
 
