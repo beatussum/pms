@@ -67,9 +67,9 @@ namespace pmscore
      * @param __a Angle à simplifier.
      *
      * @return Retourne la valeur de \p __a dans l'intervalle
-     * \f$ [-\pi ; \pi] \f$.
+     * \f$ [0 ; 2 \pi] \f$.
      */
-    inline real simplify_angle(real __a) { return fmod(__a, M_2PI); }
+    inline real simplify_angle(real __a) { return fmod(fabs(__a), M_2PI); }
 }
 
 #endif // PMSCORE_MATH_MATH_HPP
