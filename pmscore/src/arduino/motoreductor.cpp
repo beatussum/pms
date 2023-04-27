@@ -35,25 +35,25 @@ namespace pmscore::arduino
         , m_pin_b(__pin_b)
         , m_pin_pwm(__pin_pwm)
         , m_encoder(__e)
-        , m_power(__power)
-        , m_direction(direction::Off)
     {
         pinMode(m_pin_a, OUTPUT);
         pinMode(m_pin_b, OUTPUT);
         pinMode(m_pin_pwm, OUTPUT);
 
-        set_power(m_power);
+        set_power(__power);
     }
 
-    void motoreductor::__set_direction(direction __d)
+    void motoreductor::__set_direction(direction __d) const
     {
-        if (__d != m_direction) {
+        direction current = get_direction();
+
+        if (__d != current) {
             switch (__d) {
                 case direction::Front:
                     digitalWrite(m_pin_a, HIGH);
                     digitalWrite(m_pin_b, LOW);
 
-                    if (m_direction == direction::Back) {
+                    if (current == direction::Back) {
                         m_encoder->reverse();
                     }
 
@@ -62,7 +62,7 @@ namespace pmscore::arduino
                     digitalWrite(m_pin_a, LOW);
                     digitalWrite(m_pin_b, HIGH);
 
-                    if (m_direction == direction::Front) {
+                    if (current == direction::Front) {
                         m_encoder->reverse();
                     }
 
@@ -78,21 +78,35 @@ namespace pmscore::arduino
 
                     break;
             }
-
-            m_direction = __d;
         }
     }
 
-    void motoreductor::set_power(int16_t __b)
+    motoreductor::direction motoreductor::get_direction() const
     {
-        m_power = __b;
+        bool pin_status_a = (digitalRead(m_pin_a) == HIGH);
+        bool pin_status_b = (digitalRead(m_pin_b) == HIGH);
 
-        if (m_power < 0) {
+        if (pin_status_a) {
+            if (pin_status_b) {
+                return direction::Brake;
+            } else {
+                return direction::Front;
+            }
+        } else if (pin_status_b) {
+            return direction::Back;
+        } else {
+            return direction::Off;
+        }
+    }
+
+    void motoreductor::set_power(int16_t __b) const
+    {
+        if (__b < 0) {
             __set_direction(direction::Back);
-            analogWrite(m_pin_pwm, static_cast<int>(-m_power));
+            analogWrite(m_pin_pwm, static_cast<int>(-__b));
         } else {
             __set_direction(direction::Front);
-            analogWrite(m_pin_pwm, static_cast<int>(m_power));
+            analogWrite(m_pin_pwm, static_cast<int>(__b));
         }
     }
 }

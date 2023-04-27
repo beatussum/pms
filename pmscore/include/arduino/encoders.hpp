@@ -59,13 +59,13 @@ namespace pmscore::arduino
          * @brief Construit un objet `encoders`.
          *
          * @param __encoder_a Pointeur pointant vers l'encodeur A soit celui
-         *                    monitorant le moteur de la roue gauche.
+         * monitorant le moteur de la roue gauche.
          *
          * @param __encoder_b Pointeur pointant vers l'encodeur B soit celui
-         *                    monitorant le moteur de la roue gauche.
+         * monitorant le moteur de la roue gauche.
          *
          * @param __c Pointeur vers un objet `position_computer`, un
-         *            calculateur de position.
+         * calculateur de position.
          */
 
         explicit constexpr encoders(

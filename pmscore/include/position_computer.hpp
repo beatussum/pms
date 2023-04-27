@@ -48,15 +48,15 @@ namespace pmscore
          * @param __c Pointeur vers le correcteur (de position).
          *
          * @param __tadvance Pourcentage de la norme du vecteur-arrête courant
-         *                   qui est ajouté en avance à la position théorique
-         *                   sur la position réelle.
+         * qui est ajouté en avance à la position théorique sur la position
+         * réelle.
          *
          * @param __tpath Chemin sous la forme de tableau de `_n`
-         *                vecteurs-arrêtes.
+         * vecteurs-arrêtes.
          *
          * @param __vertex_radius Rayon autour du prochain sommet à atteindre
-         *                        où, s'il est dans cette zone, le robot passe
-         *                        au vecteur-arrête suivant.
+         * où, s'il est dans cette zone, le robot passe au vecteur-arrête
+         * suivant.
          */
 
         template <size_t _n>
@@ -91,16 +91,16 @@ namespace pmscore
          * @brief Actualise la position selon les paramètres donnés.
          *
          * @param __angle_a Position angulaire de l'axe du moteur A (le moteur
-         *                  gauche).
+         * gauche).
          *
          * @param __angle_b Position angulaire de l'axe du moteur B (le moteur
-         *                  droit).
+         * droit).
          *
          * @param __last_angle_a Précédente position angulaire de l'axe du
-         *                       moteur A (le moteur gauche).
+         * moteur A (le moteur gauche).
          *
          * @param __last_angle_b Précédente position angulaire de l'axe du
-         *                       moteur B (le moteur droit).
+         * moteur B (le moteur droit).
          */
 
         void update_status(

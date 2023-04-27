@@ -21,6 +21,8 @@
 
 #include "arduino/arduino.hpp"
 
+#include <Arduino.h>
+
 /**
  * @file
  *
@@ -44,14 +46,17 @@ namespace pmscore::arduino
 
         explicit chopper(pin_t __pin_stby);
     public:
+        bool is_enabled() const
+            { return (read_digital_output(m_pin_stby) == HIGH); }
+    public:
         /**
          * @brief Active ou désactive le hacheur.
          *
          * @param __b Si cette variable vaut `true`, alors le hacheur est
-         *            activé ; sinon, le hacheur est désactivé.
+         * activé ; sinon, le hacheur est désactivé.
          */
 
-        void enable(bool __b = true) const;
+        void enable(bool __b = true) const { digitalWrite(m_pin_stby, __b); }
 
         /**
          * @brief Désactive le hacheur.
@@ -60,6 +65,7 @@ namespace pmscore::arduino
         void disable() const { enable(false); }
     public:
         pin_t get_pin_stby() const noexcept { return m_pin_stby; }
+        void set_pin_stby(pin_t __p) { pinMode(m_pin_stby = __p, OUTPUT); }
     private:
         pin_t m_pin_stby;
     };
