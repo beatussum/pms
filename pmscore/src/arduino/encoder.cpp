@@ -29,9 +29,4 @@ namespace pmscore::arduino
     {
         pinMode(m_pin, INPUT_PULLUP);
     }
-
-    real encoder::get_angle() const noexcept
-    {
-        return m_incrementation * (M_2PI / incrementation_counts);
-    }
 }

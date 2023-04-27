@@ -21,7 +21,7 @@
 
 #include "math/math.hpp"
 
-#include <Arduino.h>
+#include "core/core.hpp"
 
 /**
  * @file
@@ -70,7 +70,8 @@ namespace pmscore
          * @return Le `vector` créé.
          */
 
-        static vector with_polar_coordinates(real __r, real __angle);
+        static vector with_polar_coordinates(real __r, real __angle)
+            { return {__r * cos(__angle), __r * sin(__angle)}; }
 
         /**
          * @brief Crée un `vector` à partir de ses coordonnées polaires.
@@ -82,9 +83,11 @@ namespace pmscore
          * @see vector::with_polar_coordinates(real, real)
          */
 
-        static vector with_polar_coordinates(real __angle);
+        static vector with_polar_coordinates(real __angle)
+            { return with_polar_coordinates(1., __angle); }
     public:
-        explicit operator String() const;
+        explicit operator String() const
+            { return '('_s + x + "; "_s + y + ')'_s; }
     public:
         /**
          * @brief Retourne l'argument principal du complexe dont l'affixe dans

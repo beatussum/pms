@@ -24,8 +24,6 @@
 #include "core/utility.hpp"
 #include "math/math.hpp"
 
-#include <Arduino.h>
-
 /**
  * @file
  *

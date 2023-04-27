@@ -80,7 +80,10 @@ namespace pmscore::arduino
         explicit encoder(pin_t __pin);
     public:
         pin_t get_pin() const noexcept { return m_pin; }
-        real get_angle() const noexcept;
+
+        real get_angle() const noexcept
+            { return m_incrementation * (M_2PI / incrementation_counts); }
+
         real get_incrementation() const noexcept { return m_incrementation; }
         bool is_reverse() const noexcept { return m_reverse; }
 

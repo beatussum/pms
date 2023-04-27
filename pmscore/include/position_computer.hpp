@@ -21,7 +21,6 @@
 
 #include "core/iterator.hpp"
 #include "math/vector.hpp"
-#include "correcter.hpp"
 
 /**
  * @file
@@ -74,7 +73,7 @@ namespace pmscore
          * chemin de vecteurs-arrêtes.
          */
 
-        ~position_computer();
+        ~position_computer() { delete[] m_tpath; }
     public:
         explicit operator String() const;
     private:
@@ -124,7 +123,10 @@ namespace pmscore
         vector get_rpos() const noexcept { return m_rpos; }
         real get_tangle() const noexcept { return m_tangle; }
         const vector* get_current_edge() const noexcept { return m_ti; }
-        bool is_vertex_reached() const noexcept;
+
+        bool is_vertex_reached() const noexcept
+            { return m_tis_vertex_reached; }
+
         size_t get_path_size() const noexcept { return m_tpath_size; }
         vector get_tpos() const noexcept { return m_tpos + m_tcurrent_pos; }
         real get_distance() const noexcept { return m_distance; }

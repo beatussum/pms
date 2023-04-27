@@ -23,8 +23,6 @@
 #include "core/macros.hpp"
 #include "core/utility.hpp"
 
-#include <Arduino.h>
-
 /**
  * @file
  *
