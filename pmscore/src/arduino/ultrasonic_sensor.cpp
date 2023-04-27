@@ -23,6 +23,7 @@ namespace pmscore::arduino
     ultrasonic_sensor::ultrasonic_sensor(pin_t __pin_echo, pin_t __pin_trig)
         : m_pin_echo(__pin_echo)
         , m_pin_trig(__pin_trig)
+        , m_duration(0)
     {
         pinMode(m_pin_echo, OUTPUT);
         pinMode(m_pin_trig, OUTPUT);
@@ -30,7 +31,7 @@ namespace pmscore::arduino
 
     void ultrasonic_sensor::start_echoing()
     {
-        m_duration = 0.;
+        m_duration = 0;
 
         digitalWrite(m_pin_echo, HIGH);
     }
@@ -55,7 +56,7 @@ namespace pmscore::arduino
     void update_main_ultrasonic_sensor_status()
     {
         if (main_ultrasonic_sensor->is_echoing()) {
-            if (main_ultrasonic_sensor->m_duration == 0.) {
+            if (main_ultrasonic_sensor->m_duration == 0) {
                 main_ultrasonic_sensor->m_duration = micros();
             } else {
                 main_ultrasonic_sensor->m_duration =
