@@ -91,4 +91,6 @@ namespace pmscore::detail
 
 #define noexcept_pf(...) noexcept(detail::are_noexcept_pf<__VA_ARGS__>::value)
 
+#define noexcept_if(__predicate) noexcept(noexcept(__predicate))
+
 #endif // PMSCORE_CORE_MACROS_HPP
