@@ -18,18 +18,11 @@
 
 #include "arduino/chopper.hpp"
 
-#include <Arduino.h>
-
 namespace pmscore::arduino
 {
     chopper::chopper(pin_t __pin_stby)
         : m_pin_stby(__pin_stby)
     {
         pinMode(m_pin_stby, OUTPUT);
-    }
-
-    void chopper::enable(bool __b) const
-    {
-        digitalWrite(m_pin_stby, __b);
     }
 }

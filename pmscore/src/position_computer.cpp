@@ -18,23 +18,18 @@
 
 #include "position_computer.hpp"
 
-#include "arduino/arduino.hpp"
 #include "core/core.hpp"
+#include "correcter.hpp"
 
 namespace pmscore
 {
-    position_computer::~position_computer()
-    {
-        delete[] m_tpath;
-    }
-
     position_computer::operator String() const
     {
         return
-            "real position: "_s + static_cast<String>(m_rpos) + " with " +
+            "real position: "_s + static_cast<String>(m_rpos) + " with "_s +
             m_rangle + " rad\n"_s +
             "theoretical position: "_s + static_cast<String>(get_tpos()) +
-            " with " + m_tangle + " rad\n"_s;
+            " with "_s + m_tangle + " rad\n"_s;
     }
 
     void position_computer::__update_rstatus(
@@ -114,10 +109,5 @@ namespace pmscore
         __update_tstatus(__last_angle_a, __last_angle_b);
 
         m_correcter->update_status(m_distance, m_rangle, m_rpos, get_tpos());
-    }
-
-    bool position_computer::is_vertex_reached() const noexcept
-    {
-        return m_tis_vertex_reached;
     }
 }

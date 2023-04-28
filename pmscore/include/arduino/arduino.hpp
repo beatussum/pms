@@ -70,6 +70,28 @@ namespace pmscore::arduino
 
     constexpr real r_2  = (r / 2);       ///< Valeur de \f$ \frac{r}{2} \f$.
     constexpr real r_2d = (r / (2 * d)); ///< Valeur de \f$ \frac{r}{2d} \f$.
+
+    /**
+     * @brief Lit la valeur d'un pin numérique initialisé avec `analogWrite()`.
+     *
+     * @param __p Le pin numérique étudié.
+     * @return La valeur sur un octet du pin numérique.
+     *
+     * @see https://github.com/arduino/ArduinoCore-avr/blob/1.8.6/cores/arduino/wiring_digital.c#L138-L163
+     */
+
+    uint8_t read_digital_output(pin_t __p);
+
+    /**
+     * @brief Lit la valeur d'un pin P.W.M. initialisé avec `analogWrite()`.
+     *
+     * @param __p Le pin P.W.M. étudié.
+     * @return La valeur sur un octet du pin P.W.M..
+     *
+     * @see https://github.com/arduino/ArduinoCore-avr/blob/1.8.6/cores/arduino/wiring_analog.c#L92-L285
+     */
+
+    uint8_t read_pwm_output(pin_t __p);
 }
 
 #endif // PMSCORE_ARDUINO_ARDUINO_HPP

@@ -71,15 +71,14 @@ namespace pmscore::arduino
          * @param __pin_pwm Pin P.W.M..
          *
          * @param __e Pointeur vers l'encodeur qui monitore le moteur en
-         *            question.
+         * question.
          *
          * @param __power Le rapport cyclique du signal P.W.M. alimentant le
-         *                motoréducteur. Cette valeur varie entre -255 et 255.
-         *                Si cette valeur est négative, le moteur a pour
-         *                _direction_ _Back_ ; sinon, le moteur a pour
-         *                _direction_ _Front_. Le rapport cyclique est en
-         *                lui-même codé sur 8 bits (soit une valeur variant
-         *                entre 0 et 255). La valeur par défaut est nulle.
+         * motoréducteur. Cette valeur varie entre -255 et 255. Si cette valeur
+         * est négative, le moteur a pour _direction_ _Back_ ; sinon, le moteur
+         * a pour _direction_ _Front_. Le rapport cyclique est en lui-même codé
+         * sur 8 bits (soit une valeur variant entre 0 et 255). La valeur par
+         * défaut est nulle.
          */
 
         explicit motoreductor(
@@ -90,7 +89,7 @@ namespace pmscore::arduino
             int16_t __power = 0
         );
     private:
-        void __set_direction(direction);
+        void __set_direction(direction) const;
     public:
         pin_t get_pin_a() const noexcept { return m_pin_a; }
         void set_pin_a(pin_t __p) noexcept { m_pin_a = __p; }
@@ -104,10 +103,12 @@ namespace pmscore::arduino
         encoder* get_encoder() const noexcept { return m_encoder; }
         void set_encoder(encoder* __e) noexcept { m_encoder = __e; }
 
-        int16_t get_power() const noexcept { return m_power; }
-        void set_power(int16_t);
+        int16_t get_power() const noexcept
+            { return read_pwm_output(m_pin_pwm); }
 
-        direction get_direction() const noexcept { return m_direction; }
+        void set_power(int16_t) const;
+
+        direction get_direction() const;
 
         /**
          * @brief Augmente la puissance du motoréducteur.
@@ -119,7 +120,8 @@ namespace pmscore::arduino
          * ou haute).
          */
 
-        void increase_power(int16_t __p = 1) { set_power(m_power + __p); }
+        void increase_power(int16_t __p = 1) const
+            { set_power(get_power() + __p); }
 
         /**
          * @brief Diminue la puissance du motoréducteur.
@@ -129,26 +131,24 @@ namespace pmscore::arduino
          * @see increase_power
          */
 
-        void reduce_power(int16_t __p = 1) { increase_power(-__p); }
+        void reduce_power(int16_t __p = 1) const
+            { increase_power(-__p); }
     public:
         /**
          * @brief Met la _direction_ du motoréducteur à _Brake_.
          */
 
-        void brake() { __set_direction(direction::Brake); }
+        void brake() const { __set_direction(direction::Brake); }
 
         /**
          * @brief Met la _direction_ du motoréducteur à _Off_.
          */
-        void disable() { __set_direction(direction::Off); }
+        void disable() const { __set_direction(direction::Off); }
     private:
         pin_t    m_pin_a;
         pin_t    m_pin_b;
         pin_t    m_pin_pwm;
         encoder* m_encoder;
-        int16_t  m_power;
-
-        direction m_direction;
     };
 }
 

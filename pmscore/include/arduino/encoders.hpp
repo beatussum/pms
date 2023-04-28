@@ -20,7 +20,6 @@
 #define PMSCORE_ARDUINO_ENCODERS_HPP
 
 #include "arduino/encoder.hpp"
-#include "math/math.hpp"
 
 /**
  * @file
@@ -59,13 +58,13 @@ namespace pmscore::arduino
          * @brief Construit un objet `encoders`.
          *
          * @param __encoder_a Pointeur pointant vers l'encodeur A soit celui
-         *                    monitorant le moteur de la roue gauche.
+         * monitorant le moteur de la roue gauche.
          *
          * @param __encoder_b Pointeur pointant vers l'encodeur B soit celui
-         *                    monitorant le moteur de la roue gauche.
+         * monitorant le moteur de la roue gauche.
          *
          * @param __c Pointeur vers un objet `position_computer`, un
-         *            calculateur de position.
+         * calculateur de position.
          */
 
         explicit constexpr encoders(
@@ -90,13 +89,12 @@ namespace pmscore::arduino
         void update_status();
     public:
         encoder* get_encoder_a() const noexcept { return m_encoder_a; }
-        void set_encoder_a(encoder* __e) noexcept { m_encoder_a = __e; }
-
         encoder* get_encoder_b() const noexcept { return m_encoder_b; }
-        void set_encoder_b(encoder* __e) noexcept { m_encoder_b = __e; }
 
         position_computer* get_computer() const noexcept { return m_computer; }
-        void set_computer(position_computer* __c) noexcept;
+
+        void set_computer(position_computer* __c) noexcept
+            { m_computer = __c; }
 
         real get_last_angle_a() const noexcept { return m_last_angle_a; }
         real get_last_angle_b() const noexcept { return m_last_angle_a; }
@@ -126,7 +124,8 @@ namespace pmscore::arduino
 
     inline encoder* main_encoders[] = {nullptr, nullptr};
 
-    void set_main_encoders(const encoders& __e) noexcept;
+    inline void set_main_encoders(const encoders& __e) noexcept
+        { set_main_encoders(__e.m_encoder_a, __e.m_encoder_b); }
 }
 
 #include "arduino/encoders.ipp"
