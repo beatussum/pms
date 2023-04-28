@@ -46,7 +46,9 @@ namespace pmscore::arduino
             { return static_cast<real>(m_duration) * (speed_of_sound / 2); }
 
         real get_duration() const noexcept { return m_duration; }
-        bool is_echoing() const { return (digitalRead(m_pin_echo) == HIGH); }
+
+        bool is_echoing() const
+            { return (read_digital_output(m_pin_echo) == HIGH); }
     private:
         pin_t m_pin_echo;
         pin_t m_pin_trig;
