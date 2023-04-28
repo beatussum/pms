@@ -17,8 +17,8 @@
 
 
 #include "arduino/chopper.hpp"
+#include "arduino/connecter.hpp"
 #include "arduino/encoder.hpp"
-#include "arduino/encoders.hpp"
 #include "arduino/motoreductor.hpp"
 #include "speed_profile/constant.hpp"
 #include "speed_profile/trapezoidal.hpp"
@@ -54,17 +54,17 @@ position_computer computer(
     5.
 );
 
-arduino::encoders encoders(&encoder_a, &encoder_b, &computer);
+arduino::connecter connecter(&encoder_a, &encoder_b, &computer);
 
 void setup()
 {
     Serial.begin(9600);
 
-    arduino::set_main_encoders(encoders);
+    arduino::set_main_encoders(&encoder_a, &encoder_b);
     chopper.enable();
 }
 
 void loop()
 {
-    encoders.update_status();
+    connecter.update_status();
 }

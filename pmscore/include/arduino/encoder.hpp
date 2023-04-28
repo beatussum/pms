@@ -38,17 +38,6 @@ namespace pmscore::arduino
 
     class encoder
     {
-        /**
-         * @brief Spécifie deux `encoder` en tant qu'encodeurs principaux.
-         *
-         * Afin qu'un `encoder` puisse correctement monitoré le moteur auquel
-         * il est associé (afin que le membre `m_incrementation` est incrémenté
-         * à chaque tour), il doit être défini en tant qu'encodeur principal.
-         *
-         * @param __a L'encodeur A (associé à la roue gauche).
-         * @param __b L'encodeur B (associé à la roue droite).
-         */
-
         friend void set_main_encoders(encoder* __a, encoder* __b) noexcept;
 
         /**

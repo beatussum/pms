@@ -16,16 +16,16 @@
  */
 
 
-#ifndef PMSCORE_ARDUINO_ENCODERS_HPP
-#define PMSCORE_ARDUINO_ENCODERS_HPP
+#ifndef PMSCORE_ARDUINO_CONNECTER_HPP
+#define PMSCORE_ARDUINO_CONNECTER_HPP
 
 #include "arduino/encoder.hpp"
 
 /**
  * @file
  *
- * @brief Ce fichier implémente une classe facilitant le pilotage entre deux
- * encodeurs.
+ * @brief Ce fichier implémente une classe facilitant la communication entre
+ * les différents composants du robot.
  */
 
 namespace pmscore
@@ -36,26 +36,15 @@ namespace pmscore
 namespace pmscore::arduino
 {
     /**
-     * @brief Cette classe facilite le pilotage de deux encodeur.
+     * @brief Cette classe facilite la communication entre les différents
+     * composants du robot.
      */
 
-    class encoders
+    class connecter
     {
-        /**
-         * @brief Spécifie deux `encoder`s en tant qu'encodeurs principaux.
-         *
-         * Afin qu'un `encoder` puisse correctement monitoré le moteur auquel
-         * il est associé (afin que le membre `m_incrementation` est incrémenté
-         * à chaque tour), il doit être défini en tant qu'encodeur principal.
-         *
-         * @param __e L'objet `encoders` regroupant les deux `encoder`s à spécifier
-         * en tant qu'encodeurs principaux.
-         */
-
-        friend void set_main_encoders(const encoders& __e) noexcept;
     public:
         /**
-         * @brief Construit un objet `encoders`.
+         * @brief Construit un objet `connecter`.
          *
          * @param __encoder_a Pointeur pointant vers l'encodeur A soit celui
          * monitorant le moteur de la roue gauche.
@@ -67,7 +56,7 @@ namespace pmscore::arduino
          * calculateur de position.
          */
 
-        explicit constexpr encoders(
+        explicit constexpr connecter(
             encoder* __encoder_a,
             encoder* __encoder_b,
             position_computer* __c
@@ -124,10 +113,20 @@ namespace pmscore::arduino
 
     inline encoder* main_encoders[] = {nullptr, nullptr};
 
-    inline void set_main_encoders(const encoders& __e) noexcept
-        { set_main_encoders(__e.m_encoder_a, __e.m_encoder_b); }
+    /**
+     * @brief Spécifie deux `encoder` en tant qu'encodeurs principaux.
+     *
+     * Afin qu'un `encoder` puisse correctement monitoré le moteur auquel
+     * il est associé (afin que le membre `m_incrementation` est incrémenté
+     * à chaque tour), il doit être défini en tant qu'encodeur principal.
+     *
+     * @param __a L'encodeur A (associé à la roue gauche).
+     * @param __b L'encodeur B (associé à la roue droite).
+     */
+
+    void set_main_encoders(encoder* __a, encoder* __b) noexcept;
 }
 
-#include "arduino/encoders.ipp"
+#include "arduino/connecter.ipp"
 
-#endif // PMSCORE_ARDUINO_ENCODERS_HPP
+#endif // PMSCORE_ARDUINO_CONNECTER_HPP

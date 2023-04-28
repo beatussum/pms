@@ -16,7 +16,7 @@
  */
 
 
-#include "arduino/encoders.hpp"
+#include "arduino/connecter.hpp"
 
 #include "position_computer.hpp"
 
@@ -24,7 +24,7 @@
 
 namespace pmscore::arduino
 {
-    void encoders::update_status()
+    void connecter::update_status()
     {
         real angle_a, angle_b;
 
