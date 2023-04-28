@@ -51,7 +51,7 @@ namespace pmscore::arduino
         pin_t m_pin_echo;
         pin_t m_pin_trig;
 
-        volatile unsigned long m_duration;
+        volatile uint32_t m_duration;
     };
 
     inline ultrasonic_sensor* main_ultrasonic_sensor = nullptr;

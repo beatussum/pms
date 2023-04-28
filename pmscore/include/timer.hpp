@@ -35,24 +35,24 @@ namespace pmscore
             , m_time(0)
         {}
 
-        explicit timer(unsigned long __delay, _T __callback)
+        explicit timer(uint32_t __delay, _T __callback)
             : m_delay(__delay)
             , m_callback(move(__callback))
             , m_time(0)
         {}
     public:
-        unsigned long get_delay() const noexcept { return m_delay; }
-        void set_delay(unsigned long __d) noexcept { m_delay = __d; }
+        uint32_t get_delay() const noexcept { return m_delay; }
+        void set_delay(uint32_t __d) noexcept { m_delay = __d; }
 
         _T get_callback() const noexcept_mov(_T) { return m_callback; }
         void set_callback(_T __c) noexcept_mov(_T) { m_callback = move(__c); }
     public:
         void update_status() noexcept_if(declval<_T>()());
     private:
-        unsigned long m_delay;
+        uint32_t      m_delay;
         callback_type m_callback;
 
-        unsigned long m_time;
+        uint32_t m_time;
     };
 }
 

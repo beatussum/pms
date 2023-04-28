@@ -31,7 +31,7 @@ namespace pmscore::arduino
 
     void ultrasonic_sensor::start_echoing()
     {
-        m_duration = 0;
+        m_duration = UINT32_MAX;
 
         digitalWrite(m_pin_echo, HIGH);
     }
@@ -56,7 +56,7 @@ namespace pmscore::arduino
     void update_main_ultrasonic_sensor_status()
     {
         if (main_ultrasonic_sensor->is_echoing()) {
-            if (main_ultrasonic_sensor->m_duration == 0) {
+            if (main_ultrasonic_sensor->m_duration == UINT32_MAX) {
                 main_ultrasonic_sensor->m_duration = micros();
             } else {
                 main_ultrasonic_sensor->m_duration =
