@@ -49,94 +49,104 @@ namespace pmscore
         real __distance,
         real __rangle,
         vector __rposition,
-        vector __tposition
+        vector __tposition,
+        real __obstacle_distance
     )
     {
-        int16_t k = 0;
+        if (__obstacle_distance < m_obstacle_distance_max) {
+            m_motor_a->disable();
+            m_motor_b->disable();
+        } else {
+            m_motor_a->enable();
+            m_motor_b->enable();
 
-        switch (m_speed_mode) {
-            case speed_mode::Run:
-                {
-                    int16_t omega = -m_speed_profile.compute_speed(__distance);
+            int16_t k = 0;
 
-                    if (omega != m_omega) {
-                        if (omega < m_omega) {
-                            m_heading_speed_mode = heading_speed_mode::Fix;
+            switch (m_speed_mode) {
+                case speed_mode::Run:
+                    {
+                        int16_t omega =
+                            -m_speed_profile.compute_speed(__distance);
+
+                        if (omega != m_omega) {
+                            if (omega < m_omega) {
+                                m_heading_speed_mode = heading_speed_mode::Fix;
+                            }
+
+                            m_omega = omega;
                         }
-
-                        m_omega = omega;
                     }
-                }
 
-                break;
-            case speed_mode::Off:
-                m_omega = 0;
+                    break;
+                case speed_mode::Off:
+                    m_omega = 0;
 
-                break;
-        }
+                    break;
+            }
 
-        switch (m_heading_speed_mode) {
-            case heading_speed_mode::Fix:
-                {
-                    real gamma = simplify_angle(
-                        (__tposition - __rposition).angle() - M_PI_2
-                    );
+            switch (m_heading_speed_mode) {
+                case heading_speed_mode::Fix:
+                    {
+                        real gamma = simplify_angle(
+                            (__tposition - __rposition).angle() - M_PI_2
+                        );
 
-                    if (
-                        (
-                            (m_soi_speed_mode == soi_speed_mode::Off) &&
-                            m_heading_speed_profile.init(
-                                simplify_angle(__rangle),
-                                gamma
-                            )
-                        ) ||
-                        (
-                            (m_soi_speed_mode == soi_speed_mode::Run) &&
-                            m_soi_speed_profile.init(
-                                simplify_angle(__rangle),
-                                gamma
+                        if (
+                            (
+                                (m_soi_speed_mode == soi_speed_mode::Off) &&
+                                m_heading_speed_profile.init(
+                                    simplify_angle(__rangle),
+                                    gamma
+                                )
+                            ) ||
+                            (
+                                (m_soi_speed_mode == soi_speed_mode::Run) &&
+                                m_soi_speed_profile.init(
+                                    simplify_angle(__rangle),
+                                    gamma
+                                )
                             )
                         )
-                    )
+                        {
+                            m_heading_speed_mode = heading_speed_mode::Turn;
+                        } else {
+                            m_soi_speed_mode = soi_speed_mode::Off;
+                            m_speed_mode     = speed_mode::Run;
+                        }
+                    }
+
+                    break;
+                case heading_speed_mode::Off:
+                    break;
+                case heading_speed_mode::Turn:
                     {
-                        m_heading_speed_mode = heading_speed_mode::Turn;
-                    } else {
-                        m_soi_speed_mode = soi_speed_mode::Off;
-                        m_speed_mode     = speed_mode::Run;
-                    }
-                }
+                        switch (m_soi_speed_mode) {
+                            case soi_speed_mode::Off:
+                                k = m_heading_speed_profile.compute_speed(
+                                    simplify_angle(__rangle)
+                                );
 
-                break;
-            case heading_speed_mode::Off:
-                break;
-            case heading_speed_mode::Turn:
-                {
-                    switch (m_soi_speed_mode) {
-                        case soi_speed_mode::Off:
-                            k = m_heading_speed_profile.compute_speed(
-                                simplify_angle(__rangle)
-                            );
+                                break;
+                            case soi_speed_mode::Run:
+                                k = m_soi_speed_profile.compute_speed(
+                                    simplify_angle(__rangle)
+                                );
 
-                            break;
-                        case soi_speed_mode::Run:
-                            k = m_soi_speed_profile.compute_speed(
-                                simplify_angle(__rangle)
-                            );
+                                break;
+                        }
 
-                            break;
+                        if (k == 0) {
+                            m_heading_speed_mode = heading_speed_mode::Fix;
+                            m_soi_speed_mode     = soi_speed_mode::Off;
+                            m_speed_mode         = speed_mode::Run;
+                        }
                     }
 
-                    if (k == 0) {
-                        m_heading_speed_mode = heading_speed_mode::Fix;
-                        m_soi_speed_mode     = soi_speed_mode::Off;
-                        m_speed_mode         = speed_mode::Run;
-                    }
-                }
+                    break;
+            }
 
-                break;
+            m_motor_a->set_power(m_omega + k);
+            m_motor_b->set_power(m_omega - k);
         }
-
-        m_motor_a->set_power(m_omega + k);
-        m_motor_b->set_power(m_omega - k);
     }
 }

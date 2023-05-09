@@ -20,17 +20,16 @@ namespace pmscore
 {
     template <size_t _n>
     position_computer::position_computer(
-        correcter_base* __c,
         real __tadvance,
         const vector (&__tpath)[_n],
         real __vertex_radius
     )
-        : m_correcter(__c)
-        , m_tadvance(__tadvance)
+        : m_tadvance(__tadvance)
         , m_tpath(new vector[_n])
         , m_vertex_radius(__vertex_radius)
-        , m_rangle(0.)
         , m_distance(0.)
+        , m_rangle(0.)
+        , m_ris_vertex_reached(false)
         , m_rpos()
         , m_tangle(__tpath[0].angle())
         , m_tangle_a_0(0.)
@@ -50,8 +49,6 @@ namespace pmscore
         , m_tvertex()
     {
         copy(begin(__tpath), end(__tpath), m_tpath);
-
-        m_correcter->next_edge(m_distance, m_tcurrent_edge);
     }
 
     template <size_t _n>

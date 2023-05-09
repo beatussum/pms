@@ -20,37 +20,61 @@
 #define PMSCORE_TIMER_HPP
 
 #include "core/macros.hpp"
+#include "core/utility.hpp"
+
+#include <stdint.h>
 
 namespace pmscore
 {
+    class callback_base
+    {
+    public:
+        virtual void operator()() = 0;
+    };
+
     template <class _T>
-    class timer
+    class callback final : public callback_base
     {
     public:
         using callback_type = _T;
     public:
-        constexpr timer() noexcept_def(_T)
+        callback(_T&& __callback) noexcept_pf(_T)
+            : m_callback(forward<_T>(__callback))
+        {}
+    public:
+        void operator()() override { m_callback(); }
+    private:
+        callback_type m_callback;
+    };
+
+    class timer
+    {
+    public:
+        constexpr timer()
             : m_delay(0)
-            , m_callback()
+            , m_callback(nullptr)
             , m_time(0)
         {}
 
-        explicit timer(uint32_t __delay, _T __callback)
-            : m_delay(__delay)
-            , m_callback(move(__callback))
+        template <class _T>
+        explicit timer(_T&& __callback, uint32_t __delay)
+            : m_callback(new callback(forward<_T>(__callback)))
+            , m_delay(__delay)
             , m_time(0)
         {}
     public:
+        callback_base* get_callback() const noexcept { return m_callback; }
+
+        template <class _T>
+        void set_callback(_T&&);
+
         uint32_t get_delay() const noexcept { return m_delay; }
         void set_delay(uint32_t __d) noexcept { m_delay = __d; }
-
-        _T get_callback() const noexcept_mov(_T) { return m_callback; }
-        void set_callback(_T __c) noexcept_mov(_T) { m_callback = move(__c); }
     public:
-        void update_status() noexcept_if(declval<_T>()());
+        void update_status();
     private:
-        uint32_t      m_delay;
-        callback_type m_callback;
+        callback_base* m_callback;
+        uint32_t       m_delay;
 
         uint32_t m_time;
     };

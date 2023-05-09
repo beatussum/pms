@@ -20,6 +20,8 @@
 #define PMSCORE_ARDUINO_CONNECTER_HPP
 
 #include "arduino/encoder.hpp"
+#include "arduino/ultrasonic_sensor.hpp"
+#include "timer.hpp"
 
 /**
  * @file
@@ -30,6 +32,7 @@
 
 namespace pmscore
 {
+    class correcter_base;
     class position_computer;
 }
 
@@ -52,22 +55,36 @@ namespace pmscore::arduino
          * @param __encoder_b Pointeur pointant vers l'encodeur B soit celui
          * monitorant le moteur de la roue gauche.
          *
+         * @param __usensor Pointeur vers le capteur à ultraons permettant de
+         * détecter la présence d'obstacle.
+         *
+         * @param __delay Période de l'envoie d'une impulsion ultrasonore et de
+         * l'actualisation de la distance de l'obstacle.
+         *
          * @param __c Pointeur vers un objet `position_computer`, un
          * calculateur de position.
          */
 
-        explicit constexpr connecter(
+        explicit connecter(
             encoder* __encoder_a,
             encoder* __encoder_b,
-            position_computer* __c
-        ) noexcept
+            ultrasonic_sensor* __usensor,
+            uint32_t __delay,
+            position_computer* __computer,
+            correcter_base* __correcter
+        )
             : m_encoder_a(__encoder_a)
             , m_encoder_b(__encoder_b)
-            , m_computer(__c)
+            , m_usensor(__usensor)
+            , m_computer(__computer)
+            , m_correcter(__correcter)
+            , m_timer([&] { m_usensor->start_echoing(); }, __delay)
             , m_last_angle_a(0.)
             , m_last_angle_b(0.)
         {}
     public:
+        void initialize();
+
         /**
          * @brief Actualise le statut de l'objet.
          *
@@ -79,6 +96,7 @@ namespace pmscore::arduino
     public:
         encoder* get_encoder_a() const noexcept { return m_encoder_a; }
         encoder* get_encoder_b() const noexcept { return m_encoder_b; }
+        ultrasonic_sensor* get_usensor() const noexcept { return m_usensor; }
 
         position_computer* get_computer() const noexcept { return m_computer; }
 
@@ -90,7 +108,11 @@ namespace pmscore::arduino
     private:
         encoder*           m_encoder_a;
         encoder*           m_encoder_b;
+        ultrasonic_sensor* m_usensor;
         position_computer* m_computer;
+        correcter_base*    m_correcter;
+
+        timer m_timer;
 
         real m_last_angle_a;
         real m_last_angle_b;

@@ -16,12 +16,17 @@
  */
 
 
+#include "timer.hpp"
+
+#include <Arduino.h>
+
 namespace pmscore
 {
-    template <class _T>
-    void timer::set_callback(_T&& __c)
+    void timer::update_status()
     {
-        delete m_callback;
-        m_callback = new callback(forward<_T>(__c));
+        if ((millis() - m_time) > m_delay) {
+            (*m_callback)();
+            m_time = millis();
+        }
     }
 }

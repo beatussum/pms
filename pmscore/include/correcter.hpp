@@ -62,7 +62,8 @@ namespace pmscore
             real __distance,
             real __rangle,
             vector __rposition,
-            vector __tposition
+            vector __tposition,
+            real __obstacle_distance
         ) = 0;
     };
 
@@ -152,13 +153,15 @@ namespace pmscore
             arduino::motoreductor* __motor_b,
             _HeadingSpeedProfile&& __hs,
             _SoiSpeedProfile&& __ss,
-            _SpeedProfile&& __s
+            _SpeedProfile&& __s,
+            real __obstacle_distance_max
         ) noexcept_pf(_HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile)
             : m_motor_a(__motor_a)
             , m_motor_b(__motor_b)
             , m_heading_speed_profile(forward<_HeadingSpeedProfile>(__hs))
             , m_soi_speed_profile(forward<_SoiSpeedProfile>(__ss))
             , m_speed_profile(forward<_SpeedProfile>(__s))
+            , m_obstacle_distance_max(__obstacle_distance_max)
             , m_heading_speed_mode(heading_speed_mode::Fix)
             , m_soi_speed_mode(soi_speed_mode::Off)
             , m_speed_mode(speed_mode::Run)
@@ -188,7 +191,8 @@ namespace pmscore
             real __distance,
             real __rangle,
             vector __rposition,
-            vector __tposition
+            vector __tposition,
+            real __obstacle_distance
         ) override;
     public:
         arduino::motoreductor* get_motor_a() const noexcept
@@ -241,6 +245,7 @@ namespace pmscore
         heading_speed_profile_type m_heading_speed_profile;
         soi_speed_profile_type     m_soi_speed_profile;
         speed_profile_type         m_speed_profile;
+        real                       m_obstacle_distance_max;
 
         heading_speed_mode m_heading_speed_mode;
         soi_speed_mode     m_soi_speed_mode;

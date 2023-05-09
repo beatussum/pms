@@ -141,8 +141,15 @@ namespace pmscore::arduino
         void brake() const { __set_direction(direction::Brake); }
 
         /**
+         * @brief Met la _direction_ du motoréducteur à _Front_.
+         */
+
+        void enable() const { __set_direction(direction::Front); }
+
+        /**
          * @brief Met la _direction_ du motoréducteur à _Off_.
          */
+
         void disable() const { __set_direction(direction::Off); }
     private:
         pin_t    m_pin_a;

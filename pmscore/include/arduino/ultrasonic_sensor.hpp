@@ -45,7 +45,7 @@ namespace pmscore::arduino
         real get_distance() const noexcept
             { return static_cast<real>(m_duration) * (speed_of_sound / 2); }
 
-        real get_duration() const noexcept { return m_duration; }
+        uint32_t get_duration() const noexcept { return m_duration; }
 
         bool is_echoing() const
             { return (read_digital_output(m_pin_echo) == HIGH); }

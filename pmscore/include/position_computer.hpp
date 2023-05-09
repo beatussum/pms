@@ -30,8 +30,6 @@
 
 namespace pmscore
 {
-    class correcter_base;
-
     /**
      * @brief Cette classe permet le calcul de la position du robot en fonction
      * de la position angulaire de l'axe des deux motoréducteurs.
@@ -60,7 +58,6 @@ namespace pmscore
 
         template <size_t _n>
         explicit position_computer(
-            correcter_base* __c,
             real __tadvance,
             const vector (&__tpath)[_n],
             real __vertex_radius
@@ -109,7 +106,6 @@ namespace pmscore
             real __last_angle_b
         );
     public:
-        correcter_base* get_correcter() const noexcept { return m_correcter; }
         real get_tadvance() const noexcept { return m_tadvance; }
 
         vector* get_path() const noexcept { return m_tpath; }
@@ -117,27 +113,27 @@ namespace pmscore
         template <size_t _n>
         void set_path(const vector (&)[_n]) noexcept;
 
+        size_t get_path_size() const noexcept { return m_tpath_size; }
         real get_vertex_radius() const noexcept { return m_vertex_radius; }
 
+        const vector* get_current_edge() const noexcept { return m_ti; }
+        real get_current_edge_norm() const noexcept { return m_tcurrent_edge; }
+        real get_distance() const noexcept { return m_distance; }
         real get_rangle() const noexcept { return m_rangle; }
         vector get_rpos() const noexcept { return m_rpos; }
         real get_tangle() const noexcept { return m_tangle; }
-        const vector* get_current_edge() const noexcept { return m_ti; }
+        vector get_tpos() const noexcept { return m_tpos + m_tcurrent_pos; }
 
         bool is_vertex_reached() const noexcept
-            { return m_tis_vertex_reached; }
-
-        size_t get_path_size() const noexcept { return m_tpath_size; }
-        vector get_tpos() const noexcept { return m_tpos + m_tcurrent_pos; }
-        real get_distance() const noexcept { return m_distance; }
+            { return m_ris_vertex_reached; }
     private:
-        correcter_base* m_correcter;
-        real            m_tadvance;
-        vector*         m_tpath;
-        real            m_vertex_radius;
+        real    m_tadvance;
+        vector* m_tpath;
+        real    m_vertex_radius;
 
         real          m_distance;
         real          m_rangle;
+        bool          m_ris_vertex_reached;
         vector        m_rpos;
         real          m_tangle;
         real          m_tangle_a_0;
