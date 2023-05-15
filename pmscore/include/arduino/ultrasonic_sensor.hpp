@@ -59,7 +59,7 @@ namespace pmscore::arduino
     public:
         /**
          * @brief Initialise le processus d'actualisation de la distance de
-         * l'obstcacle se situant devant le capteur à ultrasons.
+         * l'obstacle se situant devant le capteur à ultrasons.
          *
          * Cette fonction commence par spécifier une valeur par défaut pour le
          * membre caractérisant la distance de l'obstacle se situant devant le
@@ -76,7 +76,7 @@ namespace pmscore::arduino
 
         /**
          * @brief Arrête le processus d'actualisation de la distance de
-         * l'obstcacle se situant devant le capteur à ultrasons.
+         * l'obstacle se situant devant le capteur à ultrasons.
          *
          * @see start_echoing()
          */
