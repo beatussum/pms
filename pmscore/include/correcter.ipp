@@ -53,7 +53,7 @@ namespace pmscore
         real __obstacle_distance
     )
     {
-        if (__obstacle_distance < m_obstacle_distance_max) {
+        if (__obstacle_distance < m_obstacle_distance_min) {
             m_motor_a->disable();
             m_motor_b->disable();
         } else {

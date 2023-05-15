@@ -91,14 +91,17 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1chopper.html">chopper</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette classe permet le pilotage d'un hacheur.  <a href="classpmscore_1_1arduino_1_1chopper.html#details">Plus de détails...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1connecter.html">connecter</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette classe facilite la communication entre les différents composants du robot.  <a href="classpmscore_1_1arduino_1_1connecter.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette classe permet le pilotage d'un encodeur.  <a href="classpmscore_1_1arduino_1_1encoder.html#details">Plus de détails...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1encoders.html">encoders</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette classe facilite le pilotage de deux encodeur.  <a href="classpmscore_1_1arduino_1_1encoders.html#details">Plus de détails...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1motoreductor.html">motoreductor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette classe permet le pilotage d'un motoréducteur.  <a href="classpmscore_1_1arduino_1_1motoreductor.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html">ultrasonic_sensor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cette classe permet le pilotage d'un capteur à ultrason.  <a href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html#details">Plus de détails...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -110,8 +113,25 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>pin_t</b> = uint8_t<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Fonctions</h2></td></tr>
-<tr class="memitem:ac24c952bb352297d2337451a9d828acc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#ac24c952bb352297d2337451a9d828acc">set_main_encoders</a> (const <a class="el" href="classpmscore_1_1arduino_1_1encoders.html">encoders</a> &amp;__e) noexcept</td></tr>
-<tr class="separator:ac24c952bb352297d2337451a9d828acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a793f85b33be7e08d33a423567ff6190c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#a793f85b33be7e08d33a423567ff6190c">read_digital_output</a> (<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __p)</td></tr>
+<tr class="memdesc:a793f85b33be7e08d33a423567ff6190c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit la valeur d'un pin numérique initialisé avec <code>analogWrite()</code>.  <br /></td></tr>
+<tr class="separator:a793f85b33be7e08d33a423567ff6190c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae90138bb00d25366972e59bc893e7f77"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#ae90138bb00d25366972e59bc893e7f77">read_pwm_output</a> (<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __p)</td></tr>
+<tr class="memdesc:ae90138bb00d25366972e59bc893e7f77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit la valeur d'un pin P.W.M. initialisé avec <code>analogWrite()</code>.  <br /></td></tr>
+<tr class="separator:ae90138bb00d25366972e59bc893e7f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d3f3d254bf60b4f7cf1f0de8233d683"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#a4d3f3d254bf60b4f7cf1f0de8233d683">set_main_encoders</a> (<a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *__a, <a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *__b) noexcept</td></tr>
+<tr class="memdesc:a4d3f3d254bf60b4f7cf1f0de8233d683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spécifie deux <code>encoder</code> en tant qu'encodeurs principaux.  <br /></td></tr>
+<tr class="separator:a4d3f3d254bf60b4f7cf1f0de8233d683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b4a6975ae954ab4538cb85cbb3eb8a"><td class="memTemplParams" colspan="2">template&lt;size_t _n&gt; </td></tr>
+<tr class="memitem:a98b4a6975ae954ab4538cb85cbb3eb8a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#a98b4a6975ae954ab4538cb85cbb3eb8a">update_main_encoder_status</a> () noexcept</td></tr>
+<tr class="memdesc:a98b4a6975ae954ab4538cb85cbb3eb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actualise la position d'un des encodeurs principaux.  <br /></td></tr>
+<tr class="separator:a98b4a6975ae954ab4538cb85cbb3eb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee6a3aadbd37111b9e17dddf06520add"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#aee6a3aadbd37111b9e17dddf06520add">set_main_ultrasonic_sensor</a> (<a class="el" href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html">ultrasonic_sensor</a> *__us)</td></tr>
+<tr class="memdesc:aee6a3aadbd37111b9e17dddf06520add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spécifie un <code><a class="el" href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html" title="Cette classe permet le pilotage d&#39;un capteur à ultrason.">ultrasonic_sensor</a></code> en tant que capteur à ultrasons principal.  <br /></td></tr>
+<tr class="separator:aee6a3aadbd37111b9e17dddf06520add"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa03a816b6a2ad87c6ee0a79aef7e07b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#aa03a816b6a2ad87c6ee0a79aef7e07b7">update_main_ultrasonic_sensor_status</a> ()</td></tr>
+<tr class="memdesc:aa03a816b6a2ad87c6ee0a79aef7e07b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actualise la distance de l'obstacle se situant devant le capteur à ultrasons principal.  <br /></td></tr>
+<tr class="separator:aa03a816b6a2ad87c6ee0a79aef7e07b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -132,12 +152,71 @@ constexpr <a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673ba
 <tr class="memitem:aaadc10343e8e695da81b899308394eee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#aaadc10343e8e695da81b899308394eee">main_encoders</a> [] = {nullptr, nullptr}</td></tr>
 <tr class="memdesc:aaadc10343e8e695da81b899308394eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tableau contenant deux pointeurs pointant vers les deux encodeurs principaux.  <br /></td></tr>
 <tr class="separator:aaadc10343e8e695da81b899308394eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc9aee76cfd9b9260cb79dccc4f61634"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html">ultrasonic_sensor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#abc9aee76cfd9b9260cb79dccc4f61634">main_ultrasonic_sensor</a> = nullptr</td></tr>
+<tr class="memdesc:abc9aee76cfd9b9260cb79dccc4f61634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tableau contenant un pointeur pointant vers le capteur à ultrasons principal.  <br /></td></tr>
+<tr class="separator:abc9aee76cfd9b9260cb79dccc4f61634"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>Cet espace de nommage implémente une interface logiciel-machine. </p>
 </div><h2 class="groupheader">Documentation des fonctions</h2>
-<a id="ac24c952bb352297d2337451a9d828acc" name="ac24c952bb352297d2337451a9d828acc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac24c952bb352297d2337451a9d828acc">&#9670;&#160;</a></span>set_main_encoders()</h2>
+<a id="a793f85b33be7e08d33a423567ff6190c" name="a793f85b33be7e08d33a423567ff6190c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a793f85b33be7e08d33a423567ff6190c">&#9670;&#160;</a></span>read_digital_output()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t pmscore::arduino::read_digital_output </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td>
+          <td class="paramname"><em>__p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lit la valeur d'un pin numérique initialisé avec <code>analogWrite()</code>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__p</td><td>Le pin numérique étudié. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La valeur sur un octet du pin numérique.</dd></dl>
+<dl class="section see"><dt>Voir également</dt><dd><a href="https://github.com/arduino/ArduinoCore-avr/blob/1.8.6/cores/arduino/wiring_digital.c#L138-L163">https://github.com/arduino/ArduinoCore-avr/blob/1.8.6/cores/arduino/wiring_digital.c#L138-L163</a> </dd></dl>
+
+</div>
+</div>
+<a id="ae90138bb00d25366972e59bc893e7f77" name="ae90138bb00d25366972e59bc893e7f77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae90138bb00d25366972e59bc893e7f77">&#9670;&#160;</a></span>read_pwm_output()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t pmscore::arduino::read_pwm_output </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td>
+          <td class="paramname"><em>__p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lit la valeur d'un pin P.W.M. initialisé avec <code>analogWrite()</code>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__p</td><td>Le pin P.W.M. étudié. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La valeur sur un octet du pin P.W.M..</dd></dl>
+<dl class="section see"><dt>Voir également</dt><dd><a href="https://github.com/arduino/ArduinoCore-avr/blob/1.8.6/cores/arduino/wiring_analog.c#L92-L285">https://github.com/arduino/ArduinoCore-avr/blob/1.8.6/cores/arduino/wiring_analog.c#L92-L285</a> </dd></dl>
+
+</div>
+</div>
+<a id="a4d3f3d254bf60b4f7cf1f0de8233d683" name="a4d3f3d254bf60b4f7cf1f0de8233d683"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d3f3d254bf60b4f7cf1f0de8233d683">&#9670;&#160;</a></span>set_main_encoders()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,8 +227,82 @@ constexpr <a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673ba
         <tr>
           <td class="memname">void pmscore::arduino::set_main_encoders </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpmscore_1_1arduino_1_1encoders.html">encoders</a> &amp;&#160;</td>
-          <td class="paramname"><em>__e</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *&#160;</td>
+          <td class="paramname"><em>__a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classpmscore_1_1arduino_1_1encoder.html">encoder</a> *&#160;</td>
+          <td class="paramname"><em>__b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Spécifie deux <code>encoder</code> en tant qu'encodeurs principaux. </p>
+<p>Afin qu'un <code>encoder</code> puisse correctement monitoré le moteur auquel il est associé (afin que le membre <code>m_incrementation</code> est incrémenté à chaque tour), il doit être défini en tant qu'encodeur principal.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__a</td><td>L'encodeur A (associé à la roue gauche). </td></tr>
+    <tr><td class="paramname">__b</td><td>L'encodeur B (associé à la roue droite). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aee6a3aadbd37111b9e17dddf06520add" name="aee6a3aadbd37111b9e17dddf06520add"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee6a3aadbd37111b9e17dddf06520add">&#9670;&#160;</a></span>set_main_ultrasonic_sensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pmscore::arduino::set_main_ultrasonic_sensor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html">ultrasonic_sensor</a> *&#160;</td>
+          <td class="paramname"><em>__us</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Spécifie un <code><a class="el" href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html" title="Cette classe permet le pilotage d&#39;un capteur à ultrason.">ultrasonic_sensor</a></code> en tant que capteur à ultrasons principal. </p>
+<p>Afin qu'un <code><a class="el" href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html" title="Cette classe permet le pilotage d&#39;un capteur à ultrason.">ultrasonic_sensor</a></code> puisse correctement déterminer la distance le séparant des obstacles devant lui, il doit être défini en tant qu'encodeur principal.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__us</td><td>Le capteur à ultrasons à spécifié en tant que capteur à ultrasons principal. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a98b4a6975ae954ab4538cb85cbb3eb8a" name="a98b4a6975ae954ab4538cb85cbb3eb8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98b4a6975ae954ab4538cb85cbb3eb8a">&#9670;&#160;</a></span>update_main_encoder_status()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t _n&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend void pmscore::arduino::update_main_encoder_status </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -159,13 +312,35 @@ constexpr <a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673ba
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Afin qu'un <code>encoder</code> puisse correctement monitoré le moteur auquel il est associé (afin que le membre <code>m_incrementation</code> est incrémenté à chaque tour), il doit être défini en tant qu'encodeur principal.</p>
-<dl class="params"><dt>Paramètres</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">__e</td><td>L'objet <code>encoders</code> regroupant les deux <code>encoder</code>s à spécifier en tant qu'encodeurs principaux. </td></tr>
+
+<p>Actualise la position d'un des encodeurs principaux. </p>
+<dl class="tparams"><dt>Paramètres du template</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">_n</td><td>Indice dans <code>main_encoders</code> de l'encodeur principal concerné.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>Voir également</dt><dd><a class="el" href="namespacepmscore_1_1arduino.html#aaadc10343e8e695da81b899308394eee" title="Tableau contenant deux pointeurs pointant vers les deux encodeurs principaux.">main_encoders</a> </dd></dl>
+
+</div>
+</div>
+<a id="aa03a816b6a2ad87c6ee0a79aef7e07b7" name="aa03a816b6a2ad87c6ee0a79aef7e07b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa03a816b6a2ad87c6ee0a79aef7e07b7">&#9670;&#160;</a></span>update_main_ultrasonic_sensor_status()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pmscore::arduino::update_main_ultrasonic_sensor_status </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Actualise la distance de l'obstacle se situant devant le capteur à ultrasons principal. </p>
+<dl class="section see"><dt>Voir également</dt><dd><a class="el" href="namespacepmscore_1_1arduino.html#abc9aee76cfd9b9260cb79dccc4f61634" title="Tableau contenant un pointeur pointant vers le capteur à ultrasons principal.">main_ultrasonic_sensor</a> </dd></dl>
 
 </div>
 </div>
@@ -217,8 +392,34 @@ constexpr <a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673ba
 </div><div class="memdoc">
 
 <p>Tableau contenant deux pointeurs pointant vers les deux encodeurs principaux. </p>
-<p>Les deux encodeurs principaux sont les deux encodeurs dont la position est effectivement monitorée par le programme. Cette implémentation s'explique par les limitations imposées par les <em>« interrupt handler functions »</em>.</p>
+<p>Les deux encodeurs principaux sont ceux dont la position est effectivement monitorée par le programme. Cette implémentation s'explique par les limitations imposées par les <em>« interrupt handler functions »</em>.</p>
 <p>Le premier élément correspond à l'encodeur A (celui de gauche) et le deuxième élément à l'encodeur B (celui de droite).</p>
+<dl class="section see"><dt>Voir également</dt><dd>avr/interrupt.h </dd></dl>
+
+</div>
+</div>
+<a id="abc9aee76cfd9b9260cb79dccc4f61634" name="abc9aee76cfd9b9260cb79dccc4f61634"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc9aee76cfd9b9260cb79dccc4f61634">&#9670;&#160;</a></span>main_ultrasonic_sensor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classpmscore_1_1arduino_1_1ultrasonic__sensor.html">ultrasonic_sensor</a>* pmscore::arduino::main_ultrasonic_sensor = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tableau contenant un pointeur pointant vers le capteur à ultrasons principal. </p>
+<p>Le capteur à ultrason principal est celui dont le statut est effectivement monitoré par le programme. Cette implémentation s'explique par les limitations imposées par les <em>« interrupt handler functions »</em>.</p>
 <dl class="section see"><dt>Voir également</dt><dd>avr/interrupt.h </dd></dl>
 
 </div>

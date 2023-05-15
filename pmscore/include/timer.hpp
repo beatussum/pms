@@ -24,11 +24,29 @@
 
 #include <stdint.h>
 
+/**
+ * @file
+ *
+ * @brief Ce fichier implémente un minuteur.
+ */
+
 namespace pmscore
 {
+    /**
+     * @brief Cette interface permet l'implémentation d'un _« callback »_.
+     *
+     * La raison d'être de cette classe est de permettre du _« type erasure »_.
+     */
+
     class callback_base
     {
     public:
+        /**
+         * @brief Surcharge de l'opérateur `operator()`.
+         *
+         * Cette méthode s'occupe d'appeler le _« callback »_.
+         */
+
         virtual void operator()() = 0;
     };
 
@@ -50,11 +68,28 @@ namespace pmscore
     class timer
     {
     public:
+        /**
+         * @brief Construit un objet `timer`.
+         *
+         * @warning Ce constructeur par défaut crée un objet `timer` invalide :
+         * si l'appel de ce constructeur est directement suivi par celui de la
+         * méthode `update_status()`, le programme se termine d'une manière non
+         * prévue.
+         */
+
         constexpr timer()
             : m_delay(0)
             , m_callback(nullptr)
             , m_time(0)
         {}
+
+        /**
+         * @brief Construit un objet `timer`.
+         *
+         * @tparam _T Le type du _« callback »_.
+         * @param __callback Le _« callback »_.
+         * @param __delay La période d'appel du _« callback »_.
+         */
 
         template <class _T>
         explicit timer(_T&& __callback, uint32_t __delay)
@@ -71,6 +106,13 @@ namespace pmscore
         uint32_t get_delay() const noexcept { return m_delay; }
         void set_delay(uint32_t __d) noexcept { m_delay = __d; }
     public:
+        /**
+         * @brief Actualise le statut de l'objet.
+         *
+         * Actualise l'horloge interne stockée dans l'objet et appel, si
+         * nécessaire, le _« callback »_.
+         */
+
         void update_status();
     private:
         callback_base* m_callback;

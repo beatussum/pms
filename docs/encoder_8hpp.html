@@ -76,7 +76,9 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Espaces de nommage</a>  </div>
+<a href="#namespaces">Espaces de nommage</a> &#124;
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Référence du fichier encoder.hpp</div></div>
 </div><!--header-->
 <div class="contents">
@@ -85,6 +87,7 @@ $(function() {
 <a href="#details">Plus de détails...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="arduino_8hpp_source.html">arduino/arduino.hpp</a>&quot;</code><br />
 <code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &quot;arduino/encoder.ipp&quot;</code><br />
 </div>
 <p><a href="encoder_8hpp_source.html">Aller au code source de ce fichier.</a></p>
 <table class="memberdecls">
@@ -102,6 +105,22 @@ Espaces de nommage</h2></td></tr>
 <tr class="memitem:namespacepmscore_1_1arduino"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html">pmscore::arduino</a></td></tr>
 <tr class="memdesc:namespacepmscore_1_1arduino"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cet espace de nommage implémente une interface logiciel-machine. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a4d3f3d254bf60b4f7cf1f0de8233d683"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#a4d3f3d254bf60b4f7cf1f0de8233d683">pmscore::arduino::set_main_encoders</a> (encoder *__a, encoder *__b) noexcept</td></tr>
+<tr class="memdesc:a4d3f3d254bf60b4f7cf1f0de8233d683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spécifie deux <code>encoder</code> en tant qu'encodeurs principaux.  <br /></td></tr>
+<tr class="separator:a4d3f3d254bf60b4f7cf1f0de8233d683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b4a6975ae954ab4538cb85cbb3eb8a"><td class="memTemplParams" colspan="2">template&lt;size_t _n&gt; </td></tr>
+<tr class="memitem:a98b4a6975ae954ab4538cb85cbb3eb8a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#a98b4a6975ae954ab4538cb85cbb3eb8a">pmscore::arduino::update_main_encoder_status</a> () noexcept</td></tr>
+<tr class="memdesc:a98b4a6975ae954ab4538cb85cbb3eb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actualise la position d'un des encodeurs principaux.  <br /></td></tr>
+<tr class="separator:a98b4a6975ae954ab4538cb85cbb3eb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aaadc10343e8e695da81b899308394eee"><td class="memItemLeft" align="right" valign="top">encoder *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepmscore_1_1arduino.html#aaadc10343e8e695da81b899308394eee">pmscore::arduino::main_encoders</a> [] = {nullptr, nullptr}</td></tr>
+<tr class="memdesc:aaadc10343e8e695da81b899308394eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tableau contenant deux pointeurs pointant vers les deux encodeurs principaux.  <br /></td></tr>
+<tr class="separator:aaadc10343e8e695da81b899308394eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>Ce fichier implémente une interface logiciel-machine avec un encodeur. </p>

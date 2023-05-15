@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>P.M.S. core:  Fichier source de include/timer.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">P.M.S. core<span id="projectnumber">&#160;0.9</span>
+   </div>
+   <div id="projectbrief">My T.I.P.E. project: Parking Monitoring System</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">timer.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="timer_8hpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright (C) 2022-2023 Mattéo Rossillol‑‑Laruelle &lt;beatussum@protonmail.com&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * This program is free software: you can redistribute it and/or modify it</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * under the terms of the GNU General Public License as published by the Free</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * Software Foundation, either version 3 of the License, or (at your option)</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * any later version.</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * This program is distributed in the hope that it will be useful, but WITHOUT</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * more details.</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * You should have received a copy of the GNU General Public License along with</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#ifndef PMSCORE_TIMER_HPP</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#define PMSCORE_TIMER_HPP</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;core/macros.hpp&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;core/utility.hpp&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacepmscore.html">pmscore</a></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>{</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classpmscore_1_1callback__base.html">   41</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classpmscore_1_1callback__base.html">callback_base</a></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classpmscore_1_1callback__base.html#a363b15092d4b542f7498c9c3332aa443">   50</a></span>        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classpmscore_1_1callback__base.html#a363b15092d4b542f7498c9c3332aa443">operator()</a>() = 0;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> _T&gt;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classpmscore_1_1callback.html">   54</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classpmscore_1_1callback.html">callback</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classpmscore_1_1callback__base.html">callback_base</a></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keyword">using </span>callback_type = _T;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <a class="code hl_class" href="classpmscore_1_1callback.html">callback</a>(_T&amp;&amp; __callback) noexcept_pf(_T)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            : m_callback(forward&lt;_T&gt;(__callback))</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        {}</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classpmscore_1_1callback.html#ad73aebf99c3958e3e5cfcfdc5600d5b4">   63</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classpmscore_1_1callback.html#ad73aebf99c3958e3e5cfcfdc5600d5b4">operator()</a>()<span class="keyword"> override </span>{ m_callback(); }</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        callback_type m_callback;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    };</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="classpmscore_1_1timer.html">   68</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classpmscore_1_1timer.html">timer</a></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classpmscore_1_1timer.html#abd0496d7f0c3476a8247f6efe898c4b4">   80</a></span>        <span class="keyword">constexpr</span> <a class="code hl_function" href="classpmscore_1_1timer.html#abd0496d7f0c3476a8247f6efe898c4b4">timer</a>()</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            : m_delay(0)</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            , m_callback(nullptr)</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            , m_time(0)</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        {}</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">template</span> &lt;<span class="keyword">class</span> _T&gt;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classpmscore_1_1timer.html#a6a973cdea2dd93a6eb59173047691222">   95</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classpmscore_1_1timer.html#a6a973cdea2dd93a6eb59173047691222">timer</a>(_T&amp;&amp; __callback, uint32_t __delay)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            : m_callback(new <a class="code hl_class" href="classpmscore_1_1callback.html">callback</a>(forward&lt;_T&gt;(__callback)))</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            , m_delay(__delay)</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            , m_time(0)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        {}</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <a class="code hl_class" href="classpmscore_1_1callback__base.html">callback_base</a>* get_callback() const noexcept { <span class="keywordflow">return</span> m_callback; }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keyword">template</span> &lt;<span class="keyword">class</span> _T&gt;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keywordtype">void</span> set_callback(_T&amp;&amp;);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        uint32_t get_delay() const noexcept { <span class="keywordflow">return</span> m_delay; }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordtype">void</span> set_delay(uint32_t __d) <span class="keyword">noexcept</span> { m_delay = __d; }</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="classpmscore_1_1timer.html#afdd90002c9c432532af2fd8902a3b98f">  116</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classpmscore_1_1timer.html#afdd90002c9c432532af2fd8902a3b98f">update_status</a>();</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <a class="code hl_class" href="classpmscore_1_1callback__base.html">callback_base</a>* m_callback;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        uint32_t       m_delay;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        uint32_t m_time;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    };</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>}</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">#include &quot;timer.ipp&quot;</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#endif </span><span class="comment">// PMSCORE_TIMER_HPP</span></div>
+<div class="ttc" id="aclasspmscore_1_1callback__base_html"><div class="ttname"><a href="classpmscore_1_1callback__base.html">pmscore::callback_base</a></div><div class="ttdoc">Cette interface permet l'implémentation d'un « callback ».</div><div class="ttdef"><b>Definition:</b> timer.hpp:42</div></div>
+<div class="ttc" id="aclasspmscore_1_1callback__base_html_a363b15092d4b542f7498c9c3332aa443"><div class="ttname"><a href="classpmscore_1_1callback__base.html#a363b15092d4b542f7498c9c3332aa443">pmscore::callback_base::operator()</a></div><div class="ttdeci">virtual void operator()()=0</div><div class="ttdoc">Surcharge de l'opérateur operator().</div></div>
+<div class="ttc" id="aclasspmscore_1_1callback_html"><div class="ttname"><a href="classpmscore_1_1callback.html">pmscore::callback</a></div><div class="ttdef"><b>Definition:</b> timer.hpp:55</div></div>
+<div class="ttc" id="aclasspmscore_1_1callback_html_ad73aebf99c3958e3e5cfcfdc5600d5b4"><div class="ttname"><a href="classpmscore_1_1callback.html#ad73aebf99c3958e3e5cfcfdc5600d5b4">pmscore::callback::operator()</a></div><div class="ttdeci">void operator()() override</div><div class="ttdoc">Surcharge de l'opérateur operator().</div><div class="ttdef"><b>Definition:</b> timer.hpp:63</div></div>
+<div class="ttc" id="aclasspmscore_1_1timer_html"><div class="ttname"><a href="classpmscore_1_1timer.html">pmscore::timer</a></div><div class="ttdef"><b>Definition:</b> timer.hpp:69</div></div>
+<div class="ttc" id="aclasspmscore_1_1timer_html_a6a973cdea2dd93a6eb59173047691222"><div class="ttname"><a href="classpmscore_1_1timer.html#a6a973cdea2dd93a6eb59173047691222">pmscore::timer::timer</a></div><div class="ttdeci">timer(_T &amp;&amp;__callback, uint32_t __delay)</div><div class="ttdoc">Construit un objet timer.</div><div class="ttdef"><b>Definition:</b> timer.hpp:95</div></div>
+<div class="ttc" id="aclasspmscore_1_1timer_html_abd0496d7f0c3476a8247f6efe898c4b4"><div class="ttname"><a href="classpmscore_1_1timer.html#abd0496d7f0c3476a8247f6efe898c4b4">pmscore::timer::timer</a></div><div class="ttdeci">constexpr timer()</div><div class="ttdoc">Construit un objet timer.</div><div class="ttdef"><b>Definition:</b> timer.hpp:80</div></div>
+<div class="ttc" id="aclasspmscore_1_1timer_html_afdd90002c9c432532af2fd8902a3b98f"><div class="ttname"><a href="classpmscore_1_1timer.html#afdd90002c9c432532af2fd8902a3b98f">pmscore::timer::update_status</a></div><div class="ttdeci">void update_status()</div><div class="ttdoc">Actualise le statut de l'objet.</div></div>
+<div class="ttc" id="anamespacepmscore_html"><div class="ttname"><a href="namespacepmscore.html">pmscore</a></div><div class="ttdoc">Espace de nommage principal.</div><div class="ttdef"><b>Definition:</b> arduino.hpp:46</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
+</small></address>
+</body>
+</html>

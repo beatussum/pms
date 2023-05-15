@@ -61,8 +61,11 @@ namespace pmscore::arduino
          * @param __delay Période de l'envoie d'une impulsion ultrasonore et de
          * l'actualisation de la distance de l'obstacle.
          *
-         * @param __c Pointeur vers un objet `position_computer`, un
+         * @param __computer Pointeur vers un objet `position_computer`, un
          * calculateur de position.
+         *
+         * @param __correcter Pointer vers un objet `correcter_base`, un
+         * correcteur de position.
          */
 
         explicit connecter(
@@ -117,38 +120,6 @@ namespace pmscore::arduino
         real m_last_angle_a;
         real m_last_angle_b;
     };
-
-    /**
-     * @brief Tableau contenant deux pointeurs pointant vers les deux encodeurs
-     * principaux.
-     *
-     * Les deux encodeurs principaux sont les deux encodeurs dont la position
-     * est effectivement monitorée par le programme. Cette implémentation
-     * s'explique par les limitations imposées par les _« interrupt handler
-     * functions »_.
-     *
-     * Le premier élément correspond à l'encodeur A (celui de gauche) et le
-     * deuxième élément à l'encodeur B (celui de droite).
-     *
-     * @see avr/interrupt.h
-     */
-
-    inline encoder* main_encoders[] = {nullptr, nullptr};
-
-    /**
-     * @brief Spécifie deux `encoder` en tant qu'encodeurs principaux.
-     *
-     * Afin qu'un `encoder` puisse correctement monitoré le moteur auquel
-     * il est associé (afin que le membre `m_incrementation` est incrémenté
-     * à chaque tour), il doit être défini en tant qu'encodeur principal.
-     *
-     * @param __a L'encodeur A (associé à la roue gauche).
-     * @param __b L'encodeur B (associé à la roue droite).
-     */
-
-    void set_main_encoders(encoder* __a, encoder* __b) noexcept;
 }
-
-#include "arduino/connecter.ipp"
 
 #endif // PMSCORE_ARDUINO_CONNECTER_HPP

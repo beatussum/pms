@@ -70,34 +70,4 @@ namespace pmscore::arduino
             obstacle_distance
         );
     }
-
-    void set_main_encoders(encoder* __a, encoder* __b) noexcept
-    {
-        if (main_encoders[0] != nullptr) {
-            detachInterrupt(digitalPinToInterrupt(main_encoders[0]->m_pin));
-        }
-
-        if (main_encoders[1] != nullptr) {
-            detachInterrupt(digitalPinToInterrupt(main_encoders[1]->m_pin));
-        }
-
-        main_encoders[0] = __a;
-        main_encoders[1] = __b;
-
-        if (__a != nullptr) {
-            attachInterrupt(
-                digitalPinToInterrupt(__a->m_pin),
-                update_main_encoder_status<0>,
-                CHANGE
-            );
-        }
-
-        if (__b != nullptr) {
-            attachInterrupt(
-                digitalPinToInterrupt(__b->m_pin),
-                update_main_encoder_status<1>,
-                CHANGE
-            );
-        }
-    }
 }
