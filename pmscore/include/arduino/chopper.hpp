@@ -41,7 +41,7 @@ namespace pmscore::arduino
         /**
          * @brief Construit un objet `chopper`.
          *
-         * @param __pin_stby Pin de la carte Arduino sur lequel STBY est branché.
+         * @param __pin_stby Pin STBY.
          */
 
         explicit chopper(pin_t __pin_stby);

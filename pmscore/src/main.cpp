@@ -17,8 +17,8 @@
 
 
 #include "arduino/chopper.hpp"
+#include "arduino/connecter.hpp"
 #include "arduino/encoder.hpp"
-#include "arduino/encoders.hpp"
 #include "arduino/motoreductor.hpp"
 #include "speed_profile/constant.hpp"
 #include "speed_profile/trapezoidal.hpp"
@@ -35,6 +35,8 @@ arduino::encoder encoder_b(3);
 arduino::motoreductor motor_a(10, 9, 11, &encoder_a);
 arduino::motoreductor motor_b(6, 7, 5, &encoder_b);
 
+arduino::ultrasonic_sensor usensor(1, 1);
+
 correcter corr(
     &motor_a,
     &motor_b,
@@ -43,28 +45,38 @@ correcter corr(
 
     speed_profile::trapezoidal(2., 20., 100, 90, 180,
         [] (real __a, real __b) { return __b - __a; }
-    )
+    ),
 
+    15
 );
 
 position_computer computer(
-    &corr,
     .2,
     {{0., 1'000.}, {-1'000., 0.}, {0., -1'000.}, {1'000., 0.}},
     5.
 );
 
-arduino::encoders encoders(&encoder_a, &encoder_b, &computer);
+arduino::connecter connecter(
+    &encoder_a,
+    &encoder_b,
+    &usensor,
+    500,
+    &computer,
+    &corr
+);
 
 void setup()
 {
     Serial.begin(9600);
 
-    arduino::set_main_encoders(encoders);
+    arduino::set_main_encoders(&encoder_a, &encoder_b);
+    arduino::set_main_ultrasonic_sensor(&usensor);
+
     chopper.enable();
+    connecter.initialize();
 }
 
 void loop()
 {
-    encoders.update_status();
+    connecter.update_status();
 }

@@ -91,6 +91,9 @@ Fonctions membres publiques</h2></td></tr>
 <tr class="memitem:a1720b95056021f13e9cc446df6e5a901"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1chopper.html#a1720b95056021f13e9cc446df6e5a901">chopper</a> (<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __pin_stby)</td></tr>
 <tr class="memdesc:a1720b95056021f13e9cc446df6e5a901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construit un objet <code>chopper</code>.  <br /></td></tr>
 <tr class="separator:a1720b95056021f13e9cc446df6e5a901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb2e253f39bc5128150dfe1518a41180"><td class="memItemLeft" align="right" valign="top"><a id="aeb2e253f39bc5128150dfe1518a41180" name="aeb2e253f39bc5128150dfe1518a41180"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_enabled</b> () const</td></tr>
+<tr class="separator:aeb2e253f39bc5128150dfe1518a41180"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc1bf5bacfe79ddeba05604646bb2e26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1arduino_1_1chopper.html#acc1bf5bacfe79ddeba05604646bb2e26">enable</a> (bool __b=true) const</td></tr>
 <tr class="memdesc:acc1bf5bacfe79ddeba05604646bb2e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Active ou désactive le hacheur.  <br /></td></tr>
 <tr class="separator:acc1bf5bacfe79ddeba05604646bb2e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,6 +104,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>disable</b> () const<
 <tr class="memitem:a787d3e66d9fde63fd21a5667a5d49bfa"><td class="memItemLeft" align="right" valign="top"><a id="a787d3e66d9fde63fd21a5667a5d49bfa" name="a787d3e66d9fde63fd21a5667a5d49bfa"></a>
 <a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_pin_stby</b> () const noexcept</td></tr>
 <tr class="separator:a787d3e66d9fde63fd21a5667a5d49bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f380426acccacf418fc9e6cd27e0235"><td class="memItemLeft" align="right" valign="top"><a id="a4f380426acccacf418fc9e6cd27e0235" name="a4f380426acccacf418fc9e6cd27e0235"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_pin_stby</b> (<a class="el" href="namespacepmscore_1_1arduino.html#a1da7d44e82945a6e313f3f49ba0f6df4">pin_t</a> __p)</td></tr>
+<tr class="separator:a4f380426acccacf418fc9e6cd27e0235"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>Cette classe permet le pilotage d'un hacheur. </p>
@@ -132,7 +138,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>disable</b> () const<
 <p>Construit un objet <code>chopper</code>. </p>
 <dl class="params"><dt>Paramètres</dt><dd>
   <table class="params">
-    <tr><td class="paramname">__pin_stby</td><td>Pin de la carte Arduino sur lequel STBY est branché. </td></tr>
+    <tr><td class="paramname">__pin_stby</td><td>Pin STBY. </td></tr>
   </table>
   </dd>
 </dl>
@@ -145,6 +151,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>disable</b> () const<
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void pmscore::arduino::chopper::enable </td>
@@ -154,6 +163,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>disable</b> () const<
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Active ou désactive le hacheur. </p>

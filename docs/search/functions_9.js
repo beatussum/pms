@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['reduce_5fpower_0',['reduce_power',['../classpmscore_1_1arduino_1_1motoreductor.html#a8fcd94b6ee90fb89190215bcf606a198',1,'pmscore::arduino::motoreductor']]],
-  ['reverse_1',['reverse',['../classpmscore_1_1arduino_1_1encoder.html#addd158d2c5d09a670d2ab37d44d2ecc2',1,'pmscore::arduino::encoder']]]
+  ['read_5fdigital_5foutput_0',['read_digital_output',['../namespacepmscore_1_1arduino.html#a793f85b33be7e08d33a423567ff6190c',1,'pmscore::arduino']]],
+  ['read_5fpwm_5foutput_1',['read_pwm_output',['../namespacepmscore_1_1arduino.html#ae90138bb00d25366972e59bc893e7f77',1,'pmscore::arduino']]],
+  ['reverse_2',['reverse',['../classpmscore_1_1arduino_1_1encoder.html#addd158d2c5d09a670d2ab37d44d2ecc2',1,'pmscore::arduino::encoder']]]
 ];

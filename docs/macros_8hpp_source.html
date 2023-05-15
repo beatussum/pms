@@ -170,7 +170,9 @@ $(function() {
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#define noexcept_pf(...) noexcept(detail::are_noexcept_pf&lt;__VA_ARGS__&gt;::value)</span></div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#endif </span><span class="comment">// PMSCORE_CORE_MACROS_HPP</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#define noexcept_if(__predicate) noexcept(noexcept(__predicate))</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#endif </span><span class="comment">// PMSCORE_CORE_MACROS_HPP</span></div>
 <div class="ttc" id="aclasspmscore_1_1integral__constant_html"><div class="ttname"><a href="classpmscore_1_1integral__constant.html">pmscore::integral_constant</a></div><div class="ttdef"><b>Definition:</b> type_traits.hpp:71</div></div>
 <div class="ttc" id="anamespacepmscore_1_1detail_html"><div class="ttname"><a href="namespacepmscore_1_1detail.html">pmscore::detail</a></div><div class="ttdoc">Cet espace de nommage implémente des objets nécessaire au fonctionnement interne du programme.</div></div>
 <div class="ttc" id="astructpmscore_1_1conjunction_html"><div class="ttname"><a href="structpmscore_1_1conjunction.html">pmscore::conjunction</a></div><div class="ttdef"><b>Definition:</b> type_traits.hpp:145</div></div>

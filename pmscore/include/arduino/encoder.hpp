@@ -38,26 +38,7 @@ namespace pmscore::arduino
 
     class encoder
     {
-        /**
-         * @brief Spécifie deux `encoder` en tant qu'encodeurs principaux.
-         *
-         * Afin qu'un `encoder` puisse correctement monitoré le moteur auquel
-         * il est associé (afin que le membre `m_incrementation` est incrémenté
-         * à chaque tour), il doit être défini en tant qu'encodeur principal.
-         *
-         * @param __a L'encodeur A (associé à la roue gauche).
-         * @param __b L'encodeur B (associé à la roue droite).
-         */
-
         friend void set_main_encoders(encoder* __a, encoder* __b) noexcept;
-
-        /**
-         * @brief Actualise la position d'un des encodeurs principaux.
-         *
-         * @tparam _n Indice dans `main_encoders` de l'encodeur principal concerné.
-         *
-         * @see main_encoders
-         */
 
         template <size_t _n>
         friend void update_main_encoder_status() noexcept;
@@ -103,6 +84,49 @@ namespace pmscore::arduino
         volatile real m_incrementation;
         bool          m_reverse;
     };
+
+    /**
+     * @brief Tableau contenant deux pointeurs pointant vers les deux encodeurs
+     * principaux.
+     *
+     * Les deux encodeurs principaux sont ceux dont la position est
+     * effectivement monitorée par le programme. Cette implémentation
+     * s'explique par les limitations imposées par les _« interrupt handler
+     * functions »_.
+     *
+     * Le premier élément correspond à l'encodeur A (celui de gauche) et le
+     * deuxième élément à l'encodeur B (celui de droite).
+     *
+     * @see avr/interrupt.h
+     */
+
+    inline encoder* main_encoders[] = {nullptr, nullptr};
+
+    /**
+     * @brief Spécifie deux `encoder` en tant qu'encodeurs principaux.
+     *
+     * Afin qu'un `encoder` puisse correctement monitoré le moteur auquel
+     * il est associé (afin que le membre `m_incrementation` est incrémenté
+     * à chaque tour), il doit être défini en tant qu'encodeur principal.
+     *
+     * @param __a L'encodeur A (associé à la roue gauche).
+     * @param __b L'encodeur B (associé à la roue droite).
+     */
+
+    void set_main_encoders(encoder* __a, encoder* __b) noexcept;
+
+    /**
+     * @brief Actualise la position d'un des encodeurs principaux.
+     *
+     * @tparam _n Indice dans `main_encoders` de l'encodeur principal concerné.
+     *
+     * @see main_encoders
+     */
+
+    template <size_t _n>
+    void update_main_encoder_status() noexcept;
 }
+
+#include "arduino/encoder.ipp"
 
 #endif // PMSCORE_ARDUINO_ENCODER_HPP

@@ -106,33 +106,19 @@ namespace pmscore::arduino
         int16_t get_power() const noexcept
             { return read_pwm_output(m_pin_pwm); }
 
-        void set_power(int16_t) const;
-
-        direction get_direction() const;
-
         /**
-         * @brief Augmente la puissance du motoréducteur.
+         * @brief Spécifie la puissance du motoréducteur.
          *
-         * @param __p La valeur dont on augmente la puissance du motoréducteur.
+         * @param __p La valeur spécifiée à la puissance du motoréducteur.
          * Cette valeur peut être aussi bien positive que négative. De plus, si
          * celle-ci sort de l'intervalle de valeurs toléré (à savoir
          * \f$ [-255; 255] \f$), alors elle sature à la valeur extrême (basse
          * ou haute).
          */
 
-        void increase_power(int16_t __p = 1) const
-            { set_power(get_power() + __p); }
+        void set_power(int16_t __p) const;
 
-        /**
-         * @brief Diminue la puissance du motoréducteur.
-         *
-         * @param __p La valeur dont on diminue la puissance du motoréducteur.
-         *
-         * @see increase_power
-         */
-
-        void reduce_power(int16_t __p = 1) const
-            { increase_power(-__p); }
+        direction get_direction() const;
     public:
         /**
          * @brief Met la _direction_ du motoréducteur à _Brake_.
@@ -141,8 +127,15 @@ namespace pmscore::arduino
         void brake() const { __set_direction(direction::Brake); }
 
         /**
+         * @brief Met la _direction_ du motoréducteur à _Front_.
+         */
+
+        void enable() const { __set_direction(direction::Front); }
+
+        /**
          * @brief Met la _direction_ du motoréducteur à _Off_.
          */
+
         void disable() const { __set_direction(direction::Off); }
     private:
         pin_t    m_pin_a;

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['unit_0',['unit',['../classpmscore_1_1vector.html#a748b294ffceaaa1e69e01e946e59bb96',1,'pmscore::vector']]],
-  ['update_5fstatus_1',['update_status',['../classpmscore_1_1arduino_1_1encoders.html#af3b9636418a073ea3c1697ddd4de8f77',1,'pmscore::arduino::encoders::update_status()'],['../classpmscore_1_1correcter__base.html#a37a71bcfbaa0f56b74e700d2efe05a52',1,'pmscore::correcter_base::update_status()'],['../classpmscore_1_1correcter.html#a1b09def22b785c375e5e5a6aec723602',1,'pmscore::correcter::update_status()'],['../classpmscore_1_1position__computer.html#a467d2baa1b465c09ca820b161e471857',1,'pmscore::position_computer::update_status()']]]
+  ['timer_0',['timer',['../classpmscore_1_1timer.html#abd0496d7f0c3476a8247f6efe898c4b4',1,'pmscore::timer::timer()'],['../classpmscore_1_1timer.html#a6a973cdea2dd93a6eb59173047691222',1,'pmscore::timer::timer(_T &amp;&amp;__callback, uint32_t __delay)']]]
 ];

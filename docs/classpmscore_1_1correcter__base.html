@@ -100,9 +100,9 @@ Fonctions membres publiques</h2></td></tr>
 <tr class="memitem:a462d5352a1d74be161e2349ed7b74dc0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1correcter__base.html#a462d5352a1d74be161e2349ed7b74dc0">next_edge</a> (<a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __x_0, <a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __x_f) noexcept=0</td></tr>
 <tr class="memdesc:a462d5352a1d74be161e2349ed7b74dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Méthode appelée par le correcteur lors du changement de sommet.  <br /></td></tr>
 <tr class="separator:a462d5352a1d74be161e2349ed7b74dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37a71bcfbaa0f56b74e700d2efe05a52"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1correcter__base.html#a37a71bcfbaa0f56b74e700d2efe05a52">update_status</a> (<a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __distance, <a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __rangle, <a class="el" href="classpmscore_1_1vector.html">vector</a> __rposition, <a class="el" href="classpmscore_1_1vector.html">vector</a> __tposition)=0</td></tr>
-<tr class="memdesc:a37a71bcfbaa0f56b74e700d2efe05a52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actualise le statut du <code>correcter</code>.  <br /></td></tr>
-<tr class="separator:a37a71bcfbaa0f56b74e700d2efe05a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae77ca4b67dd8e96afeaec8d1e99b4e19"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpmscore_1_1correcter__base.html#ae77ca4b67dd8e96afeaec8d1e99b4e19">update_status</a> (<a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __distance, <a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __rangle, <a class="el" href="classpmscore_1_1vector.html">vector</a> __rposition, <a class="el" href="classpmscore_1_1vector.html">vector</a> __tposition, <a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __obstacle_distance)=0</td></tr>
+<tr class="memdesc:ae77ca4b67dd8e96afeaec8d1e99b4e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actualise le statut du <code>correcter</code>.  <br /></td></tr>
+<tr class="separator:ae77ca4b67dd8e96afeaec8d1e99b4e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>Cette interface permet l'implémentation d'un <code>correcter</code>. </p>
@@ -154,8 +154,8 @@ Fonctions membres publiques</h2></td></tr>
 
 </div>
 </div>
-<a id="a37a71bcfbaa0f56b74e700d2efe05a52" name="a37a71bcfbaa0f56b74e700d2efe05a52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37a71bcfbaa0f56b74e700d2efe05a52">&#9670;&#160;</a></span>update_status()</h2>
+<a id="ae77ca4b67dd8e96afeaec8d1e99b4e19" name="ae77ca4b67dd8e96afeaec8d1e99b4e19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae77ca4b67dd8e96afeaec8d1e99b4e19">&#9670;&#160;</a></span>update_status()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -185,7 +185,13 @@ Fonctions membres publiques</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classpmscore_1_1vector.html">vector</a>&#160;</td>
-          <td class="paramname"><em>__tposition</em>&#160;</td>
+          <td class="paramname"><em>__tposition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a>&#160;</td>
+          <td class="paramname"><em>__obstacle_distance</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -211,7 +217,7 @@ Fonctions membres publiques</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implémenté dans <a class="el" href="classpmscore_1_1correcter.html#a1b09def22b785c375e5e5a6aec723602">pmscore::correcter&lt; _HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile &gt;</a>.</p>
+<p>Implémenté dans <a class="el" href="classpmscore_1_1correcter.html#a8ecc50f83220b6aefa2820b93ea70cd9">pmscore::correcter&lt; _HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile &gt;</a>.</p>
 
 </div>
 </div>

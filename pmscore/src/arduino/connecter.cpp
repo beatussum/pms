@@ -16,22 +16,34 @@
  */
 
 
-#include "arduino/encoders.hpp"
+#include "arduino/connecter.hpp"
 
+#include "correcter.hpp"
 #include "position_computer.hpp"
 
 #include <util/atomic.h>
 
 namespace pmscore::arduino
 {
-    void encoders::update_status()
+    void connecter::initialize()
     {
-        real angle_a, angle_b;
+        m_correcter->next_edge(
+            m_computer->get_distance(),
+            m_computer->get_current_edge_norm()
+        );
+    }
+
+    void connecter::update_status()
+    {
+        real angle_a, angle_b, obstacle_distance;
 
         ATOMIC_BLOCK(ATOMIC_FORCEON) {
-            angle_a = m_encoder_a->get_angle();
-            angle_b = m_encoder_b->get_angle();
+            angle_a           = m_encoder_a->get_angle();
+            angle_b           = m_encoder_b->get_angle();
+            obstacle_distance = m_usensor->get_distance();
         }
+
+        m_timer.update_status();
 
         m_computer->update_status(
             angle_a,
@@ -42,35 +54,20 @@ namespace pmscore::arduino
 
         m_last_angle_a = angle_a;
         m_last_angle_b = angle_b;
-    }
 
-    void set_main_encoders(encoder* __a, encoder* __b) noexcept
-    {
-        if (main_encoders[0] != nullptr) {
-            detachInterrupt(digitalPinToInterrupt(main_encoders[0]->m_pin));
-        }
-
-        if (main_encoders[1] != nullptr) {
-            detachInterrupt(digitalPinToInterrupt(main_encoders[1]->m_pin));
-        }
-
-        main_encoders[0] = __a;
-        main_encoders[1] = __b;
-
-        if (__a != nullptr) {
-            attachInterrupt(
-                digitalPinToInterrupt(__a->m_pin),
-                update_main_encoder_status<0>,
-                CHANGE
+        if (m_computer->is_vertex_reached()) {
+            m_correcter->next_edge(
+                m_computer->get_distance(),
+                m_computer->get_current_edge_norm()
             );
         }
 
-        if (__b != nullptr) {
-            attachInterrupt(
-                digitalPinToInterrupt(__b->m_pin),
-                update_main_encoder_status<1>,
-                CHANGE
-            );
-        }
+        m_correcter->update_status(
+            m_computer->get_distance(),
+            m_computer->get_rangle(),
+            m_computer->get_rpos(),
+            m_computer->get_tpos(),
+            obstacle_distance
+        );
     }
 }
