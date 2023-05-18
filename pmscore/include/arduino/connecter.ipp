@@ -16,26 +16,19 @@
  */
 
 
-#include "arduino/connecter.hpp"
-
-#include "correcter.hpp"
-#include "position_computer.hpp"
-
-#include <util/atomic.h>
-
 namespace pmscore::arduino
 {
-    void connecter::initialize()
-    {
-        m_correcter->next_edge(
-            m_computer->get_distance(),
-            m_computer->get_current_edge_norm()
-        );
-    }
-
-    void connecter::update_status()
+    template <class _Correcter>
+    void connecter<_Correcter>::update_status()
     {
         real angle_a, angle_b, obstacle_distance;
+
+        if (m_computer->is_vertex_reached()) {
+            m_correcter.next_edge(
+                m_computer->get_cdistance(),
+                m_computer->get_current_edge_norm()
+            );
+        }
 
         ATOMIC_BLOCK(ATOMIC_FORCEON) {
             angle_a           = m_encoder_a->get_angle();
@@ -55,17 +48,10 @@ namespace pmscore::arduino
         m_last_angle_a = angle_a;
         m_last_angle_b = angle_b;
 
-        if (m_computer->is_vertex_reached()) {
-            m_correcter->next_edge(
-                m_computer->get_distance(),
-                m_computer->get_current_edge_norm()
-            );
-        }
-
-        m_correcter->update_status(
-            m_computer->get_distance(),
-            m_computer->get_rangle(),
-            m_computer->get_rpos(),
+        m_correcter.update_status(
+            m_computer->get_cdistance(),
+            m_computer->get_cangle(),
+            m_computer->get_cpos(),
             m_computer->get_tpos(),
             obstacle_distance
         );

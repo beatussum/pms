@@ -19,7 +19,7 @@
 #ifndef PMSCORE_DEBUG_DEBUG_HPP
 #define PMSCORE_DEBUG_DEBUG_HPP
 
-#include <Arduino.h>
+#include "arduino/arduino.hpp"
 
 /**
  * @dir

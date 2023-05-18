@@ -19,7 +19,7 @@
 #ifndef PMSCORE_CORE_CORE_HPP
 #define PMSCORE_CORE_CORE_HPP
 
-#include <Arduino.h>
+#include "arduino/arduino.hpp"
 
 /**
  * @dir

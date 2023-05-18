@@ -21,7 +21,10 @@
 
 #include "arduino/encoder.hpp"
 #include "arduino/ultrasonic_sensor.hpp"
+#include "position_computer.hpp"
 #include "timer.hpp"
+
+#include <util/atomic.h>
 
 /**
  * @file
@@ -32,7 +35,6 @@
 
 namespace pmscore
 {
-    class correcter_base;
     class position_computer;
 }
 
@@ -41,10 +43,15 @@ namespace pmscore::arduino
     /**
      * @brief Cette classe facilite la communication entre les différents
      * composants du robot.
+     *
+     * @tparam _Correcter Type du correcteur.
      */
 
+    template <class _Correcter>
     class connecter
     {
+    public:
+        using correcter_type = _Correcter;
     public:
         /**
          * @brief Construit un objet `connecter`.
@@ -74,20 +81,18 @@ namespace pmscore::arduino
             ultrasonic_sensor* __usensor,
             uint32_t __delay,
             position_computer* __computer,
-            correcter_base* __correcter
-        )
+            _Correcter __correcter
+        ) noexcept_cm(_Correcter)
             : m_encoder_a(__encoder_a)
             , m_encoder_b(__encoder_b)
             , m_usensor(__usensor)
             , m_computer(__computer)
-            , m_correcter(__correcter)
+            , m_correcter(move(__correcter))
             , m_timer([&] { m_usensor->start_echoing(); }, __delay)
             , m_last_angle_a(0.)
             , m_last_angle_b(0.)
         {}
     public:
-        void initialize();
-
         /**
          * @brief Actualise le statut de l'objet.
          *
@@ -105,7 +110,7 @@ namespace pmscore::arduino
 
         void set_computer(position_computer* __c) noexcept
             { m_computer = __c; }
-
+    public:
         real get_last_angle_a() const noexcept { return m_last_angle_a; }
         real get_last_angle_b() const noexcept { return m_last_angle_a; }
     private:
@@ -113,7 +118,7 @@ namespace pmscore::arduino
         encoder*           m_encoder_b;
         ultrasonic_sensor* m_usensor;
         position_computer* m_computer;
-        correcter_base*    m_correcter;
+        correcter_type     m_correcter;
 
         timer m_timer;
 
@@ -121,5 +126,7 @@ namespace pmscore::arduino
         real m_last_angle_b;
     };
 }
+
+#include "connecter.ipp"
 
 #endif // PMSCORE_ARDUINO_CONNECTER_HPP

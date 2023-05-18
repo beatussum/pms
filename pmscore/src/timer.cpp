@@ -18,7 +18,7 @@
 
 #include "timer.hpp"
 
-#include <Arduino.h>
+#include "arduino/arduino.hpp"
 
 namespace pmscore
 {

@@ -50,11 +50,11 @@ namespace pmscore::speed_profile
         explicit constexpr constant(
             real __epsilon,
             int16_t __M,
-            _Distance&& __d
-        ) noexcept_pf(_Distance)
+            _Distance __d
+        ) noexcept_cm(_Distance)
             : m_epsilon(__epsilon)
             , m_M(__M)
-            , m_distance(forward<_Distance>(__d))
+            , m_distance(move(__d))
         {}
     public:
         constexpr bool init(real __x_0, real __x_f) noexcept;
@@ -73,7 +73,7 @@ namespace pmscore::speed_profile
         constexpr void set_distance(distance_type __d)
         noexcept_cm(distance_type)
             { m_distance = move(__d); }
-
+    public:
         constexpr bool is_increasing() const noexcept
             { return m_is_increasing; }
     private:

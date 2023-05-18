@@ -21,8 +21,6 @@
 
 #include "arduino/arduino.hpp"
 
-#include <Arduino.h>
-
 /**
  * @file
  *
@@ -81,18 +79,18 @@ namespace pmscore::arduino
          * @see start_echoing()
          */
 
-        void stop_echoing() const { digitalWrite(m_pin_echo, LOW); }
+        void stop_echoing();
     public:
         pin_t get_pin_echo() const noexcept { return m_pin_echo; }
         void set_pin_echo(pin_t __p) { pinMode(m_pin_echo = __p, OUTPUT); }
 
         pin_t get_pin_trig() const noexcept { return m_pin_trig; }
         void set_pin_trig(pin_t __p) { pinMode(m_pin_trig = __p, OUTPUT); }
+    public:
+        real get_distance() const noexcept;
 
-        real get_distance() const noexcept
-            { return static_cast<real>(m_duration) * (speed_of_sound / 2); }
-
-        uint32_t get_duration() const noexcept { return m_duration; }
+        uint32_t get_duration() const noexcept
+            { return is_echoing() ? m_last_duration : m_duration; }
 
         bool is_echoing() const
             { return (read_digital_output(m_pin_echo) == HIGH); }
@@ -101,6 +99,7 @@ namespace pmscore::arduino
         pin_t m_pin_trig;
 
         volatile uint32_t m_duration;
+        volatile uint32_t m_last_duration;
     };
 
     /**

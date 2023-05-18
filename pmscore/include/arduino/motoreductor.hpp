@@ -91,35 +91,6 @@ namespace pmscore::arduino
     private:
         void __set_direction(direction) const;
     public:
-        pin_t get_pin_a() const noexcept { return m_pin_a; }
-        void set_pin_a(pin_t __p) noexcept { m_pin_a = __p; }
-
-        pin_t get_pin_b() const noexcept { return m_pin_b; }
-        void set_pin_b(pin_t __p) noexcept { m_pin_b = __p; }
-
-        pin_t get_pin_pwm() const noexcept { return m_pin_pwm; }
-        void set_pin_pwm(pin_t __p) noexcept { m_pin_pwm = __p; }
-
-        encoder* get_encoder() const noexcept { return m_encoder; }
-        void set_encoder(encoder* __e) noexcept { m_encoder = __e; }
-
-        int16_t get_power() const noexcept
-            { return read_pwm_output(m_pin_pwm); }
-
-        /**
-         * @brief Spécifie la puissance du motoréducteur.
-         *
-         * @param __p La valeur spécifiée à la puissance du motoréducteur.
-         * Cette valeur peut être aussi bien positive que négative. De plus, si
-         * celle-ci sort de l'intervalle de valeurs toléré (à savoir
-         * \f$ [-255; 255] \f$), alors elle sature à la valeur extrême (basse
-         * ou haute).
-         */
-
-        void set_power(int16_t __p) const;
-
-        direction get_direction() const;
-    public:
         /**
          * @brief Met la _direction_ du motoréducteur à _Brake_.
          */
@@ -137,6 +108,35 @@ namespace pmscore::arduino
          */
 
         void disable() const { __set_direction(direction::Off); }
+    public:
+        pin_t get_pin_a() const noexcept { return m_pin_a; }
+        void set_pin_a(pin_t __p) noexcept { m_pin_a = __p; }
+
+        pin_t get_pin_b() const noexcept { return m_pin_b; }
+        void set_pin_b(pin_t __p) noexcept { m_pin_b = __p; }
+
+        pin_t get_pin_pwm() const noexcept { return m_pin_pwm; }
+        void set_pin_pwm(pin_t __p) noexcept { m_pin_pwm = __p; }
+
+        encoder* get_encoder() const noexcept { return m_encoder; }
+        void set_encoder(encoder* __e) noexcept { m_encoder = __e; }
+    public:
+        int16_t get_power() const noexcept
+            { return read_pwm_output(m_pin_pwm); }
+
+        /**
+         * @brief Spécifie la puissance du motoréducteur.
+         *
+         * @param __p La valeur spécifiée à la puissance du motoréducteur.
+         * Cette valeur peut être aussi bien positive que négative. De plus, si
+         * celle-ci sort de l'intervalle de valeurs toléré (à savoir
+         * \f$ [-255; 255] \f$), alors elle sature à la valeur extrême (basse
+         * ou haute).
+         */
+
+        void set_power(int16_t __p) const;
+
+        direction get_direction() const;
     private:
         pin_t    m_pin_a;
         pin_t    m_pin_b;

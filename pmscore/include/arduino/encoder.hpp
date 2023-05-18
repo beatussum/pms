@@ -60,14 +60,6 @@ namespace pmscore::arduino
 
         explicit encoder(pin_t __pin);
     public:
-        pin_t get_pin() const noexcept { return m_pin; }
-
-        real get_angle() const noexcept
-            { return m_incrementation * (M_2PI / incrementation_counts); }
-
-        real get_incrementation() const noexcept { return m_incrementation; }
-        bool is_reverse() const noexcept { return m_reverse; }
-
         /**
          * @brief Active le mode de comptage inverse de l'encodeur.
          *
@@ -78,6 +70,14 @@ namespace pmscore::arduino
          */
 
         void reverse() noexcept { m_reverse = !m_reverse; }
+    public:
+        pin_t get_pin() const noexcept { return m_pin; }
+    public:
+        real get_angle() const noexcept
+            { return m_incrementation * (M_2PI / incrementation_counts); }
+
+        real get_incrementation() const noexcept { return m_incrementation; }
+        bool is_reverse() const noexcept { return m_reverse; }
     private:
         pin_t m_pin;
 

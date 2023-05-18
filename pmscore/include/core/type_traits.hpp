@@ -49,8 +49,8 @@ namespace pmscore
          * declval *
          ***********/
 
-        template <class _T, class = _T&&>
-        _T&& declval(int);
+        template <class _T, class _U = _T&&>
+        _U&& declval(int);
 
         template <class _T>
         _T declval(long);

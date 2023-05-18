@@ -64,14 +64,14 @@ namespace pmscore::speed_profile
             int16_t __m_0,
             int16_t __m_f,
             int16_t __M,
-            _Distance&& __d
-        ) noexcept_pf(_Distance)
+            _Distance __d
+        ) noexcept_cm(_Distance)
             : m_a(__a)
             , m_epsilon(__epsilon)
             , m_m_0(__m_0)
             , m_m_f(__m_f)
             , m_M(__M)
-            , m_distance(forward<_Distance>(__d))
+            , m_distance(move(__d))
             , m_is_increasing(false)
             , m_is_triangular(false)
             , m_x_0(0.)
@@ -105,7 +105,7 @@ namespace pmscore::speed_profile
         constexpr void set_distance(distance_type __d)
         noexcept_cm(distance_type)
             { m_distance = move(__d); }
-
+    public:
         constexpr bool is_increasing() const noexcept
             { return m_is_increasing; }
 

@@ -21,8 +21,6 @@
 
 #include "arduino/arduino.hpp"
 
-#include <Arduino.h>
-
 /**
  * @file
  *

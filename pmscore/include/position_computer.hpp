@@ -41,6 +41,33 @@ namespace pmscore
         /**
          * @brief Construit un objet `position_computer`.
          *
+         * @param __c Pointeur vers le correcteur (de position).
+         *
+         * @param __tadvance Pourcentage de la norme du vecteur-arrête courant
+         * qui est ajouté en avance à la position théorique sur la position
+         * réelle.
+         *
+         * @param __tpath Chemin sous la forme de tableau de `_n`
+         * vecteurs-arrêtes.
+         *
+         * @tparam __tpath_size Nombre de vecteurs-arrêtes que comporte le
+         * chemin.
+         *
+         * @param __vertex_radius Rayon autour du prochain sommet à atteindre
+         * où, s'il est dans cette zone, le robot passe au vecteur-arrête
+         * suivant.
+         */
+
+        explicit position_computer(
+            real __tadvance,
+            const vector* __tpath,
+            size_t __tpath_size,
+            real __vertex_radius
+        );
+
+        /**
+         * @brief Construit un objet `position_computer`.
+         *
          * @tparam _n Nombre de vecteurs-arrêtes que comporte le chemin.
          * @param __c Pointeur vers le correcteur (de position).
          *
@@ -61,7 +88,9 @@ namespace pmscore
             real __tadvance,
             const vector (&__tpath)[_n],
             real __vertex_radius
-        );
+        )
+            : position_computer(__tadvance, __tpath, _n, __vertex_radius)
+        {}
 
         /**
          * @brief Détruit l'objet.
@@ -109,47 +138,51 @@ namespace pmscore
         real get_tadvance() const noexcept { return m_tadvance; }
 
         vector* get_path() const noexcept { return m_tpath; }
+        void set_path(const vector* __tpath, size_t __tpath_size) noexcept;
 
         template <size_t _n>
-        void set_path(const vector (&)[_n]) noexcept;
+        void set_path(const vector (&__tpath)[_n]) noexcept
+            { set_path(__tpath, _n); }
 
         size_t get_path_size() const noexcept { return m_tpath_size; }
         real get_vertex_radius() const noexcept { return m_vertex_radius; }
-
+    public:
         const vector* get_current_edge() const noexcept { return m_ti; }
-        real get_current_edge_norm() const noexcept { return m_tcurrent_edge; }
-        real get_distance() const noexcept { return m_distance; }
-        real get_rangle() const noexcept { return m_rangle; }
-        vector get_rpos() const noexcept { return m_rpos; }
+
+        real get_current_edge_norm() const noexcept
+            { return m_tcurrent_edge_norm; }
+
+        real get_cdistance() const noexcept { return m_cdistance; }
+        real get_cangle() const noexcept { return m_cangle; }
+        vector get_cpos() const noexcept { return m_cpos; }
         real get_tangle() const noexcept { return m_tangle; }
         vector get_tpos() const noexcept { return m_tpos + m_tcurrent_pos; }
 
         bool is_vertex_reached() const noexcept
-            { return m_ris_vertex_reached; }
+            { return m_cis_vertex_reached; }
     private:
         real    m_tadvance;
         vector* m_tpath;
+        size_t  m_tpath_size;
         real    m_vertex_radius;
 
-        real          m_distance;
-        real          m_rangle;
-        bool          m_ris_vertex_reached;
-        vector        m_rpos;
+        real   m_cdistance;
+        real   m_cangle;
+        bool   m_cis_vertex_reached;
+        vector m_cpos;
+
         real          m_tangle;
         real          m_tangle_a_0;
         real          m_tangle_b_0;
-        real          m_tcurrent_edge;
+        real          m_tcurrent_edge_norm;
         vector        m_tcurrent_pos;
         const vector* m_ti;
         vector        m_ti_unit;
         bool          m_tis_vertex_reached;
-        size_t        m_tpath_size;
         vector        m_tpos;
         real          m_ttarget;
         vector        m_tvertex;
     };
 }
-
-#include "position_computer.ipp"
 
 #endif // PMSCORE_POSITION_COMPUTER_HPP

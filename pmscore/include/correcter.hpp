@@ -33,42 +33,16 @@
 namespace pmscore
 {
     /**
-     * @brief Cette interface permet l'implémentation d'un `correcter`.
-     */
-
-    class correcter_base
-    {
-    public:
-        /**
-         * @brief Méthode appelée par le correcteur lors du changement de
-         * sommet.
-         *
-         * @param __x_0 Distance de départ par rapport au sommet suivant.
-         * @param __x_f Distance d'arrivée par rapport au sommet suivant.
-         */
-
-        virtual void next_edge(real __x_0, real __x_f) noexcept = 0;
-
-        /**
-         * @brief Actualise le statut du `correcter`.
-         *
-         * @param __distance La distance par rapport au sommet suivant.
-         * @param __rangle Le cap suivi par le robot.
-         * @param __rposition La position réelle du robot.
-         * @param __tposition La position théorique du robot.
-         */
-
-        virtual void update_status(
-            real __distance,
-            real __rangle,
-            vector __rposition,
-            vector __tposition,
-            real __obstacle_distance
-        ) = 0;
-    };
-
-    /**
      * @brief Cette classe permet la correction de la position du robot.
+     *
+     * @tparam _HeadingSpeedProfile Type du profil de vitesse utilisé lors d'un
+     * changement de cap.
+     *
+     * @tparam _SoiSpeedProfile Type du profil de vitesse utilisé lors d'un
+     * changement de sommet.
+     *
+     * @tparam _SpeedProfile Type du profil de vitesse utilisé lors du parcours
+     * du robot d'un sommet à un autre.
      */
 
     template <
@@ -76,7 +50,7 @@ namespace pmscore
         class _SoiSpeedProfile,
         class _SpeedProfile
     >
-    class correcter : public correcter_base
+    class correcter
     {
     public:
         /**
@@ -155,16 +129,16 @@ namespace pmscore
         explicit constexpr correcter(
             arduino::motoreductor* __motor_a,
             arduino::motoreductor* __motor_b,
-            _HeadingSpeedProfile&& __hs,
-            _SoiSpeedProfile&& __ss,
-            _SpeedProfile&& __s,
+            _HeadingSpeedProfile __hs,
+            _SoiSpeedProfile __ss,
+            _SpeedProfile __s,
             real __obstacle_distance_min
-        ) noexcept_pf(_HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile)
+        ) noexcept_cm(_HeadingSpeedProfile, _SoiSpeedProfile, _SpeedProfile)
             : m_motor_a(__motor_a)
             , m_motor_b(__motor_b)
-            , m_heading_speed_profile(forward<_HeadingSpeedProfile>(__hs))
-            , m_soi_speed_profile(forward<_SoiSpeedProfile>(__ss))
-            , m_speed_profile(forward<_SpeedProfile>(__s))
+            , m_heading_speed_profile(move(__hs))
+            , m_soi_speed_profile(move(__ss))
+            , m_speed_profile(move(__s))
             , m_obstacle_distance_min(__obstacle_distance_min)
             , m_heading_speed_mode(heading_speed_mode::Fix)
             , m_soi_speed_mode(soi_speed_mode::Off)
@@ -180,7 +154,7 @@ namespace pmscore
          * @param __x_f Distance d'arrivée par rapport au sommet suivant.
          */
 
-        constexpr void next_edge(real __x_0, real __x_f) noexcept override;
+        constexpr void next_edge(real __x_0, real __x_f) noexcept;
 
         /**
          * @brief Actualise le statut du `correcter`.
@@ -200,7 +174,7 @@ namespace pmscore
             vector __rposition,
             vector __tposition,
             real __obstacle_distance
-        ) override;
+        );
     public:
         arduino::motoreductor* get_motor_a() const noexcept
             { return m_motor_a; }
@@ -237,7 +211,7 @@ namespace pmscore
         void set_speed_profile(speed_profile_type __s)
         noexcept_cm(speed_profile_type)
             { m_speed_profile = move(__s); }
-
+    public:
         heading_speed_mode get_heading_speed_mode() const noexcept
             { return m_heading_speed_mode; }
 

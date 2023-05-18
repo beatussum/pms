@@ -20,8 +20,6 @@
 
 #include "arduino/encoder.hpp"
 
-#include <Arduino.h>
-
 namespace pmscore::arduino
 {
     motoreductor::motoreductor(

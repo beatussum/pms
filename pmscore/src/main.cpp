@@ -62,7 +62,7 @@ arduino::connecter connecter(
     &usensor,
     500,
     &computer,
-    &corr
+    corr
 );
 
 void setup()
@@ -73,7 +73,6 @@ void setup()
     arduino::set_main_ultrasonic_sensor(&usensor);
 
     chopper.enable();
-    connecter.initialize();
 }
 
 void loop()

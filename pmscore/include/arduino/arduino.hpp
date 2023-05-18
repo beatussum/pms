@@ -20,7 +20,9 @@
 
 #include "math/math.hpp"
 
-#include <stdint.h>
+#include <Arduino.h>
+
+#undef round
 
 /**
  * @dir

@@ -78,8 +78,8 @@ namespace pmscore
          */
 
         constexpr timer()
-            : m_delay(0)
-            , m_callback(nullptr)
+            : m_callback(nullptr)
+            , m_delay(0)
             , m_time(0)
         {}
 

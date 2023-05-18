@@ -18,8 +18,6 @@
 
 #include "arduino/encoder.hpp"
 
-#include <Arduino.h>
-
 namespace pmscore::arduino
 {
     encoder::encoder(pin_t __pin)

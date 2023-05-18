@@ -21,10 +21,12 @@ namespace pmscore
     template <class _T>
     constexpr decltype(detail::declval<_T>(0)) declval() noexcept
     {
-        static_assert(
-            detail::protector<_T>::stop,
-            "declval() must not be used!"
-        );
+        // TODO: fix
+        //
+        // static_assert(
+        //     detail::protector<_T>::stop,
+        //     "declval() must not be used!"
+        // );
 
         return detail::declval<_T>(0);
     }

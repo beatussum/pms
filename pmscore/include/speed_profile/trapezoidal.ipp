@@ -26,7 +26,7 @@ namespace pmscore::speed_profile
     {
         real diff = m_distance(__x_0, __x_f);
 
-        if (abs(diff) > m_epsilon) {
+        if (fabs(diff) > m_epsilon) {
             m_is_increasing = (diff > 0.);
 
             m_x_0 = __x_0;

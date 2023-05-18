@@ -23,11 +23,46 @@
 
 namespace pmscore
 {
+    position_computer::position_computer(
+        real __tadvance,
+        const vector* __tpath,
+        size_t __tpath_size,
+        real __vertex_radius
+    )
+        : m_tadvance(__tadvance)
+        , m_tpath(new vector[__tpath_size])
+        , m_tpath_size(__tpath_size)
+        , m_vertex_radius(__vertex_radius)
+
+        , m_cdistance(0.)
+        , m_cangle(0.)
+        , m_cis_vertex_reached(true)
+        , m_cpos()
+
+        , m_tangle(__tpath[0].angle())
+        , m_tangle_a_0(0.)
+        , m_tangle_b_0(0.)
+        , m_tcurrent_edge_norm(__tpath[0].norm())
+        , m_tcurrent_pos()
+        , m_ti(m_tpath)
+        , m_ti_unit(__tpath[0].unit())
+        , m_tis_vertex_reached(false)
+
+        , m_tpos(vector::with_polar_coordinates(
+            m_tadvance * m_tcurrent_edge_norm, m_tangle
+        ))
+
+        , m_ttarget((1 - m_tadvance) * m_tcurrent_edge_norm)
+        , m_tvertex()
+    {
+        copy(__tpath, __tpath + __tpath_size, m_tpath);
+    }
+
     position_computer::operator String() const
     {
         return
-            "real position: "_s + static_cast<String>(m_rpos) + " with "_s +
-            m_rangle + " rad\n"_s +
+            "real position: "_s + static_cast<String>(m_cpos) + " with "_s +
+            m_cangle + " rad\n"_s +
             "theoretical position: "_s + static_cast<String>(get_tpos()) +
             " with "_s + m_tangle + " rad\n"_s;
     }
@@ -44,8 +79,8 @@ namespace pmscore
         real v = r_2 *
             ((__angle_a - __last_angle_a) + (__angle_b - __last_angle_b));
 
-        m_rangle  = r_2d * (__last_angle_b - __last_angle_a);
-        m_rpos   += {-v * sin(m_rangle), v * cos(m_rangle)};
+        m_cangle  = r_2d * (__last_angle_b - __last_angle_a);
+        m_cpos   += {-v * sin(m_cangle), v * cos(m_cangle)};
     }
 
     void position_computer::__update_tstatus(
@@ -55,13 +90,9 @@ namespace pmscore
     {
         using namespace arduino;
 
-        m_distance = dot(m_rpos - m_tvertex, m_ti_unit);
+        m_cdistance = dot(m_cpos - m_tvertex, m_ti_unit);
 
         if (!m_tis_vertex_reached) {
-            if (m_ris_vertex_reached) {
-                m_ris_vertex_reached = false;
-            }
-
             real v = r_2 * (
                 (__last_angle_a - m_tangle_a_0) +
                 (__last_angle_b - m_tangle_b_0)
@@ -69,10 +100,13 @@ namespace pmscore
 
             m_tcurrent_pos = {v * cos(m_tangle), v * sin(m_tangle)};
 
-            if (abs(v) >= m_ttarget) {
+            if (fabs(v) >= m_ttarget) {
                 m_tis_vertex_reached = true;
             }
-        } else if (abs(m_distance - m_tcurrent_edge) <= m_vertex_radius) {
+        } else if (
+            fabs(m_cdistance - m_tcurrent_edge_norm) <= m_vertex_radius
+        )
+        {
             m_tvertex += *m_ti;
 
             if (++m_ti == (m_tpath + m_tpath_size)) {
@@ -81,20 +115,21 @@ namespace pmscore
 
             m_ti_unit = m_ti->unit();
 
-            m_distance            = dot(m_rpos - m_tvertex, m_ti_unit);
-            m_ris_vertex_reached  = true;
+            m_cdistance           = dot(m_cpos - m_tvertex, m_ti_unit);
+            m_cis_vertex_reached  = true;
+
             m_tangle              = m_ti->angle();
             m_tangle_a_0          = __last_angle_a;
             m_tangle_b_0          = __last_angle_b;
-            m_tcurrent_edge       = m_ti->norm();
+            m_tcurrent_edge_norm  = m_ti->norm();
             m_tis_vertex_reached  = false;
             m_tpos               += m_tcurrent_pos;
-            m_ttarget             = (1 - m_tadvance) * m_tcurrent_edge;
+            m_ttarget             = (1 - m_tadvance) * m_tcurrent_edge_norm;
 
             m_tcurrent_pos = {};
 
             m_tpos += vector::with_polar_coordinates(
-                m_tadvance * m_tcurrent_edge, m_tangle
+                m_tadvance * m_tcurrent_edge_norm, m_tangle
             );
         }
     }
@@ -106,7 +141,26 @@ namespace pmscore
         real __last_angle_b
     )
     {
+        if (m_cis_vertex_reached) {
+            m_cis_vertex_reached = false;
+        }
+
         __update_rstatus(__angle_a, __angle_b, __last_angle_a, __last_angle_b);
         __update_tstatus(__last_angle_a, __last_angle_b);
+    }
+
+    void position_computer::set_path(
+        const vector* __tpath,
+        size_t __tpath_size
+    ) noexcept
+    {
+        if (m_tpath_size != __tpath_size) {
+            delete[] m_tpath;
+
+            m_tpath      = new vector[__tpath_size];
+            m_tpath_size = __tpath_size;
+        }
+
+        copy(__tpath, __tpath + __tpath_size, m_tpath);
     }
 }

@@ -18,8 +18,6 @@
 
 #include "arduino/arduino.hpp"
 
-#include <Arduino.h>
-
 namespace pmscore::arduino
 {
     uint8_t read_digital_output(pin_t __p)
