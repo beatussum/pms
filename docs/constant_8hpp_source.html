@@ -123,11 +123,11 @@ $(function() {
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keyword">explicit</span> <span class="keyword">constexpr</span> <a class="code hl_class" href="classpmscore_1_1speed__profile_1_1constant.html">constant</a>(</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __epsilon,</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            int16_t __M,</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            _Distance&amp;&amp; __d</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        ) noexcept_pf(_Distance)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            _Distance __d</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        ) noexcept_cm(_Distance)</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            : m_epsilon(__epsilon)</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            , m_M(__M)</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            , m_distance(forward&lt;_Distance&gt;(__d))</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            , m_distance(move(__d))</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        {}</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> init(<a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __x_0, <a class="code hl_typedef" href="namespacepmscore.html#a7063e563190973411e70e9673baa094e">real</a> __x_f) <span class="keyword">noexcept</span>;</div>
@@ -146,7 +146,7 @@ $(function() {
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keyword">constexpr</span> <span class="keywordtype">void</span> set_distance(distance_type __d)</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        noexcept_cm(distance_type)</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            { m_distance = move(__d); }</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> is_increasing() <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            { <span class="keywordflow">return</span> m_is_increasing; }</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">private</span>:</div>

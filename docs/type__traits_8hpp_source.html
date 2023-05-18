@@ -128,8 +128,8 @@ $(function() {
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment">         * declval *</span></div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">         ***********/</span></div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keyword">template</span> &lt;<span class="keyword">class</span> _T, <span class="keyword">class</span> = _T&amp;&amp;&gt;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        _T&amp;&amp; declval(<span class="keywordtype">int</span>);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keyword">template</span> &lt;<span class="keyword">class</span> _T, <span class="keyword">class</span> _U = _T&amp;&amp;&gt;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        _U&amp;&amp; declval(<span class="keywordtype">int</span>);</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keyword">template</span> &lt;<span class="keyword">class</span> _T&gt;</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        _T declval(<span class="keywordtype">long</span>);</div>
@@ -335,7 +335,7 @@ $(function() {
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="preprocessor">#endif </span><span class="comment">// PMSCORE_CORE_TYPE_TRAITS_HPP</span></div>
 <div class="ttc" id="aclasspmscore_1_1integral__constant_html"><div class="ttname"><a href="classpmscore_1_1integral__constant.html">pmscore::integral_constant</a></div><div class="ttdef"><b>Definition:</b> type_traits.hpp:71</div></div>
-<div class="ttc" id="anamespacepmscore_html"><div class="ttname"><a href="namespacepmscore.html">pmscore</a></div><div class="ttdoc">Espace de nommage principal.</div><div class="ttdef"><b>Definition:</b> arduino.hpp:46</div></div>
+<div class="ttc" id="anamespacepmscore_html"><div class="ttname"><a href="namespacepmscore.html">pmscore</a></div><div class="ttdoc">Espace de nommage principal.</div><div class="ttdef"><b>Definition:</b> arduino.hpp:48</div></div>
 <div class="ttc" id="astructpmscore_1_1add__const_html"><div class="ttname"><a href="structpmscore_1_1add__const.html">pmscore::add_const</a></div><div class="ttdef"><b>Definition:</b> type_traits.hpp:94</div></div>
 <div class="ttc" id="astructpmscore_1_1add__lvalue__reference_html"><div class="ttname"><a href="structpmscore_1_1add__lvalue__reference.html">pmscore::add_lvalue_reference</a></div><div class="ttdef"><b>Definition:</b> type_traits.hpp:108</div></div>
 <div class="ttc" id="astructpmscore_1_1add__rvalue__reference_html"><div class="ttname"><a href="structpmscore_1_1add__rvalue__reference.html">pmscore::add_rvalue_reference</a></div><div class="ttdef"><b>Definition:</b> type_traits.hpp:116</div></div>

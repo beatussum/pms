@@ -50,7 +50,7 @@ namespace pmscore
          * @param __tpath Chemin sous la forme de tableau de `_n`
          * vecteurs-arrêtes.
          *
-         * @tparam __tpath_size Nombre de vecteurs-arrêtes que comporte le
+         * @param __tpath_size Nombre de vecteurs-arrêtes que comporte le
          * chemin.
          *
          * @param __vertex_radius Rayon autour du prochain sommet à atteindre

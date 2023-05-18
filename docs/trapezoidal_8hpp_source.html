@@ -137,14 +137,14 @@ $(function() {
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            int16_t __m_0,</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            int16_t __m_f,</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            int16_t __M,</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            _Distance&amp;&amp; __d</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        ) noexcept_pf(_Distance)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            _Distance __d</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        ) noexcept_cm(_Distance)</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            : m_a(__a)</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            , m_epsilon(__epsilon)</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            , m_m_0(__m_0)</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            , m_m_f(__m_f)</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            , m_M(__M)</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            , m_distance(forward&lt;_Distance&gt;(__d))</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            , m_distance(move(__d))</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            , m_is_increasing(<span class="keyword">false</span>)</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            , m_is_triangular(<span class="keyword">false</span>)</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            , m_x_0(0.)</div>
@@ -178,7 +178,7 @@ $(function() {
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">constexpr</span> <span class="keywordtype">void</span> set_distance(distance_type __d)</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        noexcept_cm(distance_type)</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            { m_distance = move(__d); }</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> is_increasing() <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            { <span class="keywordflow">return</span> m_is_increasing; }</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>

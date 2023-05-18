@@ -14,6 +14,5 @@ var searchData=
   ['conjunction_3c_20is_5fnothrow_5fmove_5fconstructible_3c_20_5ft_20_3e_2e_2e_2e_20_3e_11',['conjunction&lt; is_nothrow_move_constructible&lt; _T &gt;... &gt;',['../structpmscore_1_1conjunction.html',1,'pmscore']]],
   ['connecter_12',['connecter',['../classpmscore_1_1arduino_1_1connecter.html',1,'pmscore::arduino']]],
   ['constant_13',['constant',['../classpmscore_1_1speed__profile_1_1constant.html',1,'pmscore::speed_profile']]],
-  ['correcter_14',['correcter',['../classpmscore_1_1correcter.html',1,'pmscore']]],
-  ['correcter_5fbase_15',['correcter_base',['../classpmscore_1_1correcter__base.html',1,'pmscore']]]
+  ['correcter_14',['correcter',['../classpmscore_1_1correcter.html',1,'pmscore']]]
 ];
