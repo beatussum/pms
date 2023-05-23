@@ -28,12 +28,19 @@ namespace pmscore::json
     class json_variant
     {
     public:
+        json_variant(const json_variant&) noexcept = default;
+        json_variant(json_variant&&) noexcept = default;
+
         json_variant(json_type __type) noexcept
             : m_type(__type)
         {}
 
-        virtual ~json_variant() {}
+        virtual ~json_variant() = default;
+
         virtual json_variant* clone() const = 0;
+    public:
+        json_variant& operator=(const json_variant&) noexcept = default;
+        json_variant& operator=(json_variant&&) noexcept = default;
     public:
         virtual String serialize() = 0;
     public:

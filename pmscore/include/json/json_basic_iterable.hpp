@@ -42,8 +42,6 @@ namespace pmscore::json
             , m_size(__n)
         {}
     public:
-        virtual void push_back(const json_variant&) = 0;
-    public:
         char get_begin_separator() const noexcept { return m_begin_separator; }
         char get_end_separator() const noexcept { return m_end_separator; }
         size_type size() const noexcept { return m_size; }

@@ -20,6 +20,54 @@
 
 namespace pmscore::json
 {
+    void json_value::__copy_value(const json_value& __j)
+    {
+        json_variant::operator=(__j);
+
+        switch (get_type()) {
+            case json_type::Boolean:
+            case json_type::Char:
+            case json_type::Float:
+            case json_type::SignedInteger:
+            case json_type::UnsignedInteger:
+                memcpy(&m_value, &__j.m_value, sizeof(underlying_type));
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    json_value& json_value::operator=(const json_value& __j)
+    {
+        if (get_type() == json_type::String) {
+            if (__j.get_type() == json_type::String) {
+                m_value.as_string = __j.m_value.as_string;
+            } else {
+                m_value.as_string.~String();
+            }
+        }
+
+        __copy_value(__j);
+
+        return *this;
+    }
+
+    json_value& json_value::operator=(json_value&& __j)
+    {
+        if (get_type() == json_type::String) {
+            if (__j.get_type() == json_type::String) {
+                m_value.as_string = move(__j.m_value.as_string);
+            } else {
+                m_value.as_string.~String();
+            }
+        }
+
+        __copy_value(__j);
+
+        return *this;
+    }
+
     String json_value::serialize()
     {
         switch (get_type()) {
@@ -31,6 +79,8 @@ namespace pmscore::json
                 return String(m_value.as_float);
             case json_type::SignedInteger:
                 return String(m_value.as_int);
+            case json_type::String:
+                return m_value.as_string;
             case json_type::UnsignedInteger:
                 return String(m_value.as_uint);
             default:

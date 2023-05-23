@@ -26,6 +26,9 @@ namespace pmscore::json
     class json_live_iterable : public json_basic_iterable
     {
     public:
+        json_live_iterable(const json_live_iterable&) = default;
+        json_live_iterable(json_live_iterable&&) = default;
+
         explicit json_live_iterable(
             json_type __type,
             char __begin_separator,
@@ -49,9 +52,12 @@ namespace pmscore::json
         virtual json_variant* clone() const override
             { return new json_live_iterable(*this); }
     public:
+        json_live_iterable& operator=(const json_live_iterable&) = default;
+        json_live_iterable& operator=(json_live_iterable&&) = default;
+    public:
         virtual String serialize() override;
     public:
-        virtual void push_back(const json_variant& __v) override;
+        void push_back(const json_variant& __v);
     public:
         bool is_ended() const noexcept { return m_is_ended; }
 

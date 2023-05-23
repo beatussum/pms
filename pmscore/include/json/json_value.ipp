@@ -44,6 +44,10 @@ namespace pmscore::json
     template <class _T>
     void json_value::set_value(_T __v) const
     {
+        if (get_type() == json_type::String) {
+            m_value.as_string.~String();
+        }
+
         set_type(serializer<_T>::underlying_type);
 
         m_value = move(__v);

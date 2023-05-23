@@ -30,7 +30,14 @@ namespace pmscore::json
     private:
         union underlying_type
         {
-            ~underlying_type() = default;
+            underlying_type() {}
+            underlying_type(const underlying_type&) {}
+            underlying_type(underlying_type&&) {}
+
+            ~underlying_type() {}
+
+            underlying_type& operator=(const underlying_type&) {}
+            underlying_type& operator=(underlying_type&&) {}
 
             bool       as_bool;
             char       as_char;
@@ -41,6 +48,14 @@ namespace pmscore::json
             String     as_string;
         };
     public:
+        json_value(const json_value& __j)
+            : json_variant(__j)
+        { *this = __j; }
+
+        json_value(json_value&& __j)
+            : json_variant(__j)
+        { *this = move(__j); }
+
         template <class _T>
         json_value(_T __value)
             : json_variant(serializer<_T>::underlying_type)
@@ -48,6 +63,14 @@ namespace pmscore::json
         {}
 
         virtual ~json_value() override;
+
+        virtual json_variant* clone() const override
+            { return new json_value(*this); }
+    private:
+        void __copy_value(const json_value&);
+    public:
+        json_value& operator=(const json_value&);
+        json_value& operator=(json_value&&);
     public:
         template <class _T>
         _T&& operator|(_T&& __default) const
