@@ -26,8 +26,9 @@ namespace pmscore::json
     class json_basic_iterable : public json_variant
     {
     public:
-        using reference_type       = json_variant&;
-        using const_reference_type = const json_variant&;
+        using value_type           = json_variant*;
+        using reference_type       = json_variant*&;
+        using const_reference_type = const json_variant*;
         using size_type            = size_t;
     public:
         explicit json_basic_iterable(
@@ -41,6 +42,9 @@ namespace pmscore::json
             , m_end_separator(__end_separator)
             , m_size(__n)
         {}
+    public:
+        virtual bool is_live() const noexcept = 0;
+        bool empty() const noexcept { return (m_size == 0); }
     public:
         char get_begin_separator() const noexcept { return m_begin_separator; }
         char get_end_separator() const noexcept { return m_end_separator; }

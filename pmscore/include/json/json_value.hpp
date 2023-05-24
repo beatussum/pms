@@ -27,6 +27,8 @@ namespace pmscore::json
 {
     class json_value : public json_variant
     {
+        friend bool operator==(const json_value&, const json_value&);
+        friend bool operator!=(const json_value&, const json_value&);
     private:
         union underlying_type
         {
@@ -62,9 +64,9 @@ namespace pmscore::json
             , m_value(move(__value))
         {}
 
-        virtual ~json_value() override;
+        ~json_value() override;
 
-        virtual json_variant* clone() const override
+        json_variant* clone() const override
             { return new json_value(*this); }
     private:
         void __copy_value(const json_value&);
@@ -76,7 +78,7 @@ namespace pmscore::json
         _T&& operator|(_T&& __default) const
             { return as(forward<_T>(__default)); }
     public:
-        virtual String serialize() override;
+        String serialize() override;
     public:
         template <class _T>
         _T&& as(_T&& __default = _T()) const;
@@ -86,6 +88,11 @@ namespace pmscore::json
     private:
         underlying_type m_value;
     };
+
+    bool operator==(const json_value&, const json_value&);
+
+    inline bool operator!=(const json_value& __l, const json_value& __r)
+        { return !(__l == __r); }
 }
 
 #include "json/json_value.ipp"

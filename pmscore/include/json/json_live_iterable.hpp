@@ -47,24 +47,26 @@ namespace pmscore::json
             , m_last_child(nullptr)
         {}
 
-        virtual ~json_live_iterable() override { delete m_last_child; }
+        ~json_live_iterable() override { delete m_last_child; }
 
-        virtual json_variant* clone() const override
+        json_variant* clone() const override
             { return new json_live_iterable(*this); }
     public:
         json_live_iterable& operator=(const json_live_iterable&) = default;
         json_live_iterable& operator=(json_live_iterable&&) = default;
     public:
-        virtual String serialize() override;
+        String serialize() override;
     public:
         void push_back(const json_variant& __v);
     public:
         bool is_ended() const noexcept { return m_is_ended; }
 
-        reference_type get_last_child() noexcept { return *m_last_child; }
+        reference_type get_last_child() noexcept { return m_last_child; }
 
         const_reference_type get_last_child() const noexcept
-            { return *m_last_child; }
+            { return m_last_child; }
+    public:
+        bool is_live() const noexcept final { return true; }
     private:
         Stream* m_stream;
 

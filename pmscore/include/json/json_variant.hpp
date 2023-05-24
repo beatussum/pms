@@ -27,6 +27,8 @@ namespace pmscore::json
 {
     class json_variant
     {
+        friend bool operator==(const json_variant&, const json_variant&);
+        friend bool operator!=(const json_variant&, const json_variant&);
     public:
         json_variant(const json_variant&) noexcept = default;
         json_variant(json_variant&&) noexcept = default;
@@ -52,10 +54,13 @@ namespace pmscore::json
         bool is() const noexcept
             { return is(serializer<_T>::underlying_type); }
     protected:
-        void set_type(json_type __t) noexcept { m_type = __t; }
-    private:
         json_type m_type;
     };
+
+    bool operator==(const json_variant&, const json_variant&);
+
+    inline bool operator!=(const json_variant& __l, const json_variant& __r)
+        { return !(__l == __r); }
 }
 
 #endif // PMSCORE_JSON_JSON_VARIANT_HPP

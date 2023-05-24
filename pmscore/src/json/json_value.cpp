@@ -20,11 +20,37 @@
 
 namespace pmscore::json
 {
+    bool operator==(const json_value& __l, const json_value& __r)
+    {
+        if (__l.m_type == __r.m_type) {
+            switch (__l.m_type) {
+                case json_type::Boolean:
+                    return (__l.m_value.as_bool == __r.m_value.as_bool);
+                case json_type::Char:
+                    return (__l.m_value.as_char == __r.m_value.as_char);
+                case json_type::Null:
+                    return true;
+                case json_type::Float:
+                    return (__l.m_value.as_float == __r.m_value.as_float);
+                case json_type::SignedInteger:
+                    return (__l.m_value.as_int == __r.m_value.as_int);
+                case json_type::String:
+                    return (__l.m_value.as_string == __r.m_value.as_string);
+                case json_type::UnsignedInteger:
+                    return (__l.m_value.as_uint == __r.m_value.as_uint);
+                default:
+                    return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     void json_value::__copy_value(const json_value& __j)
     {
         json_variant::operator=(__j);
 
-        switch (get_type()) {
+        switch (m_type) {
             case json_type::Boolean:
             case json_type::Char:
             case json_type::Float:
@@ -40,8 +66,8 @@ namespace pmscore::json
 
     json_value& json_value::operator=(const json_value& __j)
     {
-        if (get_type() == json_type::String) {
-            if (__j.get_type() == json_type::String) {
+        if (m_type == json_type::String) {
+            if (__j.m_type == json_type::String) {
                 m_value.as_string = __j.m_value.as_string;
             } else {
                 m_value.as_string.~String();
@@ -55,8 +81,8 @@ namespace pmscore::json
 
     json_value& json_value::operator=(json_value&& __j)
     {
-        if (get_type() == json_type::String) {
-            if (__j.get_type() == json_type::String) {
+        if (m_type == json_type::String) {
+            if (__j.m_type == json_type::String) {
                 m_value.as_string = move(__j.m_value.as_string);
             } else {
                 m_value.as_string.~String();
@@ -70,7 +96,7 @@ namespace pmscore::json
 
     String json_value::serialize()
     {
-        switch (get_type()) {
+        switch (m_type) {
             case json_type::Boolean:
                 return (m_value.as_bool ? "true" : "false");
             case json_type::Char:

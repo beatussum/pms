@@ -22,7 +22,7 @@ namespace pmscore::json
     _T&& json_value::as(_T&& __default = _T()) const
     {
         if (is<_T>()) {
-            switch (get_type()) {
+            switch (m_type) {
                 case json_type::Boolean:
                     return m_value.as_bool;
                 case json_type::Char:
@@ -44,12 +44,11 @@ namespace pmscore::json
     template <class _T>
     void json_value::set_value(_T __v) const
     {
-        if (get_type() == json_type::String) {
+        if (m_type == json_type::String) {
             m_value.as_string.~String();
         }
 
-        set_type(serializer<_T>::underlying_type);
-
+        m_type  = serializer<_T>::underlying_type;
         m_value = move(__v);
     }
 }
