@@ -60,6 +60,8 @@ namespace gui::widgets
             : SelectionWidget(QPixmap(), __parent, __f)
         {}
     public:
+        QRect get_pixmap_rect() const;
+
         QRect get_selection() const noexcept { return m_selection; }
         bool has_selection() const noexcept { return !m_selection.isEmpty(); }
     protected:
@@ -70,7 +72,9 @@ namespace gui::widgets
         void selection_changed(const QRect& __new_selection);
     public slots:
         void setPixmap(const QPixmap& __p) { return QLabel::setPixmap(__p); }
-        void setPixmap(const cv::Mat&);
+
+        void setPixmap(const cv::Mat& __m)
+            { setPixmap(qpixmap_from_mat(__m)); }
 
         void set_selection(QRect) noexcept;
         void reset_selection() noexcept;
