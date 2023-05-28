@@ -32,3 +32,14 @@ QPixmap qpixmap_from_mat(const cv::Mat& __m)
         )
     );
 }
+
+QPolygon qpolygon_from_contour(contour_type __c, const QPoint& __origin)
+{
+    QVector<QPoint> vec;
+
+    for (const cv::Point& p : __c) {
+        vec.push_back(QPoint(p.x, p.y) + __origin);
+    }
+
+    return vec;
+}

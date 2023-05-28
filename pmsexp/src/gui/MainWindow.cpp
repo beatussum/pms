@@ -18,6 +18,7 @@
 
 #include "gui/MainWindow.hpp"
 
+#include "gui/widgets/pages/ContourSelection.hpp"
 #include "gui/widgets/pages/Selection.hpp"
 #include "gui/widgets/pages/Statistics.hpp"
 #include "gui/widgets/pages/Upload.hpp"
@@ -27,6 +28,7 @@ namespace gui
     MainWindow::MainWindow(QWidget* __parent, Qt::WindowFlags __f)
         : QMainWindow(__parent, __f)
         , m_ui(new Ui::MainWindow())
+        , m_contour_selection_page(new widgets::pages::ContourSelection())
         , m_selection_page(new widgets::pages::Selection())
         , m_statistics_page(new widgets::pages::Statistics())
         , m_upload_page(new widgets::pages::Upload())
@@ -35,6 +37,7 @@ namespace gui
 
         m_ui->m_central_widget->add_page(m_upload_page);
         m_ui->m_central_widget->add_page(m_selection_page);
+        m_ui->m_central_widget->add_page(m_contour_selection_page);
         m_ui->m_central_widget->add_page(m_statistics_page);
 
         QObject::connect(
@@ -83,7 +86,7 @@ namespace gui
             ++progress;
 
             if (m_selection_page->has_selection()) {
-                ++progress;
+                progress += 2;
             }
         }
 

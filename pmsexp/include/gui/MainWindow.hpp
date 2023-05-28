@@ -23,6 +23,7 @@
 
 namespace gui::widgets::pages
 {
+    class ContourSelection;
     class Selection;
     class Statistics;
     class Upload;
@@ -42,9 +43,10 @@ namespace gui
     private:
         Ui::MainWindow*                 m_ui;
 
-        gui::widgets::pages::Selection*  m_selection_page;
-        gui::widgets::pages::Statistics* m_statistics_page;
-        gui::widgets::pages::Upload*     m_upload_page;
+        gui::widgets::pages::ContourSelection*  m_contour_selection_page;
+        gui::widgets::pages::Selection*         m_selection_page;
+        gui::widgets::pages::Statistics*        m_statistics_page;
+        gui::widgets::pages::Upload*            m_upload_page;
     };
 }
 

@@ -19,13 +19,17 @@
 #ifndef PMSEXP_CORE_CORE_HPP
 #define PMSEXP_CORE_CORE_HPP
 
-class QPixmap;
+#include <opencv2/core/types.hpp>
+#include <vector>
 
-namespace cv
-{
-    class Mat;
-}
+class QPixmap;
+class QPoint;
+class QPolygon;
+
+using contour_type  = std::vector<cv::Point>;
+using contours_type = std::vector<contour_type>;
 
 QPixmap qpixmap_from_mat(const cv::Mat&);
+QPolygon qpolygon_from_contour(contour_type, const QPoint& __origin);
 
 #endif // PMSEXP_CORE_CORE_HPP

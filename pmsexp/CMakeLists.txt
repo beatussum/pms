@@ -137,6 +137,7 @@ set(
     include/gui/widgets/ListSelecterWidget.hpp
     include/gui/widgets/SelecterWidget.hpp
     include/gui/widgets/UploadWidget.hpp
+    include/gui/widgets/pages/ContourSelection.hpp
     include/gui/widgets/pages/Selection.hpp
     include/gui/widgets/pages/Statistics.hpp
     include/gui/widgets/pages/Upload.hpp
@@ -155,6 +156,7 @@ set(
     src/gui/widgets/ListSelecterWidget.cpp
     src/gui/widgets/SelecterWidget.cpp
     src/gui/widgets/UploadWidget.cpp
+    src/gui/widgets/pages/ContourSelection.cpp
     src/gui/widgets/pages/Selection.cpp
     src/gui/widgets/pages/Statistics.cpp
     src/gui/widgets/pages/Upload.cpp
