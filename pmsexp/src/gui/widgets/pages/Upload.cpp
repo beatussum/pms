@@ -26,6 +26,16 @@ namespace gui::widgets::pages
     {
         m_ui->setupUi(this);
 
+        m_ui->m_ex_uploader->set_mime_checker(
+            [] (const QString& __m) {
+                return (__m.section('/', 0, 0) == "video");
+            }
+        );
+
+        m_ui->m_th_uploader->set_mime_checker(
+            [] (const QString& __m) { return (__m == "application/json"); }
+        );
+
         QObject::connect(
             m_ui->m_ex_uploader,
             &widgets::UploadWidget::file_path_updated,

@@ -19,12 +19,14 @@
 #include "gui/widgets/UploadWidget.hpp"
 
 #include <QtCore/QMimeData>
+#include <QtCore/QMimeDatabase>
 #include <QtGui/QDragEnterEvent>
 
 namespace gui::widgets
 {
     UploadWidget::UploadWidget(
         QString __info,
+        mime_checker_type __c,
         QWidget* __parent,
         Qt::WindowFlags __f
     )
@@ -36,6 +38,7 @@ namespace gui::widgets
             )
 
         , m_file_path()
+        , m_mime_checker(std::move(__c))
     {
         setAcceptDrops(true);
     }
@@ -49,12 +52,22 @@ namespace gui::widgets
 
     void UploadWidget::dragEnterEvent(QDragEnterEvent* __e)
     {
-        if (
-            (__e->mimeData()->hasUrls()) &&
-            (__e->mimeData()->urls().size() == 1)
-        )
+        const QMimeData* data = __e->mimeData();
+
+        if (data->hasUrls() && (data->urls().size() == 1))
         {
-            __e->acceptProposedAction();
+            QMimeDatabase db;
+
+            if (
+                !m_mime_checker ||
+
+                m_mime_checker(
+                    db.mimeTypeForUrl(__e->mimeData()->urls().first()).name()
+                )
+            )
+            {
+                __e->acceptProposedAction();
+            }
         }
 
         ItemizeWidget::dragEnterEvent(__e);

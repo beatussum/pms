@@ -36,18 +36,26 @@ namespace gui::widgets
         )
 
     public:
+        using mime_checker_type = std::function<bool(const QString&)>;
+    public:
         explicit UploadWidget(
             QString __info,
+            mime_checker_type,
             QWidget* __parent = nullptr,
             Qt::WindowFlags   = {}
         );
 
         UploadWidget(QWidget* __parent = nullptr, Qt::WindowFlags __f = {})
-            : UploadWidget(QString(), __parent, __f)
+            : UploadWidget(QString(), mime_checker_type(), __parent, __f)
         {}
     public:
         QString get_file_path() const { return m_file_path; }
         bool is_empty() const { return m_file_path.isEmpty(); }
+
+        mime_checker_type get_mime_checker() const { return m_mime_checker; }
+
+        void set_mime_checker(mime_checker_type __c)
+            { m_mime_checker = std::move(__c); }
     public slots:
         void set_file_path(QString);
         void reset_file_path() { set_file_path(QString()); }
@@ -57,7 +65,8 @@ namespace gui::widgets
         void dragEnterEvent(QDragEnterEvent*) override;
         void dropEvent(QDropEvent*) override;
     private:
-        QString m_file_path;
+        QString           m_file_path;
+        mime_checker_type m_mime_checker;
     };
 }
 
