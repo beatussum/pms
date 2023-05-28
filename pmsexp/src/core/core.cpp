@@ -28,7 +28,7 @@ QPixmap qpixmap_from_mat(const cv::Mat& __m)
             static_cast<const uchar*>(__m.data),
             __m.cols,
             __m.rows,
-            QImage::Format_RGB888
+            QImage::Format_BGR888
         )
     );
 }
