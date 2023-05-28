@@ -136,7 +136,6 @@ set(
     include/gui/widgets/ItemizeWidget.hpp
     include/gui/widgets/ListSelecterWidget.hpp
     include/gui/widgets/SelecterWidget.hpp
-    include/gui/widgets/SelectionWidget.hpp
     include/gui/widgets/UploadWidget.hpp
     include/gui/widgets/pages/Selection.hpp
     include/gui/widgets/pages/Statistics.hpp
@@ -155,7 +154,6 @@ set(
     src/gui/widgets/ItemizeWidget.cpp
     src/gui/widgets/ListSelecterWidget.cpp
     src/gui/widgets/SelecterWidget.cpp
-    src/gui/widgets/SelectionWidget.cpp
     src/gui/widgets/UploadWidget.cpp
     src/gui/widgets/pages/Selection.cpp
     src/gui/widgets/pages/Statistics.cpp
