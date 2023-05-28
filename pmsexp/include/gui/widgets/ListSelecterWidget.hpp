@@ -43,17 +43,17 @@ namespace gui::widgets
     public:
         void add_page(const QIcon&, const QString&, QWidget*);
 
-        virtual void add_page(QWidget* __w) override
+        void add_page(QWidget* __w) override
             { add_page(QIcon(), QString(), __w); }
 
         void insert_page(int __index, const QIcon&, const QString&, QWidget*);
 
-        virtual void insert_page(int __index, QWidget* __w) override
+        void insert_page(int __index, QWidget* __w) override
             { insert_page(__index, QIcon(), QString(), __w); }
 
-        virtual void remove_page(QWidget*) override;
+        void remove_page(QWidget*) override;
     protected:
-        virtual void update_buttons(int __current_index) override;
+        void update_buttons(int __current_index) override;
     private:
         map_type                m_map;
         Ui::ListSelecterWidget* m_ui;

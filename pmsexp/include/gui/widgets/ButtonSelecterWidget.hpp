@@ -45,11 +45,11 @@ namespace gui::widgets
 
         virtual ~ButtonSelecterWidget() { delete m_ui; }
     protected:
-        virtual void update_buttons(int __current_index) override;
+        void update_buttons(int __current_index) override;
     public:
         int get_progress() const noexcept { return m_progress; }
 
-        virtual void set_page_index(int) override;
+        void set_page_index(int) override;
     protected slots:
         virtual void update_page_index(int);
     public slots:

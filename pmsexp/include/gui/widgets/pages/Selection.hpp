@@ -68,10 +68,10 @@ namespace gui::widgets::pages
         QRect get_selection() const noexcept { return m_selection; }
         bool has_selection() const noexcept { return !m_selection.isEmpty(); }
     protected:
-        virtual void keyPressEvent(QKeyEvent*) override;
-        virtual void mousePressEvent(QMouseEvent*) override;
-        virtual void mouseMoveEvent(QMouseEvent*) override;
-        virtual void resizeEvent(QResizeEvent*) override;
+        void keyPressEvent(QKeyEvent*) override;
+        void mousePressEvent(QMouseEvent*) override;
+        void mouseMoveEvent(QMouseEvent*) override;
+        void resizeEvent(QResizeEvent*) override;
     signals:
         void selection_changed(const QRect& __new_selection);
     public slots:

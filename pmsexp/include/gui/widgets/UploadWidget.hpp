@@ -54,8 +54,8 @@ namespace gui::widgets
     signals:
         void file_path_updated(const QString& __new_file_path);
     protected:
-        virtual void dragEnterEvent(QDragEnterEvent*) override;
-        virtual void dropEvent(QDropEvent*) override;
+        void dragEnterEvent(QDragEnterEvent*) override;
+        void dropEvent(QDropEvent*) override;
     private:
         QString m_file_path;
     };
