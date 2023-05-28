@@ -44,12 +44,12 @@ namespace gui::widgets::pages
         );
 
         m_ui->m_selection_widget->setAlignment(Qt::AlignCenter);
-        m_ui->m_selection_widget->setPixmap(__p);
+        set_pixmap(__p);
     }
 
     QRect Selection::get_pixmap_rect() const
     {
-        QRect ret = m_ui->m_selection_widget->pixmap(Qt::ReturnByValue).rect();
+        QRect ret = get_pixmap().rect();
 
         ret.moveTopLeft(
             QPoint((width() - ret.width()) / 2, (height() - ret.height()) / 2)

@@ -76,11 +76,6 @@ namespace gui::widgets::pages
     public:
         contours_type get_contours() const { return m_contours; }
         QPixmap get_pixmap() const { return m_pixmap; }
-
-        void set_contours(contours_type, QPixmap);
-
-        void set_contours(contours_type __c, const cv::Mat& __m)
-            { set_contours(std::move(__c), qpixmap_from_mat(__m)); }
     public:
         contour_type get_current() const
             { return (m_contours.empty() ? contour_type() : *m_current); }
@@ -88,6 +83,11 @@ namespace gui::widgets::pages
         double get_current_area() const;
     signals:
         void current_changed(contours_type::const_iterator __new_current);
+    public slots:
+        void set_contours(contours_type, QPixmap);
+
+        void set_contours(contours_type __c, const cv::Mat& __m)
+            { set_contours(std::move(__c), qpixmap_from_mat(__m)); }
     public slots:
         void next();
         void previous();

@@ -31,6 +31,15 @@ namespace gui::widgets::pages
     {
         Q_OBJECT
 
+        Q_PROPERTY(QRect pixmap_rect READ get_pixmap_rect STORED false)
+
+        Q_PROPERTY(
+            QPixmap pixmap
+            READ get_pixmap
+            WRITE set_pixmap
+            STORED false
+        )
+
         Q_PROPERTY(
             QRect selection
             READ get_selection
@@ -63,10 +72,13 @@ namespace gui::widgets::pages
 
         virtual ~Selection() { delete m_ui; }
     public:
-        QRect get_pixmap_rect() const;
-
         QRect get_selection() const noexcept { return m_selection; }
         bool has_selection() const noexcept { return !m_selection.isEmpty(); }
+    public:
+        QPixmap get_pixmap() const
+            { return m_ui->m_selection_widget->pixmap(Qt::ReturnByValue); }
+
+        QRect get_pixmap_rect() const;
     protected:
         void keyPressEvent(QKeyEvent*) override;
         void mousePressEvent(QMouseEvent*) override;
@@ -75,11 +87,11 @@ namespace gui::widgets::pages
     signals:
         void selection_changed(const QRect& __new_selection);
     public slots:
-        void setPixmap(const QPixmap& __p)
+        void set_pixmap(const QPixmap& __p)
             { return m_ui->m_selection_widget->setPixmap(__p); }
 
-        void setPixmap(const cv::Mat& __m)
-            { setPixmap(qpixmap_from_mat(__m)); }
+        void set_pixmap(const cv::Mat& __m)
+            { set_pixmap(qpixmap_from_mat(__m)); }
 
         void set_selection(QRect) noexcept;
         void reset_selection() noexcept;
