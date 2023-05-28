@@ -23,8 +23,6 @@
 
 #include "core/core.hpp"
 
-#include <QtGui/QPainter>
-
 namespace gui::widgets::pages
 {
     class ContourSelection : public QWidget

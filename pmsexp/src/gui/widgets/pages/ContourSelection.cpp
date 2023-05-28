@@ -19,6 +19,7 @@
 #include "gui/widgets/pages/ContourSelection.hpp"
 
 #include <opencv2/imgproc.hpp>
+#include <QtGui/QPainter>
 
 namespace gui::widgets::pages
 {
