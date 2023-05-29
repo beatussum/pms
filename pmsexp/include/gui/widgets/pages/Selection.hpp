@@ -21,84 +21,20 @@
 
 #include "ui_Selection.h"
 
-#include "core/core.hpp"
-
-#include <QtWidgets/QRubberBand>
-
 namespace gui::widgets::pages
 {
     class Selection : public QWidget
     {
         Q_OBJECT
-
-        Q_PROPERTY(QRect pixmap_rect READ get_pixmap_rect STORED false)
-
-        Q_PROPERTY(
-            QPixmap pixmap
-            READ get_pixmap
-            WRITE set_pixmap
-            STORED false
-        )
-
-        Q_PROPERTY(
-            QRect selection
-            READ get_selection
-            WRITE set_selection
-            RESET reset_selection
-            NOTIFY selection_changed
-        )
+        Q_PROPERTY(SelectionWidget* selection_widget READ get_selection_widget)
 
     public:
-        explicit Selection(
-            const QPixmap&,
-            QWidget* __parent = nullptr,
-            Qt::WindowFlags   = {}
-        );
-
-        explicit Selection(
-            const cv::Mat& __m,
-            QWidget* __parent   = nullptr,
-            Qt::WindowFlags __f = {}
-        )
-            : Selection(qpixmap_from_mat(__m), __parent, __f)
-        {}
-
-        explicit Selection(
-            QWidget* __parent   = nullptr,
-            Qt::WindowFlags __f = {}
-        )
-            : Selection(QPixmap(), __parent, __f)
-        {}
-
+        explicit Selection(QWidget* __parent = nullptr);
         virtual ~Selection() { delete m_ui; }
     public:
-        QRect get_selection() const noexcept { return m_selection; }
-        bool has_selection() const noexcept { return !m_selection.isEmpty(); }
-    public:
-        QPixmap get_pixmap() const
-            { return m_ui->m_selection_widget->pixmap(Qt::ReturnByValue); }
-
-        QRect get_pixmap_rect() const;
-    protected:
-        void keyPressEvent(QKeyEvent*) override;
-        void mousePressEvent(QMouseEvent*) override;
-        void mouseMoveEvent(QMouseEvent*) override;
-        void resizeEvent(QResizeEvent*) override;
-    signals:
-        void selection_changed(const QRect& __new_selection);
-    public slots:
-        void set_pixmap(const QPixmap& __p)
-            { return m_ui->m_selection_widget->setPixmap(__p); }
-
-        void set_pixmap(const cv::Mat& __m)
-            { set_pixmap(qpixmap_from_mat(__m)); }
-
-        void set_selection(QRect) noexcept;
-        void reset_selection() noexcept;
+        SelectionWidget* get_selection_widget() const noexcept
+            { return m_ui->m_selection_widget; }
     private:
-        QPoint         m_origin;
-        QRubberBand    m_rubber_band;
-        QRect          m_selection;
         Ui::Selection* m_ui;
     };
 }

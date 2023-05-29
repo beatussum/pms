@@ -18,6 +18,7 @@
 
 #include "gui/MainWindow.hpp"
 
+#include "gui/widgets/SelectionWidget.hpp"
 #include "gui/widgets/pages/ContourSelection.hpp"
 #include "gui/widgets/pages/Selection.hpp"
 #include "gui/widgets/pages/Statistics.hpp"
@@ -48,8 +49,8 @@ namespace gui
         );
 
         QObject::connect(
-            m_selection_page,
-            &widgets::pages::Selection::selection_changed,
+            m_selection_page->get_selection_widget(),
+            &widgets::SelectionWidget::selection_changed,
             this,
             &MainWindow::update_progess
         );
@@ -64,8 +65,8 @@ namespace gui
         QObject::connect(
             m_ui->m_action_reset,
             &QAction::triggered,
-            m_selection_page,
-            &widgets::pages::Selection::reset_selection
+            m_selection_page->get_selection_widget(),
+            &widgets::SelectionWidget::reset_selection
         );
     }
 
@@ -85,7 +86,7 @@ namespace gui
         if (m_upload_page->is_upload_valid()) {
             ++progress;
 
-            if (m_selection_page->has_selection()) {
+            if (m_selection_page->get_selection_widget()->has_selection()) {
                 progress += 2;
             }
         }
