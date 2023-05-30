@@ -110,22 +110,16 @@ namespace gui::widgets::pages
 
             QPainter painter(&pixmap);
 
-            painter.drawPolygon(
-                qpolygon_from_contour(
-                    *m_current,
+            painter.setPen(Qt::red);
+            painter.drawPolygon(qpolygon_from_contour(*m_current));
 
-                    QPoint(
-                        (width() - m_pixmap.width()) / 2,
-                        (height() - m_pixmap.height()) / 2
-                    )
-                )
-            );
+            painter.end();
 
             m_ui->m_contour_area_label->setText(
-                tr("Aire du contour : %1.").arg(get_current_area())
+                tr("Aire du contour : %1 px.").arg(get_current_area())
             );
 
-            m_ui->m_contour_selection_widget->setPixmap(m_pixmap);
+            m_ui->m_contour_selection_widget->setPixmap(pixmap);
         } else {
             m_ui->m_contour_area_label->clear();
             m_ui->m_contour_selection_widget->clear();

@@ -21,6 +21,8 @@
 
 #include "ui_MainWindow.h"
 
+#include <opencv2/videoio.hpp>
+
 namespace gui::widgets::pages
 {
     class ContourSelection;
@@ -38,15 +40,19 @@ namespace gui
     public:
         explicit MainWindow(QWidget* __parent = nullptr, Qt::WindowFlags = {});
         virtual ~MainWindow();
-    protected slots:
-        void update_progess();
+    private slots:
+        void find_contours(const QRect& __new_selection);
+        void load_selection();
+        void reset();
     private:
-        Ui::MainWindow*                 m_ui;
+        cv::VideoCapture m_capture;
+        cv::Mat          m_first_frame;
+        Ui::MainWindow*  m_ui;
 
-        gui::widgets::pages::ContourSelection*  m_contour_selection_page;
-        gui::widgets::pages::Selection*         m_selection_page;
-        gui::widgets::pages::Statistics*        m_statistics_page;
-        gui::widgets::pages::Upload*            m_upload_page;
+        gui::widgets::pages::ContourSelection* m_contour_selection_page;
+        gui::widgets::pages::Selection*        m_selection_page;
+        gui::widgets::pages::Statistics*       m_statistics_page;
+        gui::widgets::pages::Upload*           m_upload_page;
     };
 }
 

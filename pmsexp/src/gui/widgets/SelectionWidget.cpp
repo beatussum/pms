@@ -19,7 +19,6 @@
 #include "gui/widgets/SelectionWidget.hpp"
 
 #include <QtGui/qevent.h>
-#include <QtDebug>
 
 namespace gui::widgets
 {
@@ -31,38 +30,35 @@ namespace gui::widgets
         : QLabel(__parent, __f)
         , m_origin()
         , m_rubber_band(QRubberBand::Rectangle, this)
+        , m_selection()
+        , m_selected(false)
     {
         setAlignment(Qt::AlignCenter);
         setPixmap(__p);
     }
 
-    QRect SelectionWidget::get_pixmap_rect() const
+    void SelectionWidget::__update_rubber_band_geometry()
     {
-        QRect ret = pixmap(Qt::ReturnByValue).rect();
-
-        ret.moveTopLeft(
-            QPoint((width() - ret.width()) / 2, (height() - ret.height()) / 2)
-        );
-
-        return ret;
+        if (m_rubber_band.isVisible()) {
+            m_rubber_band.move(
+                get_pixmap_rect().topLeft() + m_selection.topLeft()
+            );
+        }
     }
 
     void SelectionWidget::keyPressEvent(QKeyEvent* __e)
     {
-        QRect pixmap_rect = get_pixmap_rect();
-
         switch (__e->key()) {
             case Qt::Key_Enter:
             case Qt::Key_Return:
-                if (m_rubber_band.isVisible()) {
-                    set_selection(
-                        QRect(
-                            m_rubber_band.x() - pixmap_rect.x(),
-                            m_rubber_band.y() - pixmap_rect.y(),
-                            m_rubber_band.width(),
-                            m_rubber_band.height()
-                        )
-                    );
+                if (
+                    m_rubber_band.isVisible() &&
+                    (m_selection.size() != QSize())
+                )
+                {
+                    m_selected = true;
+
+                    emit selection_changed(m_selection);
                 }
 
                 break;
@@ -84,6 +80,10 @@ namespace gui::widgets
         setFocus();
 
         if (get_pixmap_rect().contains(origin)) {
+            if (m_selected) {
+                reset_selection();
+            }
+
             m_rubber_band.setGeometry(
                 QRect(m_origin = std::move(origin), QSize())
             );
@@ -97,26 +97,67 @@ namespace gui::widgets
     void SelectionWidget::mouseMoveEvent(QMouseEvent* __e)
     {
         QPoint bottom_right = __e->pos();
+        QRect pixmap_rect   = get_pixmap_rect();
 
-        if (get_pixmap_rect().contains(bottom_right)) {
-            m_rubber_band.setGeometry(
-                QRect(m_origin, std::move(bottom_right)).normalized()
+        if (pixmap_rect.contains(bottom_right)) {
+            QRect rubber_band_rect = QRect(
+                m_origin,
+                std::move(bottom_right)
+            ).normalized();
+
+            m_selection = QRect(
+                rubber_band_rect.x() - pixmap_rect.x(),
+                rubber_band_rect.y() - pixmap_rect.y(),
+                rubber_band_rect.width(),
+                rubber_band_rect.height()
             );
+
+            m_rubber_band.setGeometry(std::move(rubber_band_rect));
         }
 
         QLabel::mouseMoveEvent(__e);
     }
 
+    void SelectionWidget::resizeEvent(QResizeEvent* __e)
+    {
+        __update_rubber_band_geometry();
+
+        QLabel::resizeEvent(__e);
+    }
+
+    void SelectionWidget::showEvent(QShowEvent* __e)
+    {
+        __update_rubber_band_geometry();
+
+        QLabel::showEvent(__e);
+    }
+
+    QRect SelectionWidget::get_pixmap_rect() const
+    {
+        QRect ret = pixmap(Qt::ReturnByValue).rect();
+
+        ret.moveTopLeft(
+            QPoint(width() - ret.width(), height() - ret.height()) / 2
+        );
+
+        return ret;
+    }
+
     void SelectionWidget::set_selection(QRect __s) noexcept
     {
         m_selection = std::move(__s);
+        m_selected  = true;
 
         emit selection_changed(m_selection);
     }
 
     void SelectionWidget::reset_selection() noexcept
     {
-        set_selection(QRect());
+        m_selection = QRect();
+        m_selected  = false;
+
         m_rubber_band.hide();
+
+        emit selection_changed(m_selection);
     }
 }

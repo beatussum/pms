@@ -29,7 +29,7 @@ namespace gui::widgets::pages
         Q_PROPERTY(SelectionWidget* selection_widget READ get_selection_widget)
 
     public:
-        explicit Selection(QWidget* __parent = nullptr);
+        explicit Selection(QWidget* __parent = nullptr, Qt::WindowFlags = {});
         virtual ~Selection() { delete m_ui; }
     public:
         SelectionWidget* get_selection_widget() const noexcept

@@ -20,8 +20,8 @@
 
 namespace gui::widgets::pages
 {
-    Selection::Selection(QWidget* __parent)
-        : QWidget(__parent)
+    Selection::Selection(QWidget* __parent, Qt::WindowFlags __f)
+        : QWidget(__parent, __f)
         , m_ui(new Ui::Selection())
     {
         m_ui->setupUi(this);

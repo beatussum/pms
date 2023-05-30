@@ -23,13 +23,20 @@
 
 #include "core/core.hpp"
 
+#include <qevent.h>
+
 namespace gui::widgets::pages
 {
     class ContourSelection : public QWidget
     {
         Q_OBJECT
 
-        Q_PROPERTY(contours_type contours READ get_contours)
+        Q_PROPERTY(
+            contours_type contours
+            READ get_contours
+            RESET reset_contours
+        )
+
         Q_PROPERTY(QPixmap pixmap READ get_pixmap)
 
         Q_PROPERTY(
@@ -86,6 +93,8 @@ namespace gui::widgets::pages
 
         void set_contours(contours_type __c, const cv::Mat& __m)
             { set_contours(std::move(__c), qpixmap_from_mat(__m)); }
+
+        void reset_contours() { set_contours(contours_type(), QPixmap()); }
     public slots:
         void next();
         void previous();
