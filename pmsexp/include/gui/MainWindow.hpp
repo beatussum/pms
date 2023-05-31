@@ -21,7 +21,15 @@
 
 #include "ui_MainWindow.h"
 
+#include "core/core.hpp"
+
 #include <opencv2/videoio.hpp>
+#include <QtCore/QFutureWatcher>
+
+namespace cv
+{
+    class Tracker;
+}
 
 namespace gui::widgets::pages
 {
@@ -31,6 +39,8 @@ namespace gui::widgets::pages
     class Upload;
 }
 
+class QProgressBar;
+
 namespace gui
 {
     class MainWindow : public QMainWindow
@@ -39,15 +49,22 @@ namespace gui
 
     public:
         explicit MainWindow(QWidget* __parent = nullptr, Qt::WindowFlags = {});
-        virtual ~MainWindow();
+        virtual ~MainWindow() { delete m_ui; }
+    private:
+        full_positions_type process();
     private slots:
         void find_contours(const QRect& __new_selection);
         void load_selection();
         void reset();
+        void run();
+        void show_results();
     private:
-        cv::VideoCapture m_capture;
-        cv::Mat          m_first_frame;
-        Ui::MainWindow*  m_ui;
+        cv::VideoCapture                    m_capture;
+        cv::Mat                             m_first_frame;
+        QFutureWatcher<full_positions_type> m_future_watcher;
+        cv::Ptr<cv::Tracker>                m_tracker;
+        QProgressBar*                       m_progress_bar;
+        Ui::MainWindow*                     m_ui;
 
         gui::widgets::pages::ContourSelection* m_contour_selection_page;
         gui::widgets::pages::Selection*        m_selection_page;

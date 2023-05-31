@@ -19,20 +19,32 @@
 #ifndef PMSEXP_CORE_CORE_HPP
 #define PMSEXP_CORE_CORE_HPP
 
-#include <opencv2/core/types.hpp>
+#include "core/types.hpp"
 #include <QtCore/QRect>
-#include <vector>
 
 class QPixmap;
 class QPolygon;
 
-using contour_type  = std::vector<cv::Point>;
-using contours_type = std::vector<contour_type>;
+sorted_contours_type contours_from_mat(
+    const cv::Mat& __frame,
+    const cv::Rect& __roi,
+    double __standard
+);
 
+inline sorted_contours_type contours_from_mat(
+    const cv::Mat& __frame,
+    const cv::Rect& __roi
+)
+    { return contours_from_mat(__frame, __roi, __roi.area()); }
+
+full_position full_position_from_contour(contour_type);
 QPixmap qpixmap_from_mat(const cv::Mat&);
 QPolygon qpolygon_from_contour(contour_type);
 
 inline cv::Rect rect_from_qrect(const QRect& __r)
     { return cv::Rect(__r.x(), __r.y(), __r.width(), __r.height()); }
+
+inline double relative_difference(double __of, double __from)
+    { return std::abs((__of - __from) / __from); }
 
 #endif // PMSEXP_CORE_CORE_HPP

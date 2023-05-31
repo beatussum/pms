@@ -24,9 +24,9 @@ namespace gui::widgets::pages
 {
     Statistics::Statistics(QWidget* __parent, Qt::WindowFlags __f)
         : ListSelecterWidget(__parent, __f)
-        , m_trajectory(new QCustomPlot())
-        , m_angular_difference(new QCustomPlot())
-        , m_spatial_difference(new QCustomPlot())
+        , m_trajectory(new QCustomPlot(this))
+        , m_angular_difference(new QCustomPlot(this))
+        , m_spatial_difference(new QCustomPlot(this))
     {
         add_page(
             QIcon::fromTheme("applications-science"),
@@ -45,12 +45,5 @@ namespace gui::widgets::pages
             tr("Écart en position spatiale"),
             m_spatial_difference
         );
-    }
-
-    Statistics::~Statistics()
-    {
-        delete m_trajectory;
-        delete m_angular_difference;
-        delete m_spatial_difference;
     }
 }

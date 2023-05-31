@@ -32,7 +32,7 @@ namespace gui::widgets::pages
         Q_OBJECT
 
         Q_PROPERTY(
-            contours_type contours
+            sorted_contours_type contours
             READ get_contours
             RESET reset_contours
         )
@@ -50,14 +50,14 @@ namespace gui::widgets::pages
 
     public:
         explicit ContourSelection(
-            contours_type,
+            sorted_contours_type,
             QPixmap,
             QWidget* __parent = nullptr,
             Qt::WindowFlags   = {}
         );
 
         explicit ContourSelection(
-            contours_type __c,
+            sorted_contours_type __c,
             const cv::Mat& __m,
             QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = {}
@@ -74,12 +74,17 @@ namespace gui::widgets::pages
             QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = {}
         )
-            : ContourSelection(contours_type(), QPixmap(), __parent, __f)
+            : ContourSelection(
+                sorted_contours_type(),
+                QPixmap(),
+                __parent,
+                __f
+            )
         {}
 
         virtual ~ContourSelection() { delete m_ui; }
     public:
-        contours_type get_contours() const { return m_contours; }
+        sorted_contours_type get_contours() const { return m_contours; }
         QPixmap get_pixmap() const { return m_pixmap; }
     public:
         contour_type get_current() const
@@ -87,25 +92,28 @@ namespace gui::widgets::pages
 
         double get_current_area() const;
     signals:
-        void current_changed(contours_type::const_iterator __new_current);
+        void current_changed(
+            sorted_contours_type::const_iterator __new_current
+        );
     public slots:
-        void set_contours(contours_type, QPixmap);
+        void set_contours(sorted_contours_type, QPixmap);
 
-        void set_contours(contours_type __c, const cv::Mat& __m)
+        void set_contours(sorted_contours_type __c, const cv::Mat& __m)
             { set_contours(std::move(__c), qpixmap_from_mat(__m)); }
 
-        void reset_contours() { set_contours(contours_type(), QPixmap()); }
+        void reset_contours()
+            { set_contours(sorted_contours_type(), QPixmap()); }
     public slots:
         void next();
         void previous();
     private slots:
         void update_shown_contour();
     private:
-        contours_type m_contours;
-        QPixmap       m_pixmap;
+        sorted_contours_type m_contours;
+        QPixmap              m_pixmap;
 
-        contours_type::const_iterator m_current;
-        Ui::ContourSelection*         m_ui;
+        sorted_contours_type::const_iterator m_current;
+        Ui::ContourSelection*                m_ui;
     };
 }
 

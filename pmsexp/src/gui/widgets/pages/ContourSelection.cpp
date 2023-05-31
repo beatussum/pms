@@ -24,7 +24,7 @@
 namespace gui::widgets::pages
 {
     ContourSelection::ContourSelection(
-        contours_type __c,
+        sorted_contours_type __c,
         QPixmap __p,
         QWidget* __parent,
         Qt::WindowFlags __f
@@ -73,7 +73,7 @@ namespace gui::widgets::pages
         return (m_contours.empty() ? -1. : cv::contourArea(*m_current));
     }
 
-    void ContourSelection::set_contours(contours_type __c, QPixmap __p)
+    void ContourSelection::set_contours(sorted_contours_type __c, QPixmap __p)
     {
         m_contours = std::move(__c);
         m_pixmap   = std::move(__p);
@@ -97,7 +97,7 @@ namespace gui::widgets::pages
     void ContourSelection::previous()
     {
         if (m_current-- == m_contours.cbegin()) {
-            m_current = (m_contours.cend() - 1);
+            m_current = --m_contours.cend();
         }
 
         emit current_changed(m_current);

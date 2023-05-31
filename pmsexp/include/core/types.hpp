@@ -16,26 +16,37 @@
  */
 
 
-#ifndef PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
-#define PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
+#ifndef PMSEXP_CORE_TYPES_HPP
+#define PMSEXP_CORE_TYPES_HPP
 
-#include "gui/widgets/ListSelecterWidget.hpp"
+#include <opencv2/core/types.hpp>
+#include <set>
+#include <vector>
 
-class QCustomPlot;
-
-namespace gui::widgets::pages
+struct full_position
 {
-    class Statistics : public ListSelecterWidget
-    {
-        Q_OBJECT
+    double angle       = 0.;
+    cv::Point position = {};
+};
 
-    public:
-        explicit Statistics(QWidget* __parent = nullptr, Qt::WindowFlags = {});
-    private:
-        QCustomPlot* m_trajectory;
-        QCustomPlot* m_angular_difference;
-        QCustomPlot* m_spatial_difference;
-    };
-}
+using contour_type  = std::vector<cv::Point>;
+using contours_type = std::vector<contour_type>;
 
-#endif // PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
+class contour_compare
+{
+public:
+    constexpr contour_compare() noexcept
+        : m_standard(1.)
+    {}
+
+    contour_compare(double __standard);
+public:
+    bool operator()(const contour_type&, const contour_type&) const noexcept;
+private:
+    double m_standard;
+};
+
+using full_positions_type  = std::vector<full_position>;
+using sorted_contours_type = std::multiset<contour_type, contour_compare>;
+
+#endif // PMSEXP_CORE_TYPES_HPP

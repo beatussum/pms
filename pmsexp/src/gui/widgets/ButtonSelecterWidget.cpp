@@ -98,6 +98,10 @@ namespace gui::widgets
     {
         if (m_progress >= __i) {
             SelecterWidget::set_page_index(__i);
+
+            if (__i == (m_ui->m_stacked_widget->count() - 1)) {
+                emit run();
+            }
         }
     }
 

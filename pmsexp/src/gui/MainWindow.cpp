@@ -24,7 +24,10 @@
 #include "gui/widgets/pages/Statistics.hpp"
 #include "gui/widgets/pages/Upload.hpp"
 
-#include <opencv2/imgproc.hpp>
+#include <opencv2/tracking.hpp>
+
+#include <QtConcurrent/QtConcurrent>
+#include <QtWidgets/QProgressBar>
 
 namespace gui
 {
@@ -33,6 +36,9 @@ namespace gui
 
         , m_capture()
         , m_first_frame()
+        , m_future_watcher(this)
+        , m_tracker()
+        , m_progress_bar(new QProgressBar())
         , m_ui(new Ui::MainWindow())
 
         , m_contour_selection_page(new widgets::pages::ContourSelection())
@@ -41,6 +47,10 @@ namespace gui
         , m_upload_page(new widgets::pages::Upload())
     {
         m_ui->setupUi(this);
+
+        m_progress_bar->hide();
+
+        m_ui->m_status_bar->addWidget(m_progress_bar);
 
         m_ui->m_central_widget->add_page(m_upload_page);
         m_ui->m_central_widget->add_page(m_selection_page);
@@ -62,21 +72,70 @@ namespace gui
         );
 
         QObject::connect(
+            m_ui->m_central_widget,
+            &widgets::ButtonSelecterWidget::run,
+            this,
+            &MainWindow::run
+        );
+
+        QObject::connect(
             m_ui->m_action_reset,
             &QAction::triggered,
             this,
             &MainWindow::reset
         );
+
+        QObject::connect(
+            &m_future_watcher,
+            &QFutureWatcher<full_positions_type>::finished,
+            this,
+            &MainWindow::show_results
+        );
+
+        QObject::connect(
+            &m_future_watcher,
+            &QFutureWatcher<full_positions_type>::progressValueChanged,
+            m_progress_bar,
+            &QProgressBar::setValue
+        );
     }
 
-    MainWindow::~MainWindow()
+    full_positions_type MainWindow::process()
     {
-        delete m_ui;
+        full_positions_type ret;
 
-        delete m_contour_selection_page;
-        delete m_selection_page;
-        delete m_statistics_page;
-        delete m_upload_page;
+        ret.reserve(m_capture.get(cv::CAP_PROP_FRAME_COUNT));
+
+        ret.push_back(
+            full_position_from_contour(m_contour_selection_page->get_current())
+        );
+
+        int progress = 1;
+
+        emit m_future_watcher.progressValueChanged(progress);
+
+        double current_area = m_contour_selection_page->get_current_area();
+        cv::Mat frame;
+
+        cv::Rect roi = rect_from_qrect(
+            m_selection_page->get_selection_widget()->get_selection()
+        );
+
+        m_capture.set(cv::CAP_PROP_POS_FRAMES, 1.);
+
+        while (m_capture.read(frame)) {
+            m_tracker->update(frame, roi);
+
+            ret.push_back(
+                full_position_from_contour(
+                    *contours_from_mat(frame, roi, current_area).begin()
+                )
+            );
+
+            emit m_future_watcher.progressValueChanged(++progress);
+        }
+
+        return ret;
     }
 
     void MainWindow::find_contours(const QRect& __new_selection)
@@ -84,41 +143,12 @@ namespace gui
         if (__new_selection.isEmpty()) {
             m_ui->m_central_widget->set_progress(1);
         } else {
-            cv::Mat       binary_frame;
-            contours_type contours, new_contours;
-
-            cv::Rect roi     = rect_from_qrect(__new_selection);
-            double  roi_area = roi.area();
-
-            cv::Mat split_first_frame[3];
-
-            cv::split(cv::Mat(m_first_frame, roi), split_first_frame);
-
-            cv::threshold(
-                std::move(split_first_frame[2]),
-                binary_frame,
-                -1.,
-                255.,
-                cv::THRESH_BINARY | cv::THRESH_OTSU
+            sorted_contours_type contours = contours_from_mat(
+                m_first_frame,
+                rect_from_qrect(__new_selection)
             );
 
-            cv::findContours(
-                std::move(binary_frame),
-                contours,
-                cv::RETR_LIST,
-                cv::CHAIN_APPROX_NONE,
-                roi.tl()
-            );
-
-            for (auto i = contours.begin(); i != contours.end(); ++i) {
-                double contour_area = cv::contourArea(*i);
-
-                if (std::abs((contour_area - roi_area) / roi_area) < .8) {
-                    new_contours.push_back(std::move(*i));
-                }
-            }
-
-            if (std::size_t size = new_contours.size(); size == 0) {
+            if (std::size_t size = contours.size(); size == 0) {
                 m_ui->m_central_widget->set_progress(1);
 
                 m_ui->m_status_bar->showMessage(
@@ -126,7 +156,7 @@ namespace gui
                 );
             } else {
                 m_contour_selection_page->set_contours(
-                    std::move(new_contours),
+                    std::move(contours),
                     m_first_frame
                 );
 
@@ -145,6 +175,8 @@ namespace gui
             QString file_path = m_upload_page->get_ex_file_path();
 
             if (m_capture.open(file_path.toStdString())) {
+                m_capture.set(cv::CAP_PROP_POS_FRAMES, 0.);
+
                 if (m_capture.read(m_first_frame)) {
                     m_selection_page->get_selection_widget()->setPixmap(
                         m_first_frame
@@ -175,5 +207,39 @@ namespace gui
         m_contour_selection_page->reset_contours();
         m_selection_page->get_selection_widget()->reset_selection();
         m_upload_page->reset_upload_status();
+    }
+
+    void MainWindow::run()
+    {
+        m_tracker = cv::TrackerKCF::create();
+
+        m_tracker->init(
+            m_first_frame,
+
+            rect_from_qrect(
+                m_selection_page->get_selection_widget()->get_selection()
+            )
+        );
+
+        m_ui->m_action_reset->setEnabled(false);
+        m_ui->m_central_widget->setEnabled(false);
+
+        m_progress_bar->reset();
+        m_progress_bar->setRange(0, m_capture.get(cv::CAP_PROP_FRAME_COUNT));
+        m_progress_bar->show();
+
+        m_future_watcher.setFuture(
+            QtConcurrent::run(this, &MainWindow::process)
+        );
+    }
+
+    void MainWindow::show_results()
+    {
+        m_ui->m_action_reset->setEnabled(true);
+        m_ui->m_central_widget->setEnabled(true);
+
+        m_progress_bar->hide();
+
+        m_ui->m_status_bar->showMessage(tr("Terminé !"), 2'000);
     }
 }

@@ -30,7 +30,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 unset(CMAKE_CXX_FLAGS_RELEASE CACHE)
 
 macro(add_gcc_cxx_flags _flags)
-    if(CMAKE_COMPILER_IS_GNUCXX)
+    if(CMAKE_CXX_COMPILER_ID EQUAL "GNU")
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${_flags}")
     endif()
 endmacro()
@@ -79,10 +79,6 @@ macro(add_to_doc _headers)
     endif()
 endmacro()
 
-if (WITH_OPTIMISED_ALGORITHM)
-    add_compile_definitions(SUDOKUPP_OPTIMISED_ALGORITHM)
-endif()
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_EXTENSIONS FALSE)
@@ -130,6 +126,7 @@ endif()
 set(
     PMSEXP_HPP
     include/core/core.hpp
+    include/core/types.hpp
     include/gui/MainWindow.hpp
     include/gui/widgets/ButtonSelecterWidget.hpp
     include/gui/widgets/CheckWidget.hpp
@@ -150,6 +147,7 @@ set(
     PMSEXP_CPP
     src/main.cpp
     src/core/core.cpp
+    src/core/types.cpp
     src/gui/MainWindow.cpp
     src/gui/widgets/ButtonSelecterWidget.cpp
     src/gui/widgets/CheckWidget.cpp
@@ -170,7 +168,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include/gui")
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/")
 
-find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Concurrent Gui Widgets REQUIRED)
 
 find_package(OpenCV REQUIRED)
 include_directories("${OpenCV_INCLUDE_DIRS}")
@@ -183,6 +181,7 @@ target_link_libraries(
     "${OpenCV_LIBS}"
     qcustomplot
     Qt5::Core
+    Qt5::Concurrent
     Qt5::Gui
     Qt5::Widgets
 )

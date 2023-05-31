@@ -18,8 +18,71 @@
 
 #include "core/core.hpp"
 
-#include <opencv2/core/mat.hpp>
-#include <QtGui/QPixmap>
+#include <opencv2/imgproc.hpp>
+#include <QPixmap>
+
+sorted_contours_type contours_from_mat(
+    const cv::Mat& __frame,
+    const cv::Rect& __roi,
+    double __standard
+)
+{
+    sorted_contours_type ret((contour_compare(__standard)));
+
+    cv::Mat split_first_frame[3];
+
+    cv::split(cv::Mat(__frame, __roi), split_first_frame);
+
+    cv::Mat binary_frame;
+
+    cv::threshold(
+        std::move(split_first_frame[2]),
+        binary_frame,
+        -1.,
+        255.,
+        cv::THRESH_BINARY | cv::THRESH_OTSU
+    );
+
+    contours_type contours;
+
+    cv::findContours(
+        std::move(binary_frame),
+        contours,
+        cv::RETR_LIST,
+        cv::CHAIN_APPROX_NONE,
+        __roi.tl()
+    );
+
+    for (contour_type c : contours) {
+        ret.insert(std::move(c));
+    }
+
+    return ret;
+}
+
+full_position full_position_from_contour(contour_type __c)
+{
+    cv::Mat data(static_cast<int>(__c.size()), 2, CV_64F);
+
+    for (int i = 0; i != data.rows; ++i) {
+        data.at<double>(i, 0) = __c[i].x;
+        data.at<double>(i, 1) = __c[i].y;
+    }
+
+    cv::PCA pca(data, cv::Mat(), cv::PCA::DATA_AS_ROW);
+
+    cv::Point position(
+        static_cast<int>(pca.mean.at<double>(0, 0)),
+        static_cast<int>(pca.mean.at<double>(0, 1))
+    );
+
+    double angle = std::atan2(
+        pca.eigenvectors.at<double>(0, 1),
+        pca.eigenvectors.at<double>(0, 0)
+    );
+
+    return {angle, position};
+}
 
 QPixmap qpixmap_from_mat(const cv::Mat& __m)
 {

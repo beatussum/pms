@@ -16,26 +16,23 @@
  */
 
 
-#ifndef PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
-#define PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
+#include "core/core.hpp"
+#include <opencv2/imgproc.hpp>
 
-#include "gui/widgets/ListSelecterWidget.hpp"
-
-class QCustomPlot;
-
-namespace gui::widgets::pages
+contour_compare::contour_compare(double __standard)
+    : m_standard(__standard)
 {
-    class Statistics : public ListSelecterWidget
-    {
-        Q_OBJECT
-
-    public:
-        explicit Statistics(QWidget* __parent = nullptr, Qt::WindowFlags = {});
-    private:
-        QCustomPlot* m_trajectory;
-        QCustomPlot* m_angular_difference;
-        QCustomPlot* m_spatial_difference;
-    };
+    if (m_standard == 0.) {
+        throw std::invalid_argument("`contour_compare`: division by zero.");
+    }
 }
 
-#endif // PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
+bool contour_compare::operator()(
+    const contour_type& __l,
+    const contour_type& __r
+) const noexcept
+{
+    return
+        relative_difference(cv::contourArea(__l), m_standard) <
+        relative_difference(cv::contourArea(__r), m_standard);
+}
