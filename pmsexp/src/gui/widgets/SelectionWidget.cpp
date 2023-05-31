@@ -28,6 +28,7 @@ namespace gui::widgets
         Qt::WindowFlags __f
     )
         : QLabel(__parent, __f)
+
         , m_origin()
         , m_rubber_band(QRubberBand::Rectangle, this)
         , m_selection()
@@ -37,7 +38,7 @@ namespace gui::widgets
         setPixmap(__p);
     }
 
-    void SelectionWidget::__update_rubber_band_geometry()
+    void SelectionWidget::update_rubber_band_geometry()
     {
         if (m_rubber_band.isVisible()) {
             m_rubber_band.move(
@@ -120,14 +121,14 @@ namespace gui::widgets
 
     void SelectionWidget::resizeEvent(QResizeEvent* __e)
     {
-        __update_rubber_band_geometry();
+        update_rubber_band_geometry();
 
         QLabel::resizeEvent(__e);
     }
 
     void SelectionWidget::showEvent(QShowEvent* __e)
     {
-        __update_rubber_band_geometry();
+        update_rubber_band_geometry();
 
         QLabel::showEvent(__e);
     }

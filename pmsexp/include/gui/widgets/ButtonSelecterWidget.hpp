@@ -48,16 +48,15 @@ namespace gui::widgets
         void update_buttons(int __current_index) override;
     public:
         int get_progress() const noexcept { return m_progress; }
-
         void set_page_index(int) override;
+    signals:
+        void progress_changed(int);
+        void run();
     protected slots:
         virtual void update_page_index(int);
     public slots:
         void reset_progress() { emit progress_changed(m_progress = 0); }
         void set_progress(int __p) { emit progress_changed(m_progress = __p); }
-    signals:
-        void progress_changed(int);
-        void run();
     private:
         int                       m_progress;
         Ui::ButtonSelecterWidget* m_ui;

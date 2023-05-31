@@ -48,6 +48,9 @@ namespace gui::widgets
         UploadWidget(QWidget* __parent = nullptr, Qt::WindowFlags __f = {})
             : UploadWidget(QString(), mime_checker_type(), __parent, __f)
         {}
+    protected:
+        void dragEnterEvent(QDragEnterEvent*) override;
+        void dropEvent(QDropEvent*) override;
     public:
         QString get_file_path() const { return m_file_path; }
         bool is_empty() const { return m_file_path.isEmpty(); }
@@ -56,14 +59,11 @@ namespace gui::widgets
 
         void set_mime_checker(mime_checker_type __c)
             { m_mime_checker = std::move(__c); }
+    signals:
+        void file_path_updated(const QString& __new_file_path);
     public slots:
         void set_file_path(QString);
         void reset_file_path() { set_file_path(QString()); }
-    signals:
-        void file_path_updated(const QString& __new_file_path);
-    protected:
-        void dragEnterEvent(QDragEnterEvent*) override;
-        void dropEvent(QDropEvent*) override;
     private:
         QString           m_file_path;
         mime_checker_type m_mime_checker;

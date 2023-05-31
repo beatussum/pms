@@ -30,27 +30,13 @@ namespace gui::widgets
         , m_ui(new Ui::ItemizeWidget())
     {
         m_ui->setupUi(this);
+
         set_info(std::move(__info));
         set_pixmap(std::move(__p));
-    }
-
-    void ItemizeWidget::set_info(QString __i)
-    {
-        m_ui->m_info_label->setText(std::move(__i));
     }
 
     QPixmap ItemizeWidget::get_pixmap() const
     {
         return m_ui->m_pixmap_label->pixmap(Qt::ReturnByValueConstant());
-    }
-
-    void ItemizeWidget::set_pixmap(QPixmap __p)
-    {
-        m_ui->m_pixmap_label->setPixmap(std::move(__p));
-    }
-
-    void ItemizeWidget::set_pixmap(const QIcon& __i)
-    {
-        set_pixmap(__i.pixmap({32, 32}));
     }
 }

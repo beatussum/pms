@@ -45,13 +45,6 @@ namespace gui::widgets::pages
         m_ui->m_previous_button->setEnabled(m_contours.size() > 1);
 
         QObject::connect(
-            this,
-            &ContourSelection::current_changed,
-            this,
-            &ContourSelection::update_shown_contour
-        );
-
-        QObject::connect(
             m_ui->m_next_button,
             &QPushButton::clicked,
             this,
@@ -65,6 +58,13 @@ namespace gui::widgets::pages
             &ContourSelection::previous
         );
 
+        QObject::connect(
+            this,
+            &ContourSelection::current_changed,
+            this,
+            &ContourSelection::update_shown_contour
+        );
+
         update_shown_contour();
     }
 
@@ -73,7 +73,30 @@ namespace gui::widgets::pages
         return (m_contours.empty() ? -1. : cv::contourArea(*m_current));
     }
 
-    void ContourSelection::set_contours(sorted_contours_type __c, QPixmap __p)
+    void ContourSelection::update_shown_contour()
+    {
+        if (!m_pixmap.isNull()) {
+            QPixmap pixmap = m_pixmap.copy();
+
+            QPainter painter(&pixmap);
+
+            painter.setPen(Qt::red);
+            painter.drawPolygon(qpolygon_from_contour(*m_current));
+
+            painter.end();
+
+            m_ui->m_contour_area_label->setText(
+                tr("Aire du contour : %1 px.").arg(get_current_area())
+            );
+
+            m_ui->m_contour_selection_widget->setPixmap(pixmap);
+        } else {
+            m_ui->m_contour_area_label->clear();
+            m_ui->m_contour_selection_widget->clear();
+        }
+    }
+
+    void ContourSelection::set_values(sorted_contours_type __c, QPixmap __p)
     {
         m_contours = std::move(__c);
         m_pixmap   = std::move(__p);
@@ -101,28 +124,5 @@ namespace gui::widgets::pages
         }
 
         emit current_changed(m_current);
-    }
-
-    void ContourSelection::update_shown_contour()
-    {
-        if (!m_pixmap.isNull()) {
-            QPixmap pixmap = m_pixmap.copy();
-
-            QPainter painter(&pixmap);
-
-            painter.setPen(Qt::red);
-            painter.drawPolygon(qpolygon_from_contour(*m_current));
-
-            painter.end();
-
-            m_ui->m_contour_area_label->setText(
-                tr("Aire du contour : %1 px.").arg(get_current_area())
-            );
-
-            m_ui->m_contour_selection_widget->setPixmap(pixmap);
-        } else {
-            m_ui->m_contour_area_label->clear();
-            m_ui->m_contour_selection_widget->clear();
-        }
     }
 }

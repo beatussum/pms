@@ -65,12 +65,6 @@ namespace gui::widgets::pages
             !m_ui->m_th_uploader->is_empty();
     }
 
-    void Upload::reset_upload_status()
-    {
-        m_ui->m_ex_uploader->reset_file_path();
-        m_ui->m_th_uploader->reset_file_path();
-    }
-
     void Upload::update_upload_status()
     {
         bool ex_status = !m_ui->m_ex_uploader->is_empty();
@@ -78,5 +72,11 @@ namespace gui::widgets::pages
 
         m_ui->m_ex_item->set_status(ex_status);
         m_ui->m_th_item->set_status(th_status);
+    }
+
+    void Upload::reset_upload_status()
+    {
+        m_ui->m_ex_uploader->reset_file_path();
+        m_ui->m_th_uploader->reset_file_path();
     }
 }

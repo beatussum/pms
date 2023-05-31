@@ -60,20 +60,13 @@ namespace gui::widgets
             : SelectionWidget(QPixmap(), __parent, __f)
         {}
     private:
-        void __update_rubber_band_geometry();
+        void update_rubber_band_geometry();
     protected:
         void keyPressEvent(QKeyEvent*) override;
         void mousePressEvent(QMouseEvent*) override;
         void mouseMoveEvent(QMouseEvent*) override;
         void resizeEvent(QResizeEvent*) override;
         void showEvent(QShowEvent*) override;
-    signals:
-        void selection_changed(const QRect& __new_selection);
-    public slots:
-        void setPixmap(const QPixmap& __p) { QLabel::setPixmap(__p); }
-
-        void setPixmap(const cv::Mat& __m)
-            { setPixmap(qpixmap_from_mat(__m)); }
     public:
         QRect get_pixmap_rect() const;
 
@@ -81,6 +74,13 @@ namespace gui::widgets
         bool has_selection() const noexcept { return m_selected; }
         void set_selection(QRect) noexcept;
         void reset_selection() noexcept;
+    signals:
+        void selection_changed(const QRect& __new_selection);
+    public slots:
+        void setPixmap(const QPixmap& __p) { QLabel::setPixmap(__p); }
+
+        void setPixmap(const cv::Mat& __m)
+            { setPixmap(qpixmap_from_mat(__m)); }
     private:
         QPoint      m_origin;
         QRubberBand m_rubber_band;

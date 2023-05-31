@@ -31,6 +31,8 @@ namespace cv
     class Tracker;
 }
 
+class QProgressBar;
+
 namespace gui::widgets::pages
 {
     class ContourSelection;
@@ -38,8 +40,6 @@ namespace gui::widgets::pages
     class Statistics;
     class Upload;
 }
-
-class QProgressBar;
 
 namespace gui
 {

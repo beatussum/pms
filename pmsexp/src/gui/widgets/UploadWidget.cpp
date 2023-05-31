@@ -20,6 +20,7 @@
 
 #include <QtCore/QMimeData>
 #include <QtCore/QMimeDatabase>
+
 #include <QtGui/QDragEnterEvent>
 
 namespace gui::widgets
@@ -41,13 +42,6 @@ namespace gui::widgets
         , m_mime_checker(std::move(__c))
     {
         setAcceptDrops(true);
-    }
-
-    void UploadWidget::set_file_path(QString __f)
-    {
-        m_file_path = std::move(__f);
-
-        emit file_path_updated(m_file_path);
     }
 
     void UploadWidget::dragEnterEvent(QDragEnterEvent* __e)
@@ -80,5 +74,12 @@ namespace gui::widgets
         emit file_path_updated(m_file_path);
 
         ItemizeWidget::dropEvent(__e);
+    }
+
+    void UploadWidget::set_file_path(QString __f)
+    {
+        m_file_path = std::move(__f);
+
+        emit file_path_updated(m_file_path);
     }
 }

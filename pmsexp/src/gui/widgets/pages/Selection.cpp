@@ -32,8 +32,8 @@ namespace gui::widgets::pages
                 "Appuyez sur « %1 » pour valider la sélection et « %2 » pour "
                 "effacer la précédente."
             )
-            .arg(QKeySequence(Qt::Key_Enter).toString())
-            .arg(QKeySequence(Qt::Key_Escape).toString())
+                .arg(QKeySequence(Qt::Key_Enter).toString())
+                .arg(QKeySequence(Qt::Key_Escape).toString())
         );
     }
 }

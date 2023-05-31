@@ -24,6 +24,7 @@ namespace gui::widgets::pages
 {
     Statistics::Statistics(QWidget* __parent, Qt::WindowFlags __f)
         : ListSelecterWidget(__parent, __f)
+
         , m_trajectory(new QCustomPlot(this))
         , m_angular_difference(new QCustomPlot(this))
         , m_spatial_difference(new QCustomPlot(this))

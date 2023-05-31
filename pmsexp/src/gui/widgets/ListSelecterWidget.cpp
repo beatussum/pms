@@ -31,20 +31,6 @@ namespace gui::widgets
         set_stacked_widget(m_ui->m_stacked_widget);
 
         QObject::connect(
-            m_ui->m_selecter,
-            &QListWidget::currentRowChanged,
-            this,
-            &ListSelecterWidget::set_page_index
-        );
-
-        QObject::connect(
-            this,
-            &ListSelecterWidget::page_index_changed,
-            m_ui->m_selecter,
-            [&] (int __i) { m_ui->m_selecter->setCurrentRow(__i); }
-        );
-
-        QObject::connect(
             m_ui->m_scroll_down_button,
             &QToolButton::clicked,
             this,
@@ -57,9 +43,23 @@ namespace gui::widgets
             this,
             &ListSelecterWidget::previous
         );
+
+        QObject::connect(
+            m_ui->m_selecter,
+            &QListWidget::currentRowChanged,
+            this,
+            &ListSelecterWidget::set_page_index
+        );
+
+        QObject::connect(
+            this,
+            &ListSelecterWidget::page_index_changed,
+            m_ui->m_selecter,
+            [&] (int __i) { m_ui->m_selecter->setCurrentRow(__i); }
+        );
     }
 
-    void ListSelecterWidget::__add_selecter(
+    void ListSelecterWidget::add_selecter(
         const QIcon& __i,
         const QString& __s,
         QWidget* __w
@@ -72,13 +72,23 @@ namespace gui::widgets
         m_map[__w] = item;
     }
 
+    void ListSelecterWidget::update_buttons(int __current_index)
+    {
+        m_ui->m_scroll_down_button->setDisabled(
+            __current_index == (m_ui->m_selecter->count() - 1)
+        );
+
+        m_ui->m_scroll_up_button->setDisabled(__current_index == 0);
+    }
+
     void ListSelecterWidget::add_page(
         const QIcon& __i,
         const QString& __s,
         QWidget* __w
     )
     {
-        __add_selecter(__i, __s, __w);
+        add_selecter(__i, __s, __w);
+
         SelecterWidget::add_page(__w);
     }
 
@@ -89,7 +99,8 @@ namespace gui::widgets
         QWidget* __w
     )
     {
-        __add_selecter(__i, __s, __w);
+        add_selecter(__i, __s, __w);
+
         SelecterWidget::insert_page(__index, __w);
     }
 
@@ -98,18 +109,8 @@ namespace gui::widgets
         QListWidgetItem* item = m_map.extract(__w).mapped();
 
         m_ui->m_selecter->removeItemWidget(item);
-
         delete item;
 
         SelecterWidget::remove_page(__w);
-    }
-
-    void ListSelecterWidget::update_buttons(int __current_index)
-    {
-        m_ui->m_scroll_down_button->setDisabled(
-            __current_index == (m_ui->m_selecter->count() - 1)
-        );
-
-        m_ui->m_scroll_up_button->setDisabled(__current_index == 0);
     }
 }

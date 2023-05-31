@@ -19,6 +19,7 @@
 #include "gui/MainWindow.hpp"
 
 #include "gui/widgets/SelectionWidget.hpp"
+
 #include "gui/widgets/pages/ContourSelection.hpp"
 #include "gui/widgets/pages/Selection.hpp"
 #include "gui/widgets/pages/Statistics.hpp"
@@ -48,42 +49,13 @@ namespace gui
     {
         m_ui->setupUi(this);
 
-        m_progress_bar->hide();
-
-        m_ui->m_status_bar->addWidget(m_progress_bar);
-
         m_ui->m_central_widget->add_page(m_upload_page);
         m_ui->m_central_widget->add_page(m_selection_page);
         m_ui->m_central_widget->add_page(m_contour_selection_page);
         m_ui->m_central_widget->add_page(m_statistics_page);
 
-        QObject::connect(
-            m_upload_page,
-            &widgets::pages::Upload::upload_status_changed,
-            this,
-            &MainWindow::load_selection
-        );
-
-        QObject::connect(
-            m_selection_page->get_selection_widget(),
-            &widgets::SelectionWidget::selection_changed,
-            this,
-            &MainWindow::find_contours
-        );
-
-        QObject::connect(
-            m_ui->m_central_widget,
-            &widgets::ButtonSelecterWidget::run,
-            this,
-            &MainWindow::run
-        );
-
-        QObject::connect(
-            m_ui->m_action_reset,
-            &QAction::triggered,
-            this,
-            &MainWindow::reset
-        );
+        m_progress_bar->hide();
+        m_ui->m_status_bar->addWidget(m_progress_bar);
 
         QObject::connect(
             &m_future_watcher,
@@ -97,6 +69,34 @@ namespace gui
             &QFutureWatcher<full_positions_type>::progressValueChanged,
             m_progress_bar,
             &QProgressBar::setValue
+        );
+
+        QObject::connect(
+            m_ui->m_action_reset,
+            &QAction::triggered,
+            this,
+            &MainWindow::reset
+        );
+
+        QObject::connect(
+            m_ui->m_central_widget,
+            &widgets::ButtonSelecterWidget::run,
+            this,
+            &MainWindow::run
+        );
+
+        QObject::connect(
+            m_selection_page->get_selection_widget(),
+            &widgets::SelectionWidget::selection_changed,
+            this,
+            &MainWindow::find_contours
+        );
+
+        QObject::connect(
+            m_upload_page,
+            &widgets::pages::Upload::upload_status_changed,
+            this,
+            &MainWindow::load_selection
         );
     }
 
@@ -155,7 +155,7 @@ namespace gui
                     tr("Aucun contour trouvé."), 2'000
                 );
             } else {
-                m_contour_selection_page->set_contours(
+                m_contour_selection_page->set_values(
                     std::move(contours),
                     m_first_frame
                 );

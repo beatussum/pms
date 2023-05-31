@@ -32,16 +32,16 @@ namespace gui::widgets
 
         QObject::connect(
             this,
-            &SelecterWidget::page_index_changed,
+            &SelecterWidget::page_added,
             this,
-            &SelecterWidget::update_buttons
+            [&] (int __i) { update_buttons(get_page_index()); }
         );
 
         QObject::connect(
             this,
-            &SelecterWidget::page_added,
+            &SelecterWidget::page_index_changed,
             this,
-            [&] (int __i) { update_buttons(get_page_index()); }
+            &SelecterWidget::update_buttons
         );
 
         QObject::connect(

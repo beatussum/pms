@@ -25,6 +25,7 @@ namespace gui::widgets
         Qt::WindowFlags __f
     )
         : SelecterWidget(__parent, __f)
+
         , m_ui(new Ui::ButtonSelecterWidget())
         , m_progress(0)
     {
