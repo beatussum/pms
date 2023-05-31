@@ -42,8 +42,8 @@ namespace gui::widgets::pages
         QString get_ex_file_path() const
             { return m_ui->m_ex_uploader->get_file_path(); }
 
-        QString get_th_file_path() const
-            { return m_ui->m_th_uploader->get_file_path(); }
+        QString get_comp_file_path() const
+            { return m_ui->m_comp_uploader->get_file_path(); }
 
         bool is_upload_valid() const;
     signals:

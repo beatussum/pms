@@ -26,25 +26,25 @@ namespace gui::widgets::pages
     {
         m_ui->setupUi(this);
 
+        m_ui->m_comp_uploader->set_mime_checker(
+            [] (const QString& __m) { return (__m == "application/json"); }
+        );
+
         m_ui->m_ex_uploader->set_mime_checker(
             [] (const QString& __m) {
                 return (__m.section('/', 0, 0) == "video");
             }
         );
 
-        m_ui->m_th_uploader->set_mime_checker(
-            [] (const QString& __m) { return (__m == "application/json"); }
-        );
-
         QObject::connect(
-            m_ui->m_ex_uploader,
+            m_ui->m_comp_uploader,
             &widgets::UploadWidget::file_path_updated,
             this,
             &Upload::upload_status_changed
         );
 
         QObject::connect(
-            m_ui->m_th_uploader,
+            m_ui->m_ex_uploader,
             &widgets::UploadWidget::file_path_updated,
             this,
             &Upload::upload_status_changed
@@ -61,22 +61,22 @@ namespace gui::widgets::pages
     bool Upload::is_upload_valid() const
     {
         return
-            !m_ui->m_ex_uploader->is_empty() &&
-            !m_ui->m_th_uploader->is_empty();
+            !m_ui->m_comp_uploader->is_empty() &&
+            !m_ui->m_ex_uploader->is_empty();
     }
 
     void Upload::update_upload_status()
     {
-        bool ex_status = !m_ui->m_ex_uploader->is_empty();
-        bool th_status = !m_ui->m_th_uploader->is_empty();
+        bool comp_status = !m_ui->m_comp_uploader->is_empty();
+        bool ex_status   = !m_ui->m_ex_uploader->is_empty();
 
+        m_ui->m_comp_item->set_status(comp_status);
         m_ui->m_ex_item->set_status(ex_status);
-        m_ui->m_th_item->set_status(th_status);
     }
 
     void Upload::reset_upload_status()
     {
+        m_ui->m_comp_uploader->reset_file_path();
         m_ui->m_ex_uploader->reset_file_path();
-        m_ui->m_th_uploader->reset_file_path();
     }
 }

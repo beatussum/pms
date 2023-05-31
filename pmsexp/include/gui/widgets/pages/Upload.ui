@@ -35,9 +35,9 @@
        </widget>
       </item>
       <item>
-       <widget class="gui::widgets::UploadWidget" name="m_th_uploader" native="true">
+       <widget class="gui::widgets::UploadWidget" name="m_comp_uploader" native="true">
         <property name="info" stdset="0">
-         <string>Charger les données théoriques</string>
+         <string>Charger les données calculées</string>
         </property>
        </widget>
       </item>
@@ -58,9 +58,9 @@
        </widget>
       </item>
       <item>
-       <widget class="gui::widgets::CheckWidget" name="m_th_item" native="true">
+       <widget class="gui::widgets::CheckWidget" name="m_comp_item" native="true">
         <property name="info" stdset="0">
-         <string>État de chargement des données théoriques</string>
+         <string>État de chargement des données calculées</string>
         </property>
        </widget>
       </item>
