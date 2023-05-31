@@ -65,6 +65,7 @@ namespace gui
         cv::Ptr<cv::Tracker>                m_tracker;
         QProgressBar*                       m_progress_bar;
         Ui::MainWindow*                     m_ui;
+        bool                                m_update_needed;
 
         gui::widgets::pages::ContourSelection* m_contour_selection_page;
         gui::widgets::pages::Selection*        m_selection_page;

@@ -41,6 +41,7 @@ namespace gui
         , m_tracker()
         , m_progress_bar(new QProgressBar())
         , m_ui(new Ui::MainWindow())
+        , m_update_needed(true)
 
         , m_contour_selection_page(new widgets::pages::ContourSelection())
         , m_selection_page(new widgets::pages::Selection())
@@ -83,6 +84,18 @@ namespace gui
             &widgets::ButtonSelecterWidget::run,
             this,
             &MainWindow::run
+        );
+
+        QObject::connect(
+            m_contour_selection_page,
+            &widgets::pages::ContourSelection::current_changed,
+            this,
+
+            [&] {
+                if (!m_update_needed) {
+                    m_update_needed = true;
+                }
+            }
         );
 
         QObject::connect(
@@ -167,6 +180,8 @@ namespace gui
                 );
             }
         }
+
+        m_update_needed = true;
     }
 
     void MainWindow::load_selection()
@@ -200,6 +215,8 @@ namespace gui
         } else {
             m_ui->m_central_widget->set_progress(0);
         }
+
+        m_update_needed = true;
     }
 
     void MainWindow::reset()
@@ -207,30 +224,41 @@ namespace gui
         m_contour_selection_page->reset_contours();
         m_selection_page->get_selection_widget()->reset_selection();
         m_upload_page->reset_upload_status();
+
+        m_update_needed = true;
     }
 
     void MainWindow::run()
     {
-        m_tracker = cv::TrackerKCF::create();
+        if (m_update_needed) {
+            m_tracker = cv::TrackerKCF::create();
 
-        m_tracker->init(
-            m_first_frame,
+            m_tracker->init(
+                m_first_frame,
 
-            rect_from_qrect(
-                m_selection_page->get_selection_widget()->get_selection()
-            )
-        );
+                rect_from_qrect(
+                    m_selection_page->get_selection_widget()->get_selection()
+                )
+            );
 
-        m_ui->m_action_reset->setEnabled(false);
-        m_ui->m_central_widget->setEnabled(false);
+            m_ui->m_action_reset->setEnabled(false);
+            m_ui->m_central_widget->setEnabled(false);
 
-        m_progress_bar->reset();
-        m_progress_bar->setRange(0, m_capture.get(cv::CAP_PROP_FRAME_COUNT));
-        m_progress_bar->show();
+            m_progress_bar->reset();
+            m_progress_bar->setRange(0, m_capture.get(cv::CAP_PROP_FRAME_COUNT));
+            m_progress_bar->show();
 
-        m_future_watcher.setFuture(
-            QtConcurrent::run(this, &MainWindow::process)
-        );
+            m_future_watcher.setFuture(
+                QtConcurrent::run(this, &MainWindow::process)
+            );
+
+            m_update_needed = false;
+        } else {
+            m_ui->m_status_bar->showMessage(
+                tr("Résultats déjà chargés !"),
+                2'000
+            );
+        }
     }
 
     void MainWindow::show_results()
