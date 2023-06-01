@@ -30,6 +30,12 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QtWidgets/QProgressBar>
 
+#include <valijson/adapters/qtjson_adapter.hpp>
+#include <valijson/utils/qtjson_utils.hpp>
+#include <valijson/schema.hpp>
+#include <valijson/schema_parser.hpp>
+#include <valijson/validator.hpp>
+
 namespace gui
 {
     MainWindow::MainWindow(QWidget* __parent, Qt::WindowFlags __f)
@@ -37,7 +43,8 @@ namespace gui
 
         , m_capture()
         , m_first_frame()
-        , m_future_watcher(this)
+        , m_future_watcher_comp(this)
+        , m_future_watcher_ex(this)
         , m_tracker()
         , m_progress_bar(new QProgressBar())
         , m_ui(new Ui::MainWindow())
@@ -59,15 +66,48 @@ namespace gui
         m_ui->m_status_bar->addWidget(m_progress_bar);
 
         QObject::connect(
-            &m_future_watcher,
-            &QFutureWatcher<full_positions_type>::finished,
+            &m_future_watcher_comp,
+            &future_watcher_comp_type::finished,
             this,
             &MainWindow::show_results
         );
 
         QObject::connect(
-            &m_future_watcher,
-            &QFutureWatcher<full_positions_type>::progressValueChanged,
+            &m_future_watcher_comp,
+            &future_watcher_comp_type::progressTextChanged,
+            this,
+
+            [&] (const QString& __progress_text) {
+                m_ui->m_status_bar->showMessage(__progress_text, 2'000);
+            }
+        );
+
+        QObject::connect(
+            &m_future_watcher_ex,
+            &future_watcher_ex_type::finished,
+            this,
+
+            [&] {
+                m_progress_bar->reset();
+                m_progress_bar->setRange(0, 0);
+
+                m_ui->m_status_bar->showMessage(
+                    tr(
+                        "Le chargement des données expérimentales est terminé."
+                    ),
+
+                    2'000
+                );
+
+                m_future_watcher_comp.setFuture(
+                    QtConcurrent::run(this, &MainWindow::process_comp)
+                );
+            }
+        );
+
+        QObject::connect(
+            &m_future_watcher_ex,
+            &future_watcher_ex_type::progressValueChanged,
             m_progress_bar,
             &QProgressBar::setValue
         );
@@ -90,12 +130,7 @@ namespace gui
             m_contour_selection_page,
             &widgets::pages::ContourSelection::current_changed,
             this,
-
-            [&] {
-                if (!m_update_needed) {
-                    m_update_needed = true;
-                }
-            }
+            [&] { m_update_needed = true; }
         );
 
         QObject::connect(
@@ -113,7 +148,74 @@ namespace gui
         );
     }
 
-    full_positions_type MainWindow::process()
+    std::array<full_positions_type, 2> MainWindow::process_comp()
+    {
+        std::array<full_positions_type, 2> ret;
+        QString file_path = m_upload_page->get_comp_file_path();
+
+        QJsonValue schema_value;
+
+        if (
+            valijson::utils::loadDocument(
+                PMSEXP_SCHEMA_FILE_PATH,
+                schema_value
+            )
+        )
+        {
+            valijson::adapters::QtJsonAdapter schema_adaptater(schema_value);
+            valijson::Schema schema;
+            valijson::SchemaParser schema_parser;
+
+            schema_parser.populateSchema(schema_adaptater, schema);
+
+            QJsonValue data;
+
+            if (
+                valijson::utils::loadDocument(file_path.toStdString(), data)
+            )
+            {
+                valijson::adapters::QtJsonAdapter data_adaptater(data);
+                valijson::Validator validator;
+
+                if (validator.validate(schema, data_adaptater, nullptr)) {
+                    for (QJsonValueRef datum : data["data"].toArray()) {
+                        QJsonObject datum_obj = datum.toObject();
+
+                        ret[0].push_back(
+                            full_position_from_qjsonvalueref(
+                                datum_obj["computed"]
+                            )
+                        );
+
+                        ret[1].push_back(
+                            full_position_from_qjsonvalueref(
+                                datum_obj["target"]
+                            )
+                        );
+                    }
+                } else {
+                    emit m_future_watcher_comp.progressTextChanged(
+                        tr("Le fichier « %1 » n'a pas le bon format.")
+                            .arg(std::move(file_path))
+                    );
+                }
+            } else {
+                emit m_future_watcher_comp.progressTextChanged(
+                    tr("La lecture du fichier « %1 » est impossible.")
+                        .arg(file_path)
+                );
+            }
+        } else {
+            emit m_future_watcher_comp.progressTextChanged(
+                tr("La lecture du fichier schéma « %1 » est impossible.")
+                    .arg(PMSEXP_SCHEMA_FILE_PATH)
+            );
+        }
+
+        return ret;
+    }
+
+    full_positions_type MainWindow::process_ex()
     {
         full_positions_type ret;
 
@@ -125,7 +227,7 @@ namespace gui
 
         int progress = 1;
 
-        emit m_future_watcher.progressValueChanged(progress);
+        emit m_future_watcher_ex.progressValueChanged(progress);
 
         double current_area = m_contour_selection_page->get_current_area();
         cv::Mat frame;
@@ -145,7 +247,7 @@ namespace gui
                 )
             );
 
-            emit m_future_watcher.progressValueChanged(++progress);
+            emit m_future_watcher_ex.progressValueChanged(++progress);
         }
 
         return ret;
@@ -200,8 +302,7 @@ namespace gui
                     m_ui->m_central_widget->set_progress(1);
                 } else {
                     m_ui->m_status_bar->showMessage(
-                        tr("Aucun « frame » n'a pu ếtre récupéré."),
-                        2'000
+                        tr("Aucun « frame » n'a pu ếtre récupéré."), 2'000
                     );
                 }
             } else {
@@ -243,31 +344,46 @@ namespace gui
 
             m_ui->m_action_reset->setEnabled(false);
             m_ui->m_central_widget->setEnabled(false);
+            m_ui->m_status_bar->clearMessage();
 
             m_progress_bar->reset();
-            m_progress_bar->setRange(0, m_capture.get(cv::CAP_PROP_FRAME_COUNT));
-            m_progress_bar->show();
 
-            m_future_watcher.setFuture(
-                QtConcurrent::run(this, &MainWindow::process)
+            m_progress_bar->setRange(
+                0, m_capture.get(cv::CAP_PROP_FRAME_COUNT)
             );
 
-            m_update_needed = false;
+            m_progress_bar->show();
+
+            m_future_watcher_ex.setFuture(
+                QtConcurrent::run(this, &MainWindow::process_ex)
+            );
         } else {
             m_ui->m_status_bar->showMessage(
-                tr("Résultats déjà chargés !"),
-                2'000
+                tr("Résultats déjà chargés !"), 2'000
             );
         }
     }
 
     void MainWindow::show_results()
     {
+        std::array<full_positions_type, 2> result_comp =
+            m_future_watcher_comp.result();
+
+        full_positions_type result_ex = m_future_watcher_ex.result();
+
+        if (result_comp[0].empty() || result_ex.empty()) {
+            m_ui->m_central_widget->previous();
+        } else {
+            m_ui->m_status_bar->showMessage(
+                tr("Le chargement des données calculées est terminé."), 2'000
+            );
+
+            m_update_needed = false;
+        }
+
         m_ui->m_action_reset->setEnabled(true);
         m_ui->m_central_widget->setEnabled(true);
 
         m_progress_bar->hide();
-
-        m_ui->m_status_bar->showMessage(tr("Terminé !"), 2'000);
     }
 }

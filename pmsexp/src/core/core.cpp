@@ -19,7 +19,9 @@
 #include "core/core.hpp"
 
 #include <opencv2/imgproc.hpp>
-#include <QPixmap>
+
+#include <QtCore/QJsonObject>
+#include <QtGui/QPixmap>
 
 sorted_contours_type contours_from_mat(
     const cv::Mat& __frame,
@@ -82,6 +84,17 @@ full_position full_position_from_contour(contour_type __c)
     );
 
     return {angle, position};
+}
+
+full_position full_position_from_qjsonvalueref(QJsonValueRef __j)
+{
+    QJsonObject object   = __j.toObject();
+    QJsonObject position = object["position"].toObject();
+
+    return full_position{
+        object["angle"].toDouble(),
+        cv::Point(position["x"].toDouble(), position["y"].toDouble())
+    };
 }
 
 QPixmap qpixmap_from_mat(const cv::Mat& __m)

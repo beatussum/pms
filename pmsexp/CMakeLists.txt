@@ -118,6 +118,10 @@ add_gcc_cxx_flags(
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_gcc_cxx_flags(-O0)
+
+    add_definitions(
+        -DPMSEXP_SCHEMA_FILE_PATH="${CMAKE_SOURCE_DIR}/schema.json"
+    )
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     add_gcc_cxx_flags(-O2)
     add_gcc_cxx_flags(-Werror -Wfatal-errors)
