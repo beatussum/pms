@@ -40,21 +40,32 @@ namespace gui::widgets::pages
             m_ui->m_comp_uploader,
             &widgets::UploadWidget::file_path_updated,
             this,
-            &Upload::upload_status_changed
+
+            [&] (const QString& __new_file_path) {
+                bool status = !__new_file_path.isEmpty();
+
+                m_ui->m_comp_item->set_status(status);
+
+                emit upload_status_changed(
+                    status && !m_ui->m_ex_uploader->is_empty()
+                );
+            }
         );
 
         QObject::connect(
             m_ui->m_ex_uploader,
             &widgets::UploadWidget::file_path_updated,
             this,
-            &Upload::upload_status_changed
-        );
 
-        QObject::connect(
-            this,
-            &Upload::upload_status_changed,
-            this,
-            &Upload::update_upload_status
+            [&] (const QString& __new_file_path) {
+                bool status = !__new_file_path.isEmpty();
+
+                m_ui->m_ex_item->set_status(status);
+
+                emit upload_status_changed(
+                    status && !m_ui->m_comp_uploader->is_empty()
+                );
+            }
         );
     }
 
@@ -63,15 +74,6 @@ namespace gui::widgets::pages
         return
             !m_ui->m_comp_uploader->is_empty() &&
             !m_ui->m_ex_uploader->is_empty();
-    }
-
-    void Upload::update_upload_status()
-    {
-        bool comp_status = !m_ui->m_comp_uploader->is_empty();
-        bool ex_status   = !m_ui->m_ex_uploader->is_empty();
-
-        m_ui->m_comp_item->set_status(comp_status);
-        m_ui->m_ex_item->set_status(ex_status);
     }
 
     void Upload::reset_upload_status()

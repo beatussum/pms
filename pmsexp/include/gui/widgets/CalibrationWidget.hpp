@@ -16,74 +16,67 @@
  */
 
 
-#ifndef PMSEXP_GUI_WIDGETS_SELECTION_WIDGET_HPP
-#define PMSEXP_GUI_WIDGETS_SELECTION_WIDGET_HPP
+#ifndef PMSEXP_GUI_WIDGETS_CALIBRATION_WIDGET_HPP
+#define PMSEXP_GUI_WIDGETS_CALIBRATION_WIDGET_HPP
 
 #include "gui/widgets/LabelWidget.hpp"
 
-#include <QtWidgets/QRubberBand>
-
 namespace gui::widgets
 {
-    class SelectionWidget : public LabelWidget
+    class CalibrationWidget : public LabelWidget
     {
         Q_OBJECT
 
         Q_PROPERTY(
-            QRect selection
-            READ get_selection
-            WRITE set_selection
-            RESET reset_selection
-            NOTIFY selection_changed
+            double measure
+            READ get_measure
+            RESET reset_measure
+            NOTIFY measure_changed
+            STORED false
         )
 
     public:
-        explicit SelectionWidget(
+        explicit CalibrationWidget(
             const QPixmap&,
             QWidget* __parent = nullptr,
             Qt::WindowFlags   = {}
         );
 
-        explicit SelectionWidget(
+        explicit CalibrationWidget(
             const cv::Mat& __m,
             QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = {}
         )
-            : SelectionWidget(qpixmap_from_mat(__m), __parent, __f)
+            : CalibrationWidget(qpixmap_from_mat(__m), __parent, __f)
         {}
 
-        explicit SelectionWidget(
+        explicit CalibrationWidget(
             QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = {}
         )
-            : SelectionWidget(QPixmap(), __parent, __f)
+            : CalibrationWidget(QPixmap(), __parent, __f)
         {}
-    private:
-        void update_rubber_band_geometry();
     protected:
         void keyPressEvent(QKeyEvent*) override;
         void mousePressEvent(QMouseEvent*) override;
         void mouseMoveEvent(QMouseEvent*) override;
-        void resizeEvent(QResizeEvent*) override;
-        void showEvent(QShowEvent*) override;
     public:
-        QRect get_selection() const noexcept { return m_selection; }
-        bool has_selection() const noexcept { return m_selection.isValid(); }
+        double get_measure() const;
+        bool get_status() const { return (m_end != QPoint(-1., -1.)); }
     signals:
-        void selection_changed(const QRect& __new_selection);
+        void measure_changed(bool __status);
     public slots:
+        void reset_measure();
         void setPixmap(const QPixmap&);
 
         void setPixmap(const cv::Mat& __m)
             { setPixmap(qpixmap_from_mat(__m)); }
-
-        void set_selection(QRect) noexcept;
-        void reset_selection() noexcept;
     private:
-        QPoint      m_origin;
-        QRubberBand m_rubber_band;
-        QRect       m_selection;
+        QPixmap m_pixmap;
+
+        QPoint m_end;
+        QPoint m_origin;
     };
 }
 
-#endif // PMSEXP_GUI_WIDGETS_SELECTION_WIDGET_HPP
+#endif // PMSEXP_GUI_WIDGETS_CALIBRATION_WIDGET_HPP

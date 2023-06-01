@@ -133,12 +133,15 @@ set(
     include/core/types.hpp
     include/gui/MainWindow.hpp
     include/gui/widgets/ButtonSelecterWidget.hpp
+    include/gui/widgets/CalibrationWidget.hpp
     include/gui/widgets/CheckWidget.hpp
     include/gui/widgets/ItemizeWidget.hpp
+    include/gui/widgets/LabelWidget.hpp
     include/gui/widgets/ListSelecterWidget.hpp
     include/gui/widgets/SelecterWidget.hpp
     include/gui/widgets/SelectionWidget.hpp
     include/gui/widgets/UploadWidget.hpp
+    include/gui/widgets/pages/Calibration.hpp
     include/gui/widgets/pages/ContourSelection.hpp
     include/gui/widgets/pages/Selection.hpp
     include/gui/widgets/pages/Statistics.hpp
@@ -154,12 +157,15 @@ set(
     src/core/types.cpp
     src/gui/MainWindow.cpp
     src/gui/widgets/ButtonSelecterWidget.cpp
+    src/gui/widgets/CalibrationWidget.cpp
     src/gui/widgets/CheckWidget.cpp
     src/gui/widgets/ItemizeWidget.cpp
+    src/gui/widgets/LabelWidget.cpp
     src/gui/widgets/ListSelecterWidget.cpp
     src/gui/widgets/SelecterWidget.cpp
     src/gui/widgets/SelectionWidget.cpp
     src/gui/widgets/UploadWidget.cpp
+    src/gui/widgets/pages/Calibration.cpp
     src/gui/widgets/pages/ContourSelection.cpp
     src/gui/widgets/pages/Selection.cpp
     src/gui/widgets/pages/Statistics.cpp

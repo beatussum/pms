@@ -20,6 +20,7 @@
 
 #include "gui/widgets/SelectionWidget.hpp"
 
+#include "gui/widgets/pages/Calibration.hpp"
 #include "gui/widgets/pages/ContourSelection.hpp"
 #include "gui/widgets/pages/Selection.hpp"
 #include "gui/widgets/pages/Statistics.hpp"
@@ -50,6 +51,7 @@ namespace gui
         , m_ui(new Ui::MainWindow())
         , m_update_needed(true)
 
+        , m_calibration_page(new widgets::pages::Calibration())
         , m_contour_selection_page(new widgets::pages::ContourSelection())
         , m_selection_page(new widgets::pages::Selection())
         , m_statistics_page(new widgets::pages::Statistics())
@@ -60,6 +62,7 @@ namespace gui
         m_ui->m_central_widget->add_page(m_upload_page);
         m_ui->m_central_widget->add_page(m_selection_page);
         m_ui->m_central_widget->add_page(m_contour_selection_page);
+        m_ui->m_central_widget->add_page(m_calibration_page);
         m_ui->m_central_widget->add_page(m_statistics_page);
 
         m_progress_bar->hide();
@@ -131,6 +134,20 @@ namespace gui
             &widgets::pages::ContourSelection::current_changed,
             this,
             [&] { m_update_needed = true; }
+        );
+
+        QObject::connect(
+            m_calibration_page,
+            &widgets::pages::Calibration::status_changed,
+            this,
+
+            [&] (bool __new_status) {
+                if (__new_status) {
+                    m_ui->m_central_widget->set_progress(4);
+                } else {
+                    m_ui->m_central_widget->set_progress(3);
+                }
+            }
         );
 
         QObject::connect(
@@ -270,6 +287,10 @@ namespace gui
                     tr("Aucun contour trouvé."), 2'000
                 );
             } else {
+                m_calibration_page->get_calibration_widget()->setPixmap(
+                    m_first_frame
+                );
+
                 m_contour_selection_page->set_values(
                     std::move(contours),
                     m_first_frame
@@ -286,9 +307,9 @@ namespace gui
         m_update_needed = true;
     }
 
-    void MainWindow::load_selection()
+    void MainWindow::load_selection(bool __new_status)
     {
-        if (m_upload_page->is_upload_valid()) {
+        if (__new_status) {
             QString file_path = m_upload_page->get_ex_file_path();
 
             if (m_capture.open(file_path.toStdString())) {
@@ -322,6 +343,7 @@ namespace gui
 
     void MainWindow::reset()
     {
+        m_calibration_page->reset_status();
         m_contour_selection_page->reset_contours();
         m_selection_page->get_selection_widget()->reset_selection();
         m_upload_page->reset_upload_status();

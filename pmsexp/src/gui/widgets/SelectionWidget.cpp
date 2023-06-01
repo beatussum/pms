@@ -27,15 +27,14 @@ namespace gui::widgets
         QWidget* __parent,
         Qt::WindowFlags __f
     )
-        : QLabel(__parent, __f)
+        : LabelWidget(__parent, __f)
 
         , m_origin()
         , m_rubber_band(QRubberBand::Rectangle, this)
         , m_selection()
-        , m_selected(false)
     {
         setAlignment(Qt::AlignCenter);
-        setPixmap(__p);
+        LabelWidget::setPixmap(__p);
     }
 
     void SelectionWidget::update_rubber_band_geometry()
@@ -57,8 +56,6 @@ namespace gui::widgets
                     (m_selection.size() != QSize())
                 )
                 {
-                    m_selected = true;
-
                     emit selection_changed(m_selection);
                 }
 
@@ -68,7 +65,7 @@ namespace gui::widgets
 
                 break;
             default:
-                QLabel::keyPressEvent(__e);
+                LabelWidget::keyPressEvent(__e);
 
                 break;
         }
@@ -81,7 +78,7 @@ namespace gui::widgets
         setFocus();
 
         if (get_pixmap_rect().contains(origin)) {
-            if (m_selected) {
+            if (!m_selection.isEmpty()) {
                 reset_selection();
             }
 
@@ -92,7 +89,7 @@ namespace gui::widgets
             m_rubber_band.show();
         }
 
-        QLabel::mousePressEvent(__e);
+        LabelWidget::mousePressEvent(__e);
     }
 
     void SelectionWidget::mouseMoveEvent(QMouseEvent* __e)
@@ -116,38 +113,33 @@ namespace gui::widgets
             m_rubber_band.setGeometry(std::move(rubber_band_rect));
         }
 
-        QLabel::mouseMoveEvent(__e);
+        LabelWidget::mouseMoveEvent(__e);
     }
 
     void SelectionWidget::resizeEvent(QResizeEvent* __e)
     {
         update_rubber_band_geometry();
 
-        QLabel::resizeEvent(__e);
+        LabelWidget::resizeEvent(__e);
     }
 
     void SelectionWidget::showEvent(QShowEvent* __e)
     {
         update_rubber_band_geometry();
 
-        QLabel::showEvent(__e);
+        LabelWidget::showEvent(__e);
     }
 
-    QRect SelectionWidget::get_pixmap_rect() const
+    void SelectionWidget::setPixmap(const QPixmap& __p)
     {
-        QRect ret = pixmap(Qt::ReturnByValue).rect();
+        reset_selection();
 
-        ret.moveTopLeft(
-            QPoint(width() - ret.width(), height() - ret.height()) / 2
-        );
-
-        return ret;
+        LabelWidget::setPixmap(__p);
     }
 
     void SelectionWidget::set_selection(QRect __s) noexcept
     {
         m_selection = std::move(__s);
-        m_selected  = true;
 
         emit selection_changed(m_selection);
     }
@@ -155,7 +147,6 @@ namespace gui::widgets
     void SelectionWidget::reset_selection() noexcept
     {
         m_selection = QRect();
-        m_selected  = false;
 
         m_rubber_band.hide();
 

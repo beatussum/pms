@@ -39,17 +39,15 @@ namespace gui::widgets::pages
         explicit Upload(QWidget* __parent = nullptr, Qt::WindowFlags = {});
         virtual ~Upload() { delete m_ui; }
     public:
-        QString get_ex_file_path() const
-            { return m_ui->m_ex_uploader->get_file_path(); }
-
         QString get_comp_file_path() const
             { return m_ui->m_comp_uploader->get_file_path(); }
 
+        QString get_ex_file_path() const
+            { return m_ui->m_ex_uploader->get_file_path(); }
+
         bool is_upload_valid() const;
     signals:
-        void upload_status_changed();
-    private slots:
-        void update_upload_status();
+        void upload_status_changed(bool __new_status);
     public slots:
         void reset_upload_status();
     private:

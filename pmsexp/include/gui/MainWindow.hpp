@@ -35,6 +35,7 @@ class QProgressBar;
 
 namespace gui::widgets::pages
 {
+    class Calibration;
     class ContourSelection;
     class Selection;
     class Statistics;
@@ -60,7 +61,7 @@ namespace gui
         full_positions_type process_ex();
     private slots:
         void find_contours(const QRect& __new_selection);
-        void load_selection();
+        void load_selection(bool __new_status);
         void reset();
         void run();
         void show_results();
@@ -74,6 +75,7 @@ namespace gui
         Ui::MainWindow*          m_ui;
         bool                     m_update_needed;
 
+        gui::widgets::pages::Calibration*      m_calibration_page;
         gui::widgets::pages::ContourSelection* m_contour_selection_page;
         gui::widgets::pages::Selection*        m_selection_page;
         gui::widgets::pages::Statistics*       m_statistics_page;
