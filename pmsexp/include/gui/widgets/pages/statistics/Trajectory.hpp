@@ -16,27 +16,27 @@
  */
 
 
-#ifndef PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
-#define PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
+#ifndef PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_TRAJECTORY_HPP
+#define PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_TRAJECTORY_HPP
+
+#include "ui_Trajectory.h"
 
 #include "core/types.hpp"
-#include "gui/widgets/ListSelecterWidget.hpp"
-
-class QCustomPlot;
 
 namespace gui::widgets::pages::statistics
 {
-    class Trajectory;
-}
-
-namespace gui::widgets::pages
-{
-    class Statistics : public ListSelecterWidget
+    class Trajectory : public QWidget
     {
         Q_OBJECT
 
+    private:
+        QColor computed_data_color = Qt::green;
+        QColor ex_data_color       = Qt::black;
+        QColor target_data_color   = Qt::red;
     public:
-        explicit Statistics(QWidget* __parent = nullptr, Qt::WindowFlags = {});
+        Trajectory(QWidget* __parent = nullptr, Qt::WindowFlags = {});
+
+        virtual ~Trajectory() { delete m_ui; }
     public slots:
         void set_data(
             std::array<full_positions_type, 2> __comp_data,
@@ -45,12 +45,10 @@ namespace gui::widgets::pages
             const cv::Size& __size
         ) const;
 
-        void reset_data() const;
+        void reset_data() const { m_ui->m_pixmap_label->clear(); }
     private:
-        statistics::Trajectory* m_trajectory;
-        QCustomPlot*            m_angular_difference;
-        QCustomPlot*            m_spatial_difference;
+        Ui::Trajectory* m_ui;
     };
 }
 
-#endif // PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_HPP
+#endif // PMSEXP_GUI_WIDGETS_PAGES_STATISTICS_TRAJECTORY_HPP

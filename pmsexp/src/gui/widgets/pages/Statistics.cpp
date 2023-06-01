@@ -18,6 +18,8 @@
 
 #include "gui/widgets/pages/Statistics.hpp"
 
+#include "gui/widgets/pages/statistics/Trajectory.hpp"
+
 #include <qcustomplot.h>
 
 namespace gui::widgets::pages
@@ -25,7 +27,7 @@ namespace gui::widgets::pages
     Statistics::Statistics(QWidget* __parent, Qt::WindowFlags __f)
         : ListSelecterWidget(__parent, __f)
 
-        , m_trajectory(new QCustomPlot(this))
+        , m_trajectory(new statistics::Trajectory(this))
         , m_angular_difference(new QCustomPlot(this))
         , m_spatial_difference(new QCustomPlot(this))
     {
@@ -46,5 +48,21 @@ namespace gui::widgets::pages
             tr("Écart en position spatiale"),
             m_spatial_difference
         );
+    }
+
+    void Statistics::set_data(
+        std::array<full_positions_type, 2> __comp_data,
+        full_positions_type __ex_data,
+        double __ratio,
+        const cv::Size& __size
+    ) const
+    {
+        reset_data();
+        m_trajectory->set_data(__comp_data, __ex_data, __ratio, __size);
+    }
+
+    void Statistics::reset_data() const
+    {
+        m_trajectory->reset_data();
     }
 }

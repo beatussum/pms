@@ -147,6 +147,8 @@ namespace gui
                 } else {
                     m_ui->m_central_widget->set_progress(3);
                 }
+
+                m_update_needed = true;
             }
         );
 
@@ -236,11 +238,11 @@ namespace gui
     {
         full_positions_type ret;
 
-        ret.reserve(m_capture.get(cv::CAP_PROP_FRAME_COUNT));
+        full_position first_position =
+            full_position_from_contour(m_contour_selection_page->get_current());
 
-        ret.push_back(
-            full_position_from_contour(m_contour_selection_page->get_current())
-        );
+        ret.reserve(m_capture.get(cv::CAP_PROP_FRAME_COUNT));
+        ret.push_back(first_position);
 
         int progress = 1;
 
@@ -258,11 +260,14 @@ namespace gui
         while (m_capture.read(frame)) {
             m_tracker->update(frame, roi);
 
-            ret.push_back(
-                full_position_from_contour(
-                    *contours_from_mat(frame, roi, current_area).begin()
-                )
+            full_position fp = full_position_from_contour(
+                *contours_from_mat(frame, roi, current_area).begin()
             );
+
+            fp.angle    -= first_position.angle;
+            fp.position -= first_position.position;
+
+            ret.push_back(std::move(fp));
 
             emit m_future_watcher_ex.progressValueChanged(++progress);
         }
@@ -343,6 +348,7 @@ namespace gui
 
     void MainWindow::reset()
     {
+        m_statistics_page->reset_data();
         m_calibration_page->reset_status();
         m_contour_selection_page->reset_contours();
         m_selection_page->get_selection_widget()->reset_selection();
@@ -398,6 +404,13 @@ namespace gui
         } else {
             m_ui->m_status_bar->showMessage(
                 tr("Le chargement des données calculées est terminé."), 2'000
+            );
+
+            m_statistics_page->set_data(
+                std::move(result_comp),
+                std::move(result_ex),
+                m_calibration_page->get_ratio(),
+                m_first_frame.size()
             );
 
             m_update_needed = false;
