@@ -52,7 +52,7 @@ namespace gui::widgets
         );
     }
 
-    void SelecterWidget::__set_stacked_widget(QStackedWidget* __s)
+    void SelecterWidget::__set_stacked_widget(QStackedWidget* __s) const
     {
         if (__s != nullptr) {
             QObject::connect(

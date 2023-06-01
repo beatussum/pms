@@ -76,7 +76,7 @@ namespace gui::widgets::pages
             !m_ui->m_ex_uploader->is_empty();
     }
 
-    void Upload::reset_upload_status()
+    void Upload::reset_upload_status() const
     {
         m_ui->m_comp_uploader->reset_file_path();
         m_ui->m_ex_uploader->reset_file_path();

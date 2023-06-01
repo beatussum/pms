@@ -38,7 +38,14 @@ namespace gui::widgets::pages::statistics
         }
     }
 
-    Trajectory::Trajectory(QWidget* __parent, Qt::WindowFlags __f)
+    Trajectory::Trajectory(
+        const std::array<full_positions_type, 2>& __comp_data,
+        const full_positions_type& __ex_data,
+        double __ratio,
+        const cv::Size& __size,
+        QWidget* __parent,
+        Qt::WindowFlags __f
+    )
         : QWidget(__parent, __f)
         , m_ui(new Ui::Trajectory())
     {
@@ -54,39 +61,44 @@ namespace gui::widgets::pages::statistics
                 .arg(ex_data_color.name())
                 .arg(target_data_color.name())
         );
+
+        set_data(__comp_data, __ex_data, __ratio, __size);
     }
 
     void Trajectory::set_data(
-        std::array<full_positions_type, 2> __comp_data,
-        full_positions_type __ex_data,
+        const std::array<full_positions_type, 2>& __comp_data,
+        const full_positions_type& __ex_data,
         double __ratio,
         const cv::Size& __size
     ) const
     {
         QPixmap pixmap(__size.width, __size.height);
-        QPainter painter(&pixmap);
 
-        reset_data();
-        pixmap.fill();
+        if (!pixmap.isNull()) {
+            QPainter painter(&pixmap);
 
-        draw_full_positions(
-            painter,
-            computed_data_color,
-            __comp_data[0],
-            __ratio
-        );
+            reset_data();
+            pixmap.fill();
 
-        draw_full_positions(
-            painter,
-            target_data_color,
-            __comp_data[1],
-            __ratio
-        );
+            draw_full_positions(
+                painter,
+                computed_data_color,
+                __comp_data[0],
+                __ratio
+            );
 
-        draw_full_positions(painter, ex_data_color, __ex_data);
+            draw_full_positions(
+                painter,
+                target_data_color,
+                __comp_data[1],
+                __ratio
+            );
 
-        painter.end();
+            draw_full_positions(painter, ex_data_color, __ex_data);
 
-        m_ui->m_pixmap_label->setPixmap(pixmap);
+            painter.end();
+
+            m_ui->m_pixmap_label->setPixmap(pixmap);
+        }
     }
 }

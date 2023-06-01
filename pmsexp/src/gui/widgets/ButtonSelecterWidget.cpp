@@ -68,7 +68,7 @@ namespace gui::widgets
         );
     }
 
-    void ButtonSelecterWidget::update_buttons(int __current_index)
+    void ButtonSelecterWidget::update_buttons(int __current_index) const
     {
         QPushButton* next_button = m_ui->m_next_button;
 

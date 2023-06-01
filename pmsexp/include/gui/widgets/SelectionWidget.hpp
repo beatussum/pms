@@ -40,23 +40,30 @@ namespace gui::widgets
     public:
         explicit SelectionWidget(
             const QPixmap&,
+            QRect __selection,
             QWidget* __parent = nullptr,
             Qt::WindowFlags   = {}
         );
 
         explicit SelectionWidget(
             const cv::Mat& __m,
+            QRect __selection,
             QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = {}
         )
-            : SelectionWidget(qpixmap_from_mat(__m), __parent, __f)
+            : SelectionWidget(
+                qpixmap_from_mat(__m),
+                std::move(__selection),
+                __parent,
+                __f
+            )
         {}
 
         explicit SelectionWidget(
             QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = {}
         )
-            : SelectionWidget(QPixmap(), __parent, __f)
+            : SelectionWidget(QPixmap(), QRect(), __parent, __f)
         {}
     private:
         void update_rubber_band_geometry();
@@ -80,9 +87,10 @@ namespace gui::widgets
         void set_selection(QRect) noexcept;
         void reset_selection() noexcept;
     private:
+        QRect m_selection;
+
         QPoint      m_origin;
         QRubberBand m_rubber_band;
-        QRect       m_selection;
     };
 }
 

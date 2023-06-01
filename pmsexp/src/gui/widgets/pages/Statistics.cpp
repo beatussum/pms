@@ -24,7 +24,14 @@
 
 namespace gui::widgets::pages
 {
-    Statistics::Statistics(QWidget* __parent, Qt::WindowFlags __f)
+    Statistics::Statistics(
+        const std::array<full_positions_type, 2>& __comp_data,
+        const full_positions_type& __ex_data,
+        double __ratio,
+        const cv::Size& __size,
+        QWidget* __parent,
+        Qt::WindowFlags __f
+    )
         : ListSelecterWidget(__parent, __f)
 
         , m_trajectory(new statistics::Trajectory(this))
@@ -48,11 +55,13 @@ namespace gui::widgets::pages
             tr("Écart en position spatiale"),
             m_spatial_difference
         );
+
+        set_data(__comp_data, __ex_data, __ratio, __size);
     }
 
     void Statistics::set_data(
-        std::array<full_positions_type, 2> __comp_data,
-        full_positions_type __ex_data,
+        const std::array<full_positions_type, 2>& __comp_data,
+        const full_positions_type& __ex_data,
         double __ratio,
         const cv::Size& __size
     ) const

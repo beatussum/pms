@@ -45,7 +45,7 @@ namespace gui::widgets
 
         virtual ~ButtonSelecterWidget() { delete m_ui; }
     protected:
-        void update_buttons(int __current_index) override;
+        void update_buttons(int __current_index) const override;
     public:
         int get_progress() const noexcept { return m_progress; }
         void set_page_index(int) override;

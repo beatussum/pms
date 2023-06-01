@@ -21,8 +21,8 @@
 namespace gui::widgets
 {
     ItemizeWidget::ItemizeWidget(
-        QString __info,
-        QPixmap __p,
+        const QString& __info,
+        const QPixmap& __p,
         QWidget* __parent,
         Qt::WindowFlags __f
     )
@@ -31,8 +31,8 @@ namespace gui::widgets
     {
         m_ui->setupUi(this);
 
-        set_info(std::move(__info));
-        set_pixmap(std::move(__p));
+        set_info(__info);
+        set_pixmap(__p);
     }
 
     QPixmap ItemizeWidget::get_pixmap() const

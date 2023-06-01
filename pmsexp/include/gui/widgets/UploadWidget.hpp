@@ -39,7 +39,7 @@ namespace gui::widgets
         using mime_checker_type = std::function<bool(const QString&)>;
     public:
         explicit UploadWidget(
-            QString __info,
+            const QString& __info,
             mime_checker_type,
             QWidget* __parent = nullptr,
             Qt::WindowFlags   = {}

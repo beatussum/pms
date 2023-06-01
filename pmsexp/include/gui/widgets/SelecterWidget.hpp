@@ -50,10 +50,10 @@ namespace gui::widgets
             : SelecterWidget(nullptr, __parent, __f)
         {}
     public:
-        int get_index_of(QWidget* __w)
+        int get_index_of(QWidget* __w) const
             { return m_stacked_widget->indexOf(__w); }
 
-        QWidget* get_page(int __index)
+        QWidget* get_page(int __index) const
             { return m_stacked_widget->widget(__index); }
 
         int get_page_index() const { return m_stacked_widget->currentIndex(); }
@@ -74,7 +74,7 @@ namespace gui::widgets
         void page_index_changed(int __current_index);
         void page_removed(int __index);
     private:
-        void __set_stacked_widget(QStackedWidget*);
+        void __set_stacked_widget(QStackedWidget*) const;
     public:
         void set_stacked_widget(QStackedWidget* __s)
             { __set_stacked_widget(m_stacked_widget = __s); }
@@ -82,7 +82,7 @@ namespace gui::widgets
         void next();
         void previous();
     protected slots:
-        virtual void update_buttons(int __current_index) = 0;
+        virtual void update_buttons(int __current_index) const = 0;
     private:
         QStackedWidget* m_stacked_widget;
     };

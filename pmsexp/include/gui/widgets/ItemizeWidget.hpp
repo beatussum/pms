@@ -45,24 +45,19 @@ namespace gui::widgets
 
     public:
         explicit ItemizeWidget(
-            QString __info,
-            QPixmap,
+            const QString& __info,
+            const QPixmap&,
             QWidget* __parent = nullptr,
             Qt::WindowFlags   = {}
         );
 
         explicit ItemizeWidget(
-            QString __info,
+            const QString& __info,
             const QIcon& __i,
             QWidget* __parent   = nullptr,
             Qt::WindowFlags __f = {}
         )
-            : ItemizeWidget(
-                std::move(__info),
-                __i.pixmap({32, 32}),
-                __parent,
-                __f
-            )
+            : ItemizeWidget(__info, __i.pixmap({32, 32}), __parent, __f)
         {}
 
         ItemizeWidget(QWidget* __parent = nullptr, Qt::WindowFlags __f = {})
@@ -74,13 +69,14 @@ namespace gui::widgets
         QString get_info() const { return m_ui->m_info_label->text(); }
         QPixmap get_pixmap() const;
     public slots:
-        void set_info(QString __i)
-            { m_ui->m_info_label->setText(std::move(__i)); }
+        void set_info(const QString& __i) const
+            { m_ui->m_info_label->setText(__i); }
     protected slots:
-        void set_pixmap(QPixmap __p)
-            { m_ui->m_pixmap_label->setPixmap(std::move(__p)); }
+        void set_pixmap(const QPixmap& __p) const
+            { m_ui->m_pixmap_label->setPixmap(__p); }
 
-        void set_pixmap(const QIcon& __i) { set_pixmap(__i.pixmap({32, 32})); }
+        void set_pixmap(const QIcon& __i) const
+            { set_pixmap(__i.pixmap({32, 32})); }
     private:
         Ui::ItemizeWidget* m_ui;
     };

@@ -24,14 +24,16 @@ namespace gui::widgets
 {
     SelectionWidget::SelectionWidget(
         const QPixmap& __p,
+        QRect __selection,
         QWidget* __parent,
         Qt::WindowFlags __f
     )
         : LabelWidget(__parent, __f)
 
+        , m_selection(std::move(__selection))
+
         , m_origin()
         , m_rubber_band(QRubberBand::Rectangle, this)
-        , m_selection()
     {
         setAlignment(Qt::AlignCenter);
         LabelWidget::setPixmap(__p);
@@ -100,7 +102,7 @@ namespace gui::widgets
         if (pixmap_rect.contains(bottom_right)) {
             QRect rubber_band_rect = QRect(
                 m_origin,
-                std::move(bottom_right)
+                bottom_right
             ).normalized();
 
             m_selection = QRect(
@@ -110,7 +112,7 @@ namespace gui::widgets
                 rubber_band_rect.height()
             );
 
-            m_rubber_band.setGeometry(std::move(rubber_band_rect));
+            m_rubber_band.setGeometry(rubber_band_rect);
         }
 
         LabelWidget::mouseMoveEvent(__e);

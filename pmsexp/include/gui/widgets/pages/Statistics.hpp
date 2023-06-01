@@ -36,11 +36,32 @@ namespace gui::widgets::pages
         Q_OBJECT
 
     public:
-        explicit Statistics(QWidget* __parent = nullptr, Qt::WindowFlags = {});
+        explicit Statistics(
+            const std::array<full_positions_type, 2>& __comp_data,
+            const full_positions_type& __ex_data,
+            double __ratio,
+            const cv::Size& __size,
+            QWidget* __parent = nullptr,
+            Qt::WindowFlags = {}
+        );
+
+        explicit Statistics(
+            QWidget* __parent = nullptr,
+            Qt::WindowFlags __f = {}
+        )
+            : Statistics(
+                std::array<full_positions_type, 2>(),
+                full_positions_type(),
+                1.,
+                cv::Size(),
+                __parent,
+                __f
+            )
+        {}
     public slots:
         void set_data(
-            std::array<full_positions_type, 2> __comp_data,
-            full_positions_type __ex_data,
+            const std::array<full_positions_type, 2>& __comp_data,
+            const full_positions_type& __ex_data,
             double __ratio,
             const cv::Size& __size
         ) const;

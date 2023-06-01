@@ -56,7 +56,7 @@ namespace gui::widgets::pages
     signals:
         void status_changed(bool __new_status);
     public slots:
-        void reset_status();
+        void reset_status() const;
     private:
         Ui::Calibration* m_ui;
     };

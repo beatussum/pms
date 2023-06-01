@@ -215,7 +215,7 @@ namespace gui
                 } else {
                     emit m_future_watcher_comp.progressTextChanged(
                         tr("Le fichier « %1 » n'a pas le bon format.")
-                            .arg(std::move(file_path))
+                            .arg(file_path)
                     );
                 }
             } else {
@@ -407,8 +407,8 @@ namespace gui
             );
 
             m_statistics_page->set_data(
-                std::move(result_comp),
-                std::move(result_ex),
+                result_comp,
+                result_ex,
                 m_calibration_page->get_ratio(),
                 m_first_frame.size()
             );

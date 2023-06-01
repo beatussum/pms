@@ -81,7 +81,7 @@ namespace gui::widgets::pages
         }
     }
 
-    void Calibration::reset_status()
+    void Calibration::reset_status() const
     {
         m_ui->m_calibration_widget->reset_measure();
         m_ui->m_line_edit->clear();

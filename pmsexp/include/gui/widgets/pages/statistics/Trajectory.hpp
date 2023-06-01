@@ -34,13 +34,34 @@ namespace gui::widgets::pages::statistics
         QColor ex_data_color       = Qt::black;
         QColor target_data_color   = Qt::red;
     public:
-        Trajectory(QWidget* __parent = nullptr, Qt::WindowFlags = {});
+        explicit Trajectory(
+            const std::array<full_positions_type, 2>& __comp_data,
+            const full_positions_type& __ex_data,
+            double __ratio,
+            const cv::Size& __size,
+            QWidget* __parent = nullptr,
+            Qt::WindowFlags   = {}
+        );
+
+        explicit Trajectory(
+            QWidget* __parent   = nullptr,
+            Qt::WindowFlags __f = {}
+        )
+            : Trajectory(
+                std::array<full_positions_type, 2>(),
+                full_positions_type(),
+                1.,
+                cv::Size(),
+                __parent,
+                __f
+            )
+        {}
 
         virtual ~Trajectory() { delete m_ui; }
     public slots:
         void set_data(
-            std::array<full_positions_type, 2> __comp_data,
-            full_positions_type __ex_data,
+            const std::array<full_positions_type, 2>& __comp_data,
+            const full_positions_type& __ex_data,
             double __ratio,
             const cv::Size& __size
         ) const;

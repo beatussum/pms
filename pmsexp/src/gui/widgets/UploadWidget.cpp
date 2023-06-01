@@ -26,13 +26,13 @@
 namespace gui::widgets
 {
     UploadWidget::UploadWidget(
-        QString __info,
+        const QString& __info,
         mime_checker_type __c,
         QWidget* __parent,
         Qt::WindowFlags __f
     )
         : ItemizeWidget(
-                std::move(__info),
+                __info,
                 QIcon::fromTheme("document-new"),
                 __parent,
                 __f

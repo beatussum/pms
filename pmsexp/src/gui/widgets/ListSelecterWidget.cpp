@@ -72,7 +72,7 @@ namespace gui::widgets
         m_map[__w] = item;
     }
 
-    void ListSelecterWidget::update_buttons(int __current_index)
+    void ListSelecterWidget::update_buttons(int __current_index) const
     {
         m_ui->m_scroll_down_button->setDisabled(
             __current_index == (m_ui->m_selecter->count() - 1)

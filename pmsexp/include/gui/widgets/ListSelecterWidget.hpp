@@ -41,7 +41,7 @@ namespace gui::widgets
     private:
         void add_selecter(const QIcon&, const QString&, QWidget*);
     protected:
-        void update_buttons(int __current_index) override;
+        void update_buttons(int __current_index) const override;
     public:
         void add_page(const QIcon&, const QString&, QWidget*);
 

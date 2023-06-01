@@ -49,7 +49,7 @@ namespace gui::widgets::pages
     signals:
         void upload_status_changed(bool __new_status);
     public slots:
-        void reset_upload_status();
+        void reset_upload_status() const;
     private:
         Ui::Upload* m_ui;
     };

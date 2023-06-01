@@ -43,7 +43,7 @@ namespace gui::widgets
             Qt::WindowFlags __f = {}
         )
             : ItemizeWidget(
-                std::move(__info),
+                __info,
                 QIcon::fromTheme(__status ? "list-add" : "list-remove"),
                 __parent,
                 __f
