@@ -146,7 +146,6 @@ set(
     include/gui/widgets/pages/Selection.hpp
     include/gui/widgets/pages/Statistics.hpp
     include/gui/widgets/pages/Upload.hpp
-    include/gui/widgets/pages/statistics/Trajectory.hpp
 )
 
 set(PMSEXP_IPP)
@@ -171,7 +170,6 @@ set(
     src/gui/widgets/pages/Selection.cpp
     src/gui/widgets/pages/Statistics.cpp
     src/gui/widgets/pages/Upload.cpp
-    src/gui/widgets/pages/statistics/Trajectory.cpp
 )
 
 set(CMAKE_AUTOMOC ON)

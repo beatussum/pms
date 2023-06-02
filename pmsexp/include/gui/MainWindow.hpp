@@ -25,6 +25,7 @@
 
 #include <opencv2/videoio.hpp>
 #include <QtCore/QFutureWatcher>
+#include <unordered_map>
 
 namespace cv
 {
@@ -50,15 +51,15 @@ namespace gui
 
     private:
         using future_watcher_comp_type =
-            QFutureWatcher<std::array<full_positions_type, 2>>;
+            QFutureWatcher<full_positions_comp_data>;
 
-        using future_watcher_ex_type = QFutureWatcher<full_positions_type>;
+        using future_watcher_ex_type = QFutureWatcher<full_positions_ex_data>;
     public:
         explicit MainWindow(QWidget* __parent = nullptr, Qt::WindowFlags = {});
         virtual ~MainWindow() { delete m_ui; }
     private:
-        std::array<full_positions_type, 2> process_comp();
-        full_positions_type process_ex();
+        full_positions_comp_data process_comp();
+        full_positions_ex_data process_ex();
     private slots:
         void find_contours(const QRect& __new_selection);
         void load_selection(bool __new_status);

@@ -86,14 +86,19 @@ full_position full_position_from_contour(contour_type __c)
     return {angle, position};
 }
 
-full_position full_position_from_qjsonvalueref(QJsonValueRef __j)
+full_position full_position_from_qjsonvalue(
+    const QJsonValue& __j,
+    full_position __offset
+)
 {
     QJsonObject object   = __j.toObject();
     QJsonObject position = object["position"].toObject();
 
     return full_position{
-        object["angle"].toDouble(),
+        object["angle"].toDouble() - __offset.angle,
+
         cv::Point(position["x"].toDouble(), position["y"].toDouble())
+            - __offset.position,
     };
 }
 

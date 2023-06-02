@@ -40,7 +40,12 @@ inline sorted_contours_type contours_from_mat(
     { return contours_from_mat(__frame, __roi, __roi.area()); }
 
 full_position full_position_from_contour(contour_type);
-full_position full_position_from_qjsonvalueref(QJsonValueRef);
+
+full_position full_position_from_qjsonvalue(
+    const QJsonValue&,
+    full_position __offset = full_position()
+);
+
 QPixmap qpixmap_from_mat(const cv::Mat&);
 QPolygon qpolygon_from_contour(contour_type);
 

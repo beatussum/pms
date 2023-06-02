@@ -18,15 +18,13 @@
 
 #include "gui/widgets/pages/Statistics.hpp"
 
-#include "gui/widgets/pages/statistics/Trajectory.hpp"
-
 #include <qcustomplot.h>
 
 namespace gui::widgets::pages
 {
     Statistics::Statistics(
-        const std::array<full_positions_type, 2>& __comp_data,
-        const full_positions_type& __ex_data,
+        const full_positions_comp_data& __comp_data,
+        const full_positions_ex_data& __ex_data,
         double __ratio,
         const cv::Size& __size,
         QWidget* __parent,
@@ -34,7 +32,7 @@ namespace gui::widgets::pages
     )
         : ListSelecterWidget(__parent, __f)
 
-        , m_trajectory(new statistics::Trajectory(this))
+        , m_trajectory(new QCustomPlot(this))
         , m_angular_difference(new QCustomPlot(this))
         , m_spatial_difference(new QCustomPlot(this))
     {
@@ -56,22 +54,91 @@ namespace gui::widgets::pages
             m_spatial_difference
         );
 
+        m_trajectory->addGraph();
+        m_trajectory->graph(0)->setLineStyle(QCPGraph::lsNone);
+        m_trajectory->graph(0)->setName(tr("Positions calculées"));
+        m_trajectory->graph(0)->setPen(QPen(computed_data_color));
+
+        m_trajectory->graph(0)->setScatterStyle(
+            QCPScatterStyle(QCPScatterStyle::ssCircle, 4)
+        );
+
+        m_trajectory->addGraph();
+        m_trajectory->graph(1)->setLineStyle(QCPGraph::lsNone);
+        m_trajectory->graph(1)->setName(tr("Positions expérimentales"));
+        m_trajectory->graph(1)->setPen(QPen(ex_data_color));
+
+        m_trajectory->graph(1)->setScatterStyle(
+            QCPScatterStyle(QCPScatterStyle::ssPlus, 4)
+        );
+
+        m_trajectory->addGraph();
+        m_trajectory->graph(2)->setLineStyle(QCPGraph::lsNone);
+        m_trajectory->graph(2)->setName(tr("Positions cibles"));
+        m_trajectory->graph(2)->setPen(QPen(target_data_color));
+
+        m_trajectory->graph(2)->setScatterStyle(
+            QCPScatterStyle(QCPScatterStyle::ssCross, 4)
+        );
+
+        m_trajectory->legend->setVisible(true);
+        m_trajectory->yAxis->setRangeReversed(true);
+
         set_data(__comp_data, __ex_data, __ratio, __size);
     }
 
     void Statistics::set_data(
-        const std::array<full_positions_type, 2>& __comp_data,
-        const full_positions_type& __ex_data,
+        const full_positions_comp_data& __comp_data,
+        const full_positions_ex_data& __ex_data,
         double __ratio,
         const cv::Size& __size
     ) const
     {
         reset_data();
-        m_trajectory->set_data(__comp_data, __ex_data, __ratio, __size);
+
+        std::size_t size = __comp_data.size();
+        QVector<double> x, y;
+
+        x.reserve(size);
+        y.reserve(size);
+
+        for (auto i = __comp_data.cbegin(); i != (__comp_data.cend()); ++i) {
+            x.push_back(i->second.first.position.x);
+            y.push_back(i->second.first.position.y);
+        }
+
+        m_trajectory->graph(0)->setData(x, y, true);
+        m_trajectory->graph(0)->rescaleAxes();
+
+        x.resize(0);
+        y.resize(0);
+
+        for (auto i = __ex_data.cbegin(); i != (__ex_data.cend()); ++i) {
+            x.push_back(i->second.position.x * __ratio);
+            y.push_back(i->second.position.y * __ratio);
+        }
+
+        m_trajectory->graph(1)->setData(x, y, true);
+        m_trajectory->graph(1)->rescaleAxes();
+
+        x.resize(0);
+        y.resize(0);
+
+        for (auto i = __comp_data.cbegin(); i != (__comp_data.cend()); ++i) {
+            x.push_back(i->second.second.position.x);
+            y.push_back(i->second.second.position.y);
+        }
+
+        m_trajectory->graph(2)->setData(x, y, true);
+        m_trajectory->graph(2)->rescaleAxes();
+
+        m_trajectory->replot();
     }
 
     void Statistics::reset_data() const
     {
-        m_trajectory->reset_data();
+        for (int i = 0; i != 3; ++i) {
+            m_trajectory->graph(i)->data()->clear();
+        }
     }
 }

@@ -167,9 +167,9 @@ namespace gui
         );
     }
 
-    std::array<full_positions_type, 2> MainWindow::process_comp()
+    full_positions_comp_data MainWindow::process_comp()
     {
-        std::array<full_positions_type, 2> ret;
+        full_positions_comp_data ret;
         QString file_path = m_upload_page->get_comp_file_path();
 
         QJsonValue schema_value;
@@ -197,20 +197,37 @@ namespace gui
                 valijson::Validator validator;
 
                 if (validator.validate(schema, data_adaptater, nullptr)) {
-                    for (QJsonValueRef datum : data["data"].toArray()) {
-                        QJsonObject datum_obj = datum.toObject();
+                    QJsonArray data_arr = data["data"].toArray();
 
-                        ret[0].push_back(
-                            full_position_from_qjsonvalueref(
-                                datum_obj["computed"]
-                            )
-                        );
+                    double first_timestamp =
+                        data_arr.first()["timestamp"].toDouble();
 
-                        ret[1].push_back(
-                            full_position_from_qjsonvalueref(
-                                datum_obj["target"]
-                            )
-                        );
+                    full_position first_position =
+                        full_position_from_qjsonvalue(data_arr.first());
+
+                    ret[0.].first  = full_position();
+                    ret[0.].second = full_position();
+
+                    for (
+                        auto i = (data_arr.begin() + 1);
+                        i < data_arr.end();
+                        ++i
+                    )
+                    {
+                        QJsonObject datum = i->toObject();
+                        double timestamp  = datum["timestamp"].toDouble();
+
+                        ret[timestamp - first_timestamp].first =
+                            full_position_from_qjsonvalue(
+                                datum["computed"],
+                                first_position
+                            );
+
+                        ret[timestamp - first_timestamp].second =
+                            full_position_from_qjsonvalue(
+                                datum["target"],
+                                first_position
+                            );
                     }
                 } else {
                     emit m_future_watcher_comp.progressTextChanged(
@@ -234,17 +251,18 @@ namespace gui
         return ret;
     }
 
-    full_positions_type MainWindow::process_ex()
+    full_positions_ex_data MainWindow::process_ex()
     {
-        full_positions_type ret;
+        full_positions_ex_data ret;
 
         full_position first_position =
-            full_position_from_contour(m_contour_selection_page->get_current());
+            full_position_from_contour(
+                m_contour_selection_page->get_current()
+            );
 
-        ret.reserve(m_capture.get(cv::CAP_PROP_FRAME_COUNT));
-        ret.push_back(first_position);
-
-        int progress = 1;
+        double first_timestamp = m_capture.get(cv::CAP_PROP_POS_MSEC);
+        int progress           = 1;
+        ret[0.]                = full_position();
 
         emit m_future_watcher_ex.progressValueChanged(progress);
 
@@ -264,10 +282,12 @@ namespace gui
                 *contours_from_mat(frame, roi, current_area).begin()
             );
 
-            fp.angle    -= first_position.angle;
-            fp.position -= first_position.position;
+            fp.angle     -= first_position.angle;
+            fp.position  -= first_position.position;
 
-            ret.push_back(std::move(fp));
+            ret[
+                m_capture.get(cv::CAP_PROP_POS_MSEC) - first_timestamp
+            ] = std::move(fp);
 
             emit m_future_watcher_ex.progressValueChanged(++progress);
         }
@@ -394,12 +414,10 @@ namespace gui
 
     void MainWindow::show_results()
     {
-        std::array<full_positions_type, 2> result_comp =
-            m_future_watcher_comp.result();
+        full_positions_comp_data result_comp = m_future_watcher_comp.result();
+        full_positions_ex_data result_ex     = m_future_watcher_ex.result();
 
-        full_positions_type result_ex = m_future_watcher_ex.result();
-
-        if (result_comp[0].empty() || result_ex.empty()) {
+        if (result_comp.empty() || result_ex.empty()) {
             m_ui->m_central_widget->previous();
         } else {
             m_ui->m_status_bar->showMessage(

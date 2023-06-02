@@ -56,10 +56,17 @@
                 "target": {
                     "description": "The target position of the robot",
                     "$ref": "#/$defs/full_position"
+                },
+
+                "timestamp": {
+                    "description":
+                        "The timestamp associated with the position",
+
+                    "type": "number"
                 }
             },
 
-            "required": ["computed", "target"]
+            "required": ["computed", "target", "timestamp"]
         },
 
         "data": {

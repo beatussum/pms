@@ -24,11 +24,6 @@
 
 class QCustomPlot;
 
-namespace gui::widgets::pages::statistics
-{
-    class Trajectory;
-}
-
 namespace gui::widgets::pages
 {
     class Statistics : public ListSelecterWidget
@@ -36,9 +31,13 @@ namespace gui::widgets::pages
         Q_OBJECT
 
     public:
+        inline static const QColor computed_data_color = Qt::green;
+        inline static const QColor ex_data_color       = Qt::black;
+        inline static const QColor target_data_color   = Qt::red;
+    public:
         explicit Statistics(
-            const std::array<full_positions_type, 2>& __comp_data,
-            const full_positions_type& __ex_data,
+            const full_positions_comp_data& __comp_data,
+            const full_positions_ex_data& __ex_data,
             double __ratio,
             const cv::Size& __size,
             QWidget* __parent = nullptr,
@@ -50,8 +49,8 @@ namespace gui::widgets::pages
             Qt::WindowFlags __f = {}
         )
             : Statistics(
-                std::array<full_positions_type, 2>(),
-                full_positions_type(),
+                full_positions_comp_data(),
+                full_positions_ex_data(),
                 1.,
                 cv::Size(),
                 __parent,
@@ -60,17 +59,17 @@ namespace gui::widgets::pages
         {}
     public slots:
         void set_data(
-            const std::array<full_positions_type, 2>& __comp_data,
-            const full_positions_type& __ex_data,
+            const full_positions_comp_data& __comp_data,
+            const full_positions_ex_data& __ex_data,
             double __ratio,
             const cv::Size& __size
         ) const;
 
         void reset_data() const;
     private:
-        statistics::Trajectory* m_trajectory;
-        QCustomPlot*            m_angular_difference;
-        QCustomPlot*            m_spatial_difference;
+        QCustomPlot* m_trajectory;
+        QCustomPlot* m_angular_difference;
+        QCustomPlot* m_spatial_difference;
     };
 }
 
