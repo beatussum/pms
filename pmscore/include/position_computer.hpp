@@ -22,6 +22,11 @@
 #include "core/iterator.hpp"
 #include "math/vector.hpp"
 
+namespace pmscore::json
+{
+    class json_object;
+}
+
 /**
  * @file
  *
@@ -56,13 +61,18 @@ namespace pmscore
          * @param __vertex_radius Rayon autour du prochain sommet à atteindre
          * où, s'il est dans cette zone, le robot passe au vecteur-arrête
          * suivant.
+         *
+         * @param __loop Si ce booléen est vrai, alors le chemin bouclera
+         * indéfiniement ; sinon, il s'arrêtera une fois arrivé au dernier
+         * vecteur-arrête.
          */
 
         explicit position_computer(
             real __tadvance,
             const vector* __tpath,
             size_t __tpath_size,
-            real __vertex_radius
+            real __vertex_radius,
+            bool __loop = true
         );
 
         /**
@@ -81,15 +91,20 @@ namespace pmscore
          * @param __vertex_radius Rayon autour du prochain sommet à atteindre
          * où, s'il est dans cette zone, le robot passe au vecteur-arrête
          * suivant.
+         *
+         * @param __loop Si ce booléen est vrai, alors le chemin bouclera
+         * indéfiniement ; sinon, il s'arrêtera une fois arrivé au dernier
+         * vecteur-arrête.
          */
 
         template <size_t _n>
         explicit position_computer(
             real __tadvance,
             const vector (&__tpath)[_n],
-            real __vertex_radius
+            real __vertex_radius,
+            bool __loop = true
         )
-            : position_computer(__tadvance, __tpath, _n, __vertex_radius)
+            : position_computer(__tadvance, __tpath, _n, __vertex_radius, __loop)
         {}
 
         /**
@@ -101,6 +116,7 @@ namespace pmscore
 
         ~position_computer() { delete[] m_tpath; }
     public:
+        explicit operator pmscore::json::json_object() const;
         explicit operator String() const;
     private:
         void __update_rstatus(
@@ -135,6 +151,9 @@ namespace pmscore
             real __last_angle_b
         );
     public:
+        bool is_looping() const noexcept { return m_loop; }
+        void set_loop(bool __b) noexcept { m_loop = __b; }
+
         real get_tadvance() const noexcept { return m_tadvance; }
 
         vector* get_path() const noexcept { return m_tpath; }
@@ -160,7 +179,10 @@ namespace pmscore
 
         bool is_vertex_reached() const noexcept
             { return m_cis_vertex_reached; }
+
+        bool is_ended() const noexcept { return m_is_ended; }
     private:
+        bool    m_loop;
         real    m_tadvance;
         vector* m_tpath;
         size_t  m_tpath_size;
@@ -182,6 +204,8 @@ namespace pmscore
         vector        m_tpos;
         real          m_ttarget;
         vector        m_tvertex;
+
+        bool m_is_ended;
     };
 }
 

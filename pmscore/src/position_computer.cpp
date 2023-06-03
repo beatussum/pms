@@ -19,17 +19,39 @@
 #include "position_computer.hpp"
 
 #include "core/core.hpp"
+
+#include "json/json_object.hpp"
+#include "json/json_property.hpp"
+#include "json/json_value.hpp"
+
 #include "correcter.hpp"
 
 namespace pmscore
 {
+    pmscore::json::json_object full_position_from(
+        real __angle,
+        const vector& __v
+    )
+    {
+        return json::json_object({
+            json::json_property("angle", json::json_value(__angle)),
+
+            json::json_property(
+                "position",
+                static_cast<pmscore::json::json_object>(__v)
+            ),
+        });
+    }
+
     position_computer::position_computer(
         real __tadvance,
         const vector* __tpath,
         size_t __tpath_size,
-        real __vertex_radius
+        real __vertex_radius,
+        bool __loop
     )
-        : m_tadvance(__tadvance)
+        : m_loop(__loop)
+        , m_tadvance(__tadvance)
         , m_tpath(new vector[__tpath_size])
         , m_tpath_size(__tpath_size)
         , m_vertex_radius(__vertex_radius)
@@ -54,8 +76,27 @@ namespace pmscore
 
         , m_ttarget((1 - m_tadvance) * m_tcurrent_edge_norm)
         , m_tvertex()
+
+        , m_is_ended(false)
     {
         copy(__tpath, __tpath + __tpath_size, m_tpath);
+    }
+
+    position_computer::operator pmscore::json::json_object() const
+    {
+        return pmscore::json::json_object({
+            json::json_property(
+                "computed",
+                full_position_from(m_cangle, m_cpos)
+            ),
+
+            json::json_property(
+                "target",
+                full_position_from(m_tangle, get_tpos())
+            ),
+
+            json::json_property("timestamp", json::json_value(millis()))
+        });
     }
 
     position_computer::operator String() const
@@ -110,7 +151,11 @@ namespace pmscore
             m_tvertex += *m_ti;
 
             if (++m_ti == (m_tpath + m_tpath_size)) {
-                m_ti = m_tpath;
+                if (m_loop) {
+                    m_ti = m_tpath;
+                } else {
+                    m_is_ended = true;
+                }
             }
 
             m_ti_unit = m_ti->unit();

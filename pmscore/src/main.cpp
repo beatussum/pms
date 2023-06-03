@@ -20,10 +20,22 @@
 #include "arduino/connecter.hpp"
 #include "arduino/encoder.hpp"
 #include "arduino/motoreductor.hpp"
+
+#include "json/json_array.hpp"
+#include "json/json_live_array.hpp"
+#include "json/json_live_object.hpp"
+#include "json/json_object.hpp"
+#include "json/json_property.hpp"
+#include "json/json_value.hpp"
+
 #include "speed_profile/constant.hpp"
 #include "speed_profile/trapezoidal.hpp"
+
 #include "correcter.hpp"
 #include "position_computer.hpp"
+
+#include <SPI.h>
+#include <SD.h>
 
 using namespace pmscore;
 
@@ -50,11 +62,9 @@ correcter corr(
     15
 );
 
-position_computer computer(
-    .2,
-    {{0., 1'000.}, {-1'000., 0.}, {0., -1'000.}, {1'000., 0.}},
-    5.
-);
+vector path[] = {{0., 1'000.}, {-1'000., 0.}, {0., -1'000.}, {1'000., 0.}};
+
+position_computer computer(.2, path, 5.);
 
 arduino::connecter connecter(
     &encoder_a,
@@ -65,9 +75,47 @@ arduino::connecter connecter(
     corr
 );
 
+File file;
+
+json::json_live_array json_data(&file);
+json::json_live_object json_main_object(&file);
+
+void operator delete(void* __ptr, size_t __size)
+{
+    free(__ptr);
+}
+
+void operator delete[](void* __ptr, size_t __size)
+{
+    free(__ptr);
+}
+
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(9'600);
+    pinMode(SS, OUTPUT);
+
+    Serial.print("Initialisation");
+
+    while (!SD.begin(SPI_HALF_SPEED, 53)) {
+        Serial.print('.');
+    }
+
+    Serial.println();
+
+    file = SD.open("comp_data.json", FILE_WRITE);
+
+    if (!file) {
+        Serial.println("Cannot open `comp_data.json`.");
+    }
+
+    json::json_array json_path;
+
+    for (const vector& v : path) {
+        json_path.push_back(static_cast<json::json_object>(v));
+    }
+
+    file.print(", \"data\": ");
 
     arduino::set_main_encoders(&encoder_a, &encoder_b);
     arduino::set_main_ultrasonic_sensor(&usensor);
@@ -77,5 +125,11 @@ void setup()
 
 void loop()
 {
+    if (!computer.is_ended()) {
+        json_data.push_back(static_cast<json::json_object>(computer));
+    } else if (!json_main_object.is_ended()) {
+        json_main_object.serialize();
+    }
+
     connecter.update_status();
 }
