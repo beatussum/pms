@@ -16,26 +16,39 @@
  */
 
 
-#ifndef PMSCORE_JSON_JSON_TYPE_HPP
-#define PMSCORE_JSON_JSON_TYPE_HPP
-
-#include <stdint.h>
+#include "json/json_property.hpp"
 
 namespace pmscore::json
 {
-    enum class json_type : uint8_t
+    void swap(json_property& __l, json_property& __r) noexcept
     {
-        Array,
-        Boolean,
-        Char,
-        Float,
-        Null,
-        Object,
-        Property,
-        SignedInteger,
-        String,
-        UnsignedInteger
-    };
-}
+        String name         = __l.m_name;
+        json_type type      = __l.m_type;
+        json_variant* value = __l.m_value;
 
-#endif // PMSCORE_JSON_JSON_TYPE_HPP
+        __l.m_name  = __r.m_name;
+        __l.m_type  = __r.m_type;
+        __l.m_value = __r.m_value;
+
+        __r.m_name  = name;
+        __r.m_type  = type;
+        __r.m_value = value;
+    }
+
+    json_property::json_property(json_property&& __j)
+        : json_variant(__j)
+
+        , m_name(__j.m_name)
+        , m_value(__j.m_value)
+    {
+        __j.m_name  = String();
+        __j.m_value = nullptr;
+    }
+
+    json_property& json_property::operator=(json_property __j) noexcept
+    {
+        swap(*this, __j);
+
+        return *this;
+    }
+}
