@@ -23,6 +23,11 @@
 
 #include "core/core.hpp"
 
+namespace pmscore::json
+{
+    class json_object;
+}
+
 /**
  * @file
  *
@@ -86,6 +91,8 @@ namespace pmscore
         static vector with_polar_coordinates(real __angle)
             { return with_polar_coordinates(1., __angle); }
     public:
+        explicit operator pmscore::json::json_object() const;
+
         explicit operator String() const
             { return '('_s + x + "; "_s + y + ')'_s; }
     public:

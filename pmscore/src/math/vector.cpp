@@ -16,38 +16,19 @@
  */
 
 
-#include "json/json_live_iterable.hpp"
+#include "math/vector.hpp"
 
-namespace pmscore::json
+#include "json/json_object.hpp"
+#include "json/json_property.hpp"
+#include "json/json_value.hpp"
+
+namespace pmscore
 {
-    String json_live_iterable::serialize()
+    vector::operator pmscore::json::json_object() const
     {
-        if (!m_is_ended) {
-            m_stream->println(
-                ", " + m_last_child->serialize() + ' ' + get_end_separator()
-            );
-
-            m_is_ended = true;
-        }
-
-        return {};
-    }
-
-    void json_live_iterable::push_back(const json_variant& __v)
-    {
-        if (!m_is_ended) {
-
-            m_stream->print(
-                (
-                    (++m_size == 1) ?
-                    String(get_begin_separator()) + ' ' :
-                    ", "
-                ) +
-
-                m_last_child->serialize()
-            );
-
-            m_last_child == __v.clone();
-        }
+        return pmscore::json::json_object({
+            json::json_property("x", json::json_value(x)),
+            json::json_property("y", json::json_value(y)),
+        });
     }
 }

@@ -39,7 +39,7 @@ namespace pmscore::json
         {}
 
         template <class _T, size_t _n>
-        explicit json_object(_T (&__values)[_n]);
+        explicit json_object(const _T (&__values)[_n])
             : json_iterable(json_type::Object, '{', '}', __values, _n)
         {}
 

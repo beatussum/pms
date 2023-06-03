@@ -59,12 +59,7 @@ namespace pmscore::json
         { *this = move(__j); }
 
         template <class _T>
-        json_value(_T __value)
-            : json_variant(serializer<_T>::underlying_type)
-            , m_value(move(__value))
-        {}
-
-        ~json_value() override;
+        json_value(_T&& __value);
 
         json_variant* clone() const override
             { return new json_value(*this); }

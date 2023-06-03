@@ -21,39 +21,41 @@ namespace pmscore::arduino
     template <class _Correcter>
     void connecter<_Correcter>::update_status()
     {
-        real angle_a, angle_b, obstacle_distance;
+        if (!m_computer->is_ended()) {
+            real angle_a, angle_b, obstacle_distance;
 
-        if (m_computer->is_vertex_reached()) {
-            m_correcter.next_edge(
+            if (m_computer->is_vertex_reached()) {
+                m_correcter.next_edge(
+                    m_computer->get_cdistance(),
+                    m_computer->get_current_edge_norm()
+                );
+            }
+
+            ATOMIC_BLOCK(ATOMIC_FORCEON) {
+                angle_a           = m_encoder_a->get_angle();
+                angle_b           = m_encoder_b->get_angle();
+                obstacle_distance = m_usensor->get_distance();
+            }
+
+            m_timer.update_status();
+
+            m_computer->update_status(
+                angle_a,
+                angle_b,
+                m_last_angle_a,
+                m_last_angle_b
+            );
+
+            m_last_angle_a = angle_a;
+            m_last_angle_b = angle_b;
+
+            m_correcter.update_status(
                 m_computer->get_cdistance(),
-                m_computer->get_current_edge_norm()
+                m_computer->get_cangle(),
+                m_computer->get_cpos(),
+                m_computer->get_tpos(),
+                obstacle_distance
             );
         }
-
-        ATOMIC_BLOCK(ATOMIC_FORCEON) {
-            angle_a           = m_encoder_a->get_angle();
-            angle_b           = m_encoder_b->get_angle();
-            obstacle_distance = m_usensor->get_distance();
-        }
-
-        m_timer.update_status();
-
-        m_computer->update_status(
-            angle_a,
-            angle_b,
-            m_last_angle_a,
-            m_last_angle_b
-        );
-
-        m_last_angle_a = angle_a;
-        m_last_angle_b = angle_b;
-
-        m_correcter.update_status(
-            m_computer->get_cdistance(),
-            m_computer->get_cangle(),
-            m_computer->get_cpos(),
-            m_computer->get_tpos(),
-            obstacle_distance
-        );
     }
 }

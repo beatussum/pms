@@ -39,8 +39,8 @@ namespace pmscore::json
         {}
 
         template <class _T, size_t _n>
-        explicit json_array(_T (&__values)[_n]);
-            : json_iterable(json_type::Array, '[', ']', __values, _n)
+        explicit json_array(const _T (&__values)[_n])
+            : json_iterable(json_type::Array, '[', ']', __values)
         {}
 
         explicit json_array(const_iterator __begin, const_iterator __end)

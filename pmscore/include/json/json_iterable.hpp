@@ -89,7 +89,7 @@ namespace pmscore::json
             json_type __type,
             char __begin_separator,
             char __end_separator,
-            _T (&__values)[_n]
+            const _T (&__values)[_n]
         )
             : json_iterable(
                 __type,

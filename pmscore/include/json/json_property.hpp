@@ -46,6 +46,18 @@ namespace pmscore::json
         {}
 
         json_property(json_property&&);
+
+        explicit json_property(
+            String __name,
+            const json_variant& __value
+        ) noexcept
+
+            : json_variant(json_type::Property)
+
+            , m_name(move(__name))
+            , m_value(__value.clone())
+        {}
+
         ~json_property() override { delete m_value; }
 
         json_variant* clone() const override

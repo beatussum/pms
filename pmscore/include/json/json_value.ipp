@@ -19,6 +19,35 @@
 namespace pmscore::json
 {
     template <class _T>
+    json_value::json_value(_T&& __value)
+        : json_variant(serializer<_T>::underlying_type)
+        , m_value()
+    {
+        switch (m_type) {
+            case json_type::Boolean:
+                m_value.as_bool = __value;
+
+                break;
+            case json_type::Char:
+                m_value.as_char = __value;
+
+                break;
+            case json_type::Float:
+                m_value.as_float = __value;
+
+                break;
+            case json_type::SignedInteger:
+                m_value.as_int = __value;
+
+                break;
+            case json_type::UnsignedInteger:
+                m_value.as_uint = __value;
+
+                break;
+        }
+    }
+
+    template <class _T>
     _T&& json_value::as(_T&& __default = _T()) const
     {
         if (is<_T>()) {
