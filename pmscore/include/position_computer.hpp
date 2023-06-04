@@ -63,7 +63,8 @@ namespace pmscore
             correcter_base* __c,
             real __tadvance,
             const vector (&__tpath)[_n],
-            real __vertex_radius
+            real __vertex_radius,
+            bool __is_looping = true
         );
 
         /**
@@ -76,6 +77,8 @@ namespace pmscore
         ~position_computer() { delete[] m_tpath; }
     public:
         explicit operator String() const;
+    public:
+        String to_json() const;
     private:
         void __update_rstatus(
             real __angle_a,
@@ -112,6 +115,9 @@ namespace pmscore
         correcter_base* get_correcter() const noexcept { return m_correcter; }
         real get_tadvance() const noexcept { return m_tadvance; }
 
+        bool is_looping() const noexcept { return m_is_looping; }
+        void set_looping(bool __b) { m_is_looping = __b; }
+
         vector* get_path() const noexcept { return m_tpath; }
 
         template <size_t _n>
@@ -119,6 +125,7 @@ namespace pmscore
 
         real get_vertex_radius() const noexcept { return m_vertex_radius; }
 
+        bool is_ended() const noexcept { return m_is_ended; }
         real get_rangle() const noexcept { return m_rangle; }
         vector get_rpos() const noexcept { return m_rpos; }
         real get_tangle() const noexcept { return m_tangle; }
@@ -132,11 +139,13 @@ namespace pmscore
         real get_distance() const noexcept { return m_distance; }
     private:
         correcter_base* m_correcter;
+        bool            m_is_looping;
         real            m_tadvance;
         vector*         m_tpath;
         real            m_vertex_radius;
 
         real          m_distance;
+        bool          m_is_ended;
         real          m_rangle;
         vector        m_rpos;
         real          m_tangle;

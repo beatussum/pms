@@ -23,13 +23,28 @@
 
 namespace pmscore
 {
+    String full_position_from(real __angle, const vector& __v)
+    {
+        return
+            "{ \"angle\": "_s + __angle + ", "_s
+            "\"position\": "_s + __v.to_json() + " }"_s;
+    }
+
     position_computer::operator String() const
     {
         return
             "real position: "_s + static_cast<String>(m_rpos) + " with "_s +
-            m_rangle + " rad\n"_s +
+            (m_rpos.angle() * (180 / M_PI)) + "°\n"_s +
             "theoretical position: "_s + static_cast<String>(get_tpos()) +
-            " with "_s + m_tangle + " rad\n"_s;
+            " with "_s + (m_tangle * (180 / M_PI)) + "°\n"_s;
+    }
+
+    String position_computer::to_json() const
+    {
+        return
+            "{ \"computed\": " + full_position_from(m_rangle, m_rpos) + ", "
+            "\"target\": " + full_position_from(m_tangle, get_tpos()) + ", "
+            "\"timestamp\": " + millis() + " }";
     }
 
     void position_computer::__update_rstatus(
@@ -63,6 +78,10 @@ namespace pmscore
 
                 if (++m_ti == (m_tpath + m_tpath_size)) {
                     m_ti = m_tpath;
+
+                    if (!m_is_looping) {
+                        m_is_ended = true;
+                    }
                 }
 
                 m_ti_unit = m_ti->unit();
@@ -105,9 +124,11 @@ namespace pmscore
         real __last_angle_b
     )
     {
-        __update_rstatus(__angle_a, __angle_b, __last_angle_a, __last_angle_b);
-        __update_tstatus(__last_angle_a, __last_angle_b);
+        if (!m_is_ended) {
+            __update_rstatus(__angle_a, __angle_b, __last_angle_a, __last_angle_b);
+            __update_tstatus(__last_angle_a, __last_angle_b);
 
-        m_correcter->update_status(m_distance, m_rangle, m_rpos, get_tpos());
+            m_correcter->update_status(m_distance, m_rangle, m_rpos, get_tpos());
+        }
     }
 }

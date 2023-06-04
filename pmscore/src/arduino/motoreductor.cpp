@@ -83,8 +83,8 @@ namespace pmscore::arduino
 
     motoreductor::direction motoreductor::get_direction() const
     {
-        bool pin_status_a = (digitalRead(m_pin_a) == HIGH);
-        bool pin_status_b = (digitalRead(m_pin_b) == HIGH);
+        bool pin_status_a = (read_digital_output(m_pin_a) == HIGH);
+        bool pin_status_b = (read_digital_output(m_pin_b) == HIGH);
 
         if (pin_status_a) {
             if (pin_status_b) {
@@ -96,6 +96,20 @@ namespace pmscore::arduino
             return direction::Back;
         } else {
             return direction::Off;
+        }
+    }
+
+    int16_t motoreductor::get_power() const noexcept
+    {
+        int16_t power = read_pwm_output(m_pin_pwm);
+
+        switch (get_direction()) {
+            case direction::Back:
+                return -power;
+            case direction::Front:
+                return power;
+            default:
+                return 0;
         }
     }
 

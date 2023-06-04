@@ -66,7 +66,7 @@ namespace pmscore::arduino
      * @see Schéma cinématique en annexe.
      */
 
-    constexpr real r = 2.55;
+    constexpr real r = 6.8;
 
     constexpr real r_2  = (r / 2);       ///< Valeur de \f$ \frac{r}{2} \f$.
     constexpr real r_2d = (r / (2 * d)); ///< Valeur de \f$ \frac{r}{2d} \f$.

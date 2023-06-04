@@ -56,17 +56,7 @@ namespace pmscore
 
         switch (m_speed_mode) {
             case speed_mode::Run:
-                {
-                    int16_t omega = -m_speed_profile.compute_speed(__distance);
-
-                    if (omega != m_omega) {
-                        if (omega < m_omega) {
-                            m_heading_speed_mode = heading_speed_mode::Fix;
-                        }
-
-                        m_omega = omega;
-                    }
-                }
+                m_omega = -m_speed_profile.compute_speed(__distance);
 
                 break;
             case speed_mode::Off:
@@ -78,24 +68,16 @@ namespace pmscore
         switch (m_heading_speed_mode) {
             case heading_speed_mode::Fix:
                 {
-                    real gamma = simplify_angle(
-                        (__tposition - __rposition).angle() - M_PI_2
-                    );
+                    real gamma = (__tposition - __rposition).angle() - M_PI_2;
 
                     if (
                         (
                             (m_soi_speed_mode == soi_speed_mode::Off) &&
-                            m_heading_speed_profile.init(
-                                simplify_angle(__rangle),
-                                gamma
-                            )
+                            m_heading_speed_profile.init(__rangle, gamma)
                         ) ||
                         (
                             (m_soi_speed_mode == soi_speed_mode::Run) &&
-                            m_soi_speed_profile.init(
-                                simplify_angle(__rangle),
-                                gamma
-                            )
+                            m_soi_speed_profile.init(__rangle, gamma)
                         )
                     )
                     {
@@ -114,13 +96,13 @@ namespace pmscore
                     switch (m_soi_speed_mode) {
                         case soi_speed_mode::Off:
                             k = m_heading_speed_profile.compute_speed(
-                                simplify_angle(__rangle)
+                                __rangle
                             );
 
                             break;
                         case soi_speed_mode::Run:
                             k = m_soi_speed_profile.compute_speed(
-                                simplify_angle(__rangle)
+                                __rangle
                             );
 
                             break;

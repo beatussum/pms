@@ -23,14 +23,17 @@ namespace pmscore
         correcter_base* __c,
         real __tadvance,
         const vector (&__tpath)[_n],
-        real __vertex_radius
+        real __vertex_radius,
+        bool __is_looping
     )
         : m_correcter(__c)
+        , m_is_looping(__is_looping)
         , m_tadvance(__tadvance)
         , m_tpath(new vector[_n])
         , m_vertex_radius(__vertex_radius)
         , m_rangle(0.)
         , m_distance(0.)
+        , m_is_ended(false)
         , m_rpos()
         , m_tangle(__tpath[0].angle())
         , m_tangle_a_0(0.)

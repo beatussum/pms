@@ -20,51 +20,106 @@
 #include "arduino/encoder.hpp"
 #include "arduino/encoders.hpp"
 #include "arduino/motoreductor.hpp"
+
 #include "speed_profile/constant.hpp"
 #include "speed_profile/trapezoidal.hpp"
+
 #include "correcter.hpp"
 #include "position_computer.hpp"
+
+#include <SPI.h>
+#include <SD.h>
 
 using namespace pmscore;
 
 arduino::chopper chopper(8);
 
-arduino::encoder encoder_a(2);
-arduino::encoder encoder_b(3);
+arduino::encoder encoder_a(3);
+arduino::encoder encoder_b(2);
 
-arduino::motoreductor motor_a(10, 9, 11, &encoder_a);
-arduino::motoreductor motor_b(6, 7, 5, &encoder_b);
+arduino::motoreductor motor_a(6, 7, 5, &encoder_a);
+arduino::motoreductor motor_b(9, 10, 11, &encoder_b);
 
 correcter corr(
     &motor_a,
     &motor_b,
-    speed_profile::trapezoidal(10., .01, 10, 0, 25, &angle_distance),
-    speed_profile::constant(.01, 100, &angle_distance),
+    speed_profile::trapezoidal(10., .001, 30, 0, 30, &angle_distance),
+    speed_profile::constant(.01, 55, &angle_distance),
 
-    speed_profile::trapezoidal(2., 20., 100, 90, 180,
+    speed_profile::trapezoidal(2., 20., 80, 55, 80,
         [] (real __a, real __b) { return __b - __a; }
     )
 
 );
 
-position_computer computer(
-    &corr,
-    .2,
-    {{0., 1'000.}, {-1'000., 0.}, {0., -1'000.}, {1'000., 0.}},
-    5.
-);
+vector path[] = {{0., 100.}, {0., -100.}};
 
+position_computer computer(&corr, .8, path, 5., false);
 arduino::encoders encoders(&encoder_a, &encoder_b, &computer);
+
+File file;
+bool is_json_ended = false;
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(9'600);
+    pinMode(SS, OUTPUT);
+
+    Serial.print("Initialisation");
+    while (!SD.begin(SPI_HALF_SPEED, 53)) { Serial.print('.'); }
+    Serial.println();
+
+    file = SD.open("COMP", FILE_WRITE);
+
+    if (!file) {
+        Serial.println("Cannot open `COMP`.");
+    }
+
+    String order = "{ ";
+
+    for (auto i = begin(path); i != (end(path) - 1); ++i) {
+        order += (i->to_json() + ", ");
+    }
+
+    order += (end(path)[-1].to_json() + " }");
+
+    file.print(
+        "{\n"
+        "\t\"order\": " + move(order) + ",\n\n"
+        "\t\"data\": [\n"
+        "\t\t" + computer.to_json()
+    );
+
+    file.flush();
 
     arduino::set_main_encoders(encoders);
+
     chopper.enable();
 }
 
 void loop()
 {
-    encoders.update_status();
+    if (!computer.is_ended()) {
+        file.print(
+            ",\n"
+            "\t\t" + computer.to_json()
+        );
+
+        file.flush();
+
+        // Serial.println(static_cast<String>(computer));
+
+        encoders.update_status();
+    } else if (!is_json_ended) {
+        is_json_ended = true;
+
+        file.print(
+            ",\n"
+            "\t\t" + computer.to_json() + "\n"
+            "\t]\n"
+            "}\n"
+        );
+
+        file.close();
+    }
 }

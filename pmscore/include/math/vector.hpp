@@ -89,6 +89,9 @@ namespace pmscore
         explicit operator String() const
             { return '('_s + x + "; "_s + y + ')'_s; }
     public:
+        String to_json() const
+            { return "{ \"x\": "_s + x + ", \"y\": "_s + y + " }"_s; }
+    public:
         /**
          * @brief Retourne l'argument principal du complexe dont l'affixe dans
          * le plan est ce vecteur.

@@ -30,7 +30,7 @@ namespace pmscore::arduino
             return LOW;
         } else {
             return
-                ((*portOutputRegister(port) | digitalPinToBitMask(__p)) == 0) ?
+                ((*portOutputRegister(port) & digitalPinToBitMask(__p)) == 0) ?
                 LOW :
                 HIGH;
         }

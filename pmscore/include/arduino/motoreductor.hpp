@@ -103,9 +103,7 @@ namespace pmscore::arduino
         encoder* get_encoder() const noexcept { return m_encoder; }
         void set_encoder(encoder* __e) noexcept { m_encoder = __e; }
 
-        int16_t get_power() const noexcept
-            { return read_pwm_output(m_pin_pwm); }
-
+        int16_t get_power() const noexcept;
         void set_power(int16_t) const;
 
         direction get_direction() const;
